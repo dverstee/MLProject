@@ -1,30 +1,47 @@
 
 from django.db import models
 
-class RankedMatch(models.Model):
-    team_1_summoner1_id= models.IntegerField(max_length=200)
-    team_1_summoner2_id = models.IntegerField(max_length=200)
-    team_1_summoner3_id = models.IntegerField(max_length=200)
-    team_1_summoner4_id = models.IntegerField(max_length=200)
-    team_1_summoner5_id = models.IntegerField(max_length=200)
 
-    team_2_summoner1_id = models.IntegerField(max_length=200)
-    team_2_summoner2_id = models.IntegerField(max_length=200)
-    team_2_summoner3_id = models.IntegerField(max_length=200)
-    team_2_summoner4_id = models.IntegerField(max_length=200)
-    team_2_summoner5_id = models.IntegerField(max_length=200)
+class ChampionPlayed(models.Model): 
 
-    team_1_summoner1_champid = models.IntegerField(max_length=200)
-    team_1_summoner2_champid = models.IntegerField(max_length=200)
-    team_1_summoner3_champid = models.IntegerField(max_length=200)
-    team_1_summoner4_champid = models.IntegerField(max_length=200)
-    team_1_summoner5_champid = models.IntegerField(max_length=200)
+    nr_gameswithchamp       = models.SmallIntegerField()
+    nr_gameswonwithchamp    = models.SmallIntegerField()
+    champid                 = models.SmallIntegerField()
 
-    team_2_summoner1_champid = models.IntegerField(max_length=200)
-    team_2_summoner2_champid = models.IntegerField(max_length=200)
-    team_2_summoner3_champid = models.IntegerField(max_length=200)
-    team_2_summoner4_champid = models.IntegerField(max_length=200)
-    team_2_summoner5_champid = models.IntegerField(max_length=200)
+
+
 
 class Summoner(models.Model):
-    name = models.CharField(max_length=200)
+
+
+    champion_played             = models.ForeignKey('ChampionPlayed')
+    leaguepoints                = models.SmallIntegerField()
+    tier                        = models.CharField(max_length=40)
+    rank                        = models.SmallIntegerField()
+    nr_gameswoninlast5games     = models.SmallIntegerField()
+
+
+
+class match(models.Model):
+
+
+    team1_is_red        = models.BooleanField()
+    nr_premade_team1    = models.SmallIntegerField()
+    nr_premade_team2    = models.SmallIntegerField()
+
+
+    team_1summoner1_id = models.ForeignKey('Summoner' , related_name='team_1summoner1')
+    team_1summoner2_id = models.ForeignKey('Summoner' , related_name='team_1summoner2')
+    team_1summoner3_id = models.ForeignKey('Summoner' , related_name='team_1summoner3')
+    team_1summoner4_id = models.ForeignKey('Summoner' , related_name='team_1summoner4')
+    team_1summoner5_id = models.ForeignKey('Summoner' , related_name='team_1summoner5')
+
+    team_2summoner1_id = models.ForeignKey('Summoner' , related_name='team_2summoner1')
+    team_2summoner2_id = models.ForeignKey('Summoner' , related_name='team_2summoner2')
+    team_2summoner3_id = models.ForeignKey('Summoner' , related_name='team_2summoner3')
+    team_2summoner4_id = models.ForeignKey('Summoner' , related_name='team_2summoner4')
+    team_2summoner5_id = models.ForeignKey('Summoner' , related_name='team_2summoner5')
+
+
+
+
