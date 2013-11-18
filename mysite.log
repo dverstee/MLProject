@@ -1,0 +1,247 @@
+[18/Nov/2013 15:47:56] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 4, in <module>
+    admin.autodiscover()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/contrib/admin/__init__.py", line 29, in autodiscover
+    import_module('%s.admin' % app)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/admin.py", line 5, in <module>
+    from LeaguePredictor.models import Summoner
+ImportError: No module named LeaguePredictor.models
+[18/Nov/2013 15:48:34] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 4, in <module>
+    admin.autodiscover()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/contrib/admin/__init__.py", line 29, in autodiscover
+    import_module('%s.admin' % app)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/admin.py", line 5, in <module>
+    from models import Summoner
+ImportError: cannot import name Summoner
+[18/Nov/2013 15:48:37] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 4, in <module>
+    admin.autodiscover()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/contrib/admin/__init__.py", line 29, in autodiscover
+    import_module('%s.admin' % app)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/admin.py", line 5, in <module>
+    from models import Summoner
+ImportError: cannot import name Summoner
+[18/Nov/2013 15:48:39] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 4, in <module>
+    admin.autodiscover()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/contrib/admin/__init__.py", line 29, in autodiscover
+    import_module('%s.admin' % app)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/admin.py", line 5, in <module>
+    from models import Summoner
+ImportError: cannot import name Summoner
+[18/Nov/2013 15:48:40] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 4, in <module>
+    admin.autodiscover()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/contrib/admin/__init__.py", line 29, in autodiscover
+    import_module('%s.admin' % app)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/admin.py", line 5, in <module>
+    from models import Summoner
+ImportError: cannot import name Summoner
+[18/Nov/2013 15:49:18] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 10, in <module>
+    url(r'^LeaguePredictor/', include('LeaguePredictor.url', namespace="LeaguePredictor")),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+ImportError: No module named LeaguePredictor.url
+[18/Nov/2013 15:49:58] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 10, in <module>
+    url(r'^LeaguePredictor/', include('lolpredictor.LeaguePredictor.url', namespace='LeaguePredictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/url.py", line 3, in <module>
+    import views
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/views.py", line 3, in <module>
+    import unirest
+ImportError: No module named unirest
+[18/Nov/2013 15:50:04] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 10, in <module>
+    url(r'^LeaguePredictor/', include('lolpredictor.LeaguePredictor.url', namespace='LeaguePredictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/url.py", line 3, in <module>
+    import views
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/views.py", line 3, in <module>
+    import unirest
+ImportError: No module named unirest
+[18/Nov/2013 15:50:05] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 10, in <module>
+    url(r'^LeaguePredictor/', include('lolpredictor.LeaguePredictor.url', namespace='LeaguePredictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/url.py", line 3, in <module>
+    import views
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/views.py", line 3, in <module>
+    import unirest
+ImportError: No module named unirest
+[18/Nov/2013 15:50:50] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 10, in <module>
+    url(r'^LeaguePredictor/', include('lolpredictor.LeaguePredictor.url', namespace='LeaguePredictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/url.py", line 3, in <module>
+    import views
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/views.py", line 73, in <module>
+    from pybrain.datasets            import ClassificationDataSet
+ImportError: No module named pybrain.datasets
+[18/Nov/2013 15:51:22] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 10, in <module>
+    url(r'^LeaguePredictor/', include('lolpredictor.LeaguePredictor.url', namespace='LeaguePredictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/url.py", line 3, in <module>
+    import views
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/LeaguePredictor/views.py", line 73, in <module>
+    from pybrain.datasets            import ClassificationDataSet
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/pybrain/__init__.py", line 1, in <module>
+    from structure.__init__ import *
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/pybrain/structure/__init__.py", line 1, in <module>
+    from connections.__init__ import *
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/pybrain/structure/connections/__init__.py", line 1, in <module>
+    from full import FullConnection
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/pybrain/structure/connections/full.py", line 3, in <module>
+    from scipy import reshape, dot, outer
+ImportError: No module named scipy
