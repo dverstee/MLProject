@@ -90,11 +90,6 @@ def neural(request):
 	#This is a dataset 
 	#first argument is the dimension of the input
 	# second argument is dimension of the output
-	ds = SupervisedDataSet(input_dimension, output_dimension)
-
-	ds.addSample((1, 1), (0,))
-	ds.addSample((1, 1), (0,))
-	ds.addSample((1, 1), (0,))
 	
 
 	means = [(-1,0),(2,4),(3,1)]
@@ -116,7 +111,7 @@ def neural(request):
 	#Third is number of outputs
 	
 	fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
-	trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=false, weightdecay=0.01)
+	trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=0.01)
 	trainer.trainEpochs(number_of_training_epochs)
 
 
