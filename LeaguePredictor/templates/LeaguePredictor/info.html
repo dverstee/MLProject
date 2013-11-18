@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}The most played heroes of {{name}}{% endblock %}
+{% block content %}
+<table border="1">
+    <tr>
+        <th>Champion id</th>
+        <th>Image</th>
+        <th>Games played</th>
+    </tr>
+{% for champion in most_played_champions %}
+    <tr >
+        <td>{{champion.id}}</td>
+        <td><img src="{{champion.image}}"</img></td>
+        <td>{{champion.games}}</td>
+    </tr>
+{% endfor %}
+
+</table>
+{% endblock %}
