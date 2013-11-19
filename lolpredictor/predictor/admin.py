@@ -6,3 +6,4 @@ from models import *
 
 admin.site.register(ChampionPlayed)
 admin.site.register(Summoner)
+admin.site.register(match)

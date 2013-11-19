@@ -124,12 +124,14 @@ def parseRecentGames(recentGames, accountid):
 	#TODO : SELECT MOST RECENT MATCH !!!! 
 
 	#Store yourself
+	our_team = []
+	their_team = []
 	championid = game["championId"]
 	summoner_id = game["summonerId"]
 	teamid = game["teamId"]
-	StoreSummonerandChampion(accountid, championid,summoner_id)
-	our_team = []
-	their_team = []
+	summoner = StoreSummonerandChampion(accountid, championid,summoner_id)
+	our_team.append(summoner)
+	
 	#Store Others$
 	print "Store Others"
 	fellowplayers = game["fellowPlayers"]["array"]
@@ -157,8 +159,10 @@ def parseRecentGames(recentGames, accountid):
 	else:	
 		win = False
 
+	print len(our_team)
+	print len(their_team)
 	#TODO Iterate over the list to make the match object ! :) 
-	#match.objects.create(team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id
+	match.objects.create(team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4])
 		
 	return summoner_id
 
