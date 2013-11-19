@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def index(request):
  	if request.method == 'GET':
-		return render(request, 'LeaguePredictor/index.html')
+		return render(request, 'predictor/index.html')
 	if request.method == 'POST':
 
 		name = request.POST["SummonerName"]
@@ -23,9 +23,9 @@ def index(request):
 			my_hash["most_played_champions"] = parseChampionlist(most_played_champions)
 			my_hash["name"] = name
 			print my_hash["most_played_champions"]
-			return render(request, 'LeaguePredictor/info.html', my_hash)
+			return render(request, 'predictor/info.html', my_hash)
 		else:
-			return render(request, 'LeaguePredictor/index.html')
+			return render(request, 'predictor/index.html')
 
 from pybrain.datasets            import ClassificationDataSet
 from pybrain.utilities           import percentError
@@ -83,7 +83,7 @@ def neural(request):
 	my_hash["trnresult"] = trnresult
 
 
-	return render(request, 'LeaguePredictor/neural.html' , my_hash )
+	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
 	accountId = 28629167
 	rg = getRecentGamesByAccountId(accountId)
