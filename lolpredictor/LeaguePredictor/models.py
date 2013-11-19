@@ -18,7 +18,7 @@ class Summoner(models.Model):
     leaguepoints                = models.SmallIntegerField()
     tier                        = models.CharField(max_length=40)
     rank                        = models.SmallIntegerField()
-    nr_gameswoninlast5games     = models.SmallIntegerField()
+    recentwinpercentage         = models.FloatField ()
 
 
 
@@ -28,7 +28,8 @@ class match(models.Model):
     team1_is_red        = models.BooleanField()
     nr_premade_team1    = models.SmallIntegerField()
     nr_premade_team2    = models.SmallIntegerField()
-
+    won                 = models.BooleanField()
+    
 
     team_1summoner1_id = models.ForeignKey('Summoner' , related_name='team_1summoner1')
     team_1summoner2_id = models.ForeignKey('Summoner' , related_name='team_1summoner2')
