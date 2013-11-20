@@ -91,14 +91,42 @@ def neural(request):
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
 
-	a=hex(252)
-	un = u'abc\' + a +'FC2a'	
-	print(a)
 	accountId = 28629167
 	rg = getRecentGamesByAccountId(accountId)
 	info = parseRecentGames(rg,accountId)
 	print info
 	return HttpResponse("hi")
+
+def unicode_conversion(text):
+    def fixup(m):
+        text = m.group(0)
+        if text[:1] == "<":
+            return "" # ignore tags
+        if text[:2] == "&#":
+            try:
+                if text[:3] == "&#x":
+                    return unichr(int(text[3:-1], 16))
+                else:
+                    return unichr(int(text[2:-1]))
+            except ValueError:
+                pass
+        elif text[:1] == "&":
+            import htmlentitydefs
+            entity = htmlentitydefs.entitydefs.get(text[1:-1])
+            if entity:
+                if entity[:2] == "&#":
+                    try:
+                        return unichr(int(entity[2:-1]))
+                    except ValueError:
+                        pass
+                else:
+                    return unicode(entity, "iso-8859-1")
+        return text # leave as is
+    return re.sub("(?s)<[^>]*>|&#?\w+;", fixup, text)
+
+
+
+
 def parseChampionlist(champions):
 	parsed_list = []
 	for key, champion in champions.items():
@@ -249,24 +277,41 @@ def getAccountIdBySummonerId(summonerid):
   	accountid =	getAccountIdByName(name)
    
   	return accountid
+import httplib
 def getAccountIdByName(name):
 
-  	name = name.replace(' ', '')  	
-  	pattern = re.compile(r'&#')
-  	if pattern.findall(name):
-  		name = name.replace('&#', '\\u')  
-  		name = name.replace(';', '')  
-  	print u''+name
-  	print unicode(name)
-	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerByName/%s" % name,
-	headers={
-    	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-  	});
-  	values = json.loads(response.raw_body)	
+  	name = name.replace(' ', '')  
+  	name = unicode_conversion(name);
+ 	print name
+ 	url = u"https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerByName/"
+ 	url = url + name
+ 	print url
+ 	
+	#response = unirest.get(url,
+	#headers={
+    #	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
+  	#},
+  	#encoding='utf-8');
 
+  	values = json.loads(requester(url))  
+ 
   	if 'acctId' in values:
   		return values['acctId']
   	return None
+def requester(url):
+    host = url.split('/')[2].replace('http://','')
+    req = url[url.find(host)+len(host):]
+    conn = httplib.HTTPSConnection(host)
+    headers = {"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"}
+    conn.request("GET","/"+req,"",headers)
+    response = conn.getresponse()
+    print response.status, response.reason
+    
+    data = response.read()
+    print data
+    return data
+
+
 def getInfoByaccountId(accountId):
    	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getAllPublicSummonerDataByAccount/%s" % accountId,
 	headers={
