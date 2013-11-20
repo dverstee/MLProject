@@ -91,41 +91,19 @@ def neural(request):
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
 
-	accountId = 28629167
-	rg = getRecentGamesByAccountId(accountId)
-	info = parseRecentGames(rg,accountId)
+	startId = 28629236
+	nrofMatches = 1000
+	nrofMatchescrawled=0
+	for accountId in range(startId, startId + nrofMatches):
+		print accountId
+		rg = getRecentGamesByAccountId(accountId)		
+		if rg != None:
+			info = parseRecentGames(rg,accountId)
+			if info !=None :
+				nrofMatchescrawled = nrofMatchescrawled +1 
+				print "Match added"
 	print info
 	return HttpResponse("hi")
-
-def unicode_conversion(text):
-    def fixup(m):
-        text = m.group(0)
-        if text[:1] == "<":
-            return "" # ignore tags
-        if text[:2] == "&#":
-            try:
-                if text[:3] == "&#x":
-                    return unichr(int(text[3:-1], 16))
-                else:
-                    return unichr(int(text[2:-1]))
-            except ValueError:
-                pass
-        elif text[:1] == "&":
-            import htmlentitydefs
-            entity = htmlentitydefs.entitydefs.get(text[1:-1])
-            if entity:
-                if entity[:2] == "&#":
-                    try:
-                        return unichr(int(entity[2:-1]))
-                    except ValueError:
-                        pass
-                else:
-                    return unicode(entity, "iso-8859-1")
-        return text # leave as is
-    return re.sub("(?s)<[^>]*>|&#?\w+;", fixup, text)
-
-
-
 
 def parseChampionlist(champions):
 	parsed_list = []
@@ -148,24 +126,28 @@ def parseRecentGames(recentGames, accountid):
 			win = determineWin(game)
 			if win == 1 :
 				nrrecentrankedgameswon = nrrecentrankedgameswon +1 
-			
-
-	
+				
 	if nrrecentrankedgames ==0 :  
-		return None
-
-	
+		return None	
 	recentwinpercentage = float(nrrecentrankedgameswon) / float(nrrecentrankedgames) * 100
+	print nrrecentrankedgames
 	print recentwinpercentage
 
 	#TODO : SELECT MOST RECENT MATCH !!!! 
 
 	#Store yourself
+	print "Store Myself"
 	our_team = []
 	their_team = []
 	championid = game["championId"]
 	summoner_id = game["summonerId"]
 	teamid = game["teamId"]
+	print championid
+	print summoner_id
+	print teamid
+	if summoner_id == 0:
+		summoner_id = getSummonerIdByAccountId(accountid)
+	print summoner_id
 	summoner = StoreSummonerandChampion(accountid, championid,summoner_id)
 	our_team.append(summoner)
 	
@@ -177,6 +159,8 @@ def parseRecentGames(recentGames, accountid):
 		summoner_id = player["summonerId"]	
 		accountId = getAccountIdBySummonerId(summoner_id)	
 		summoner = StoreSummonerandChampion(accountId, champid,summoner_id)
+		if summoner == None:
+			return None
 		if player ["teamId"] == teamid : 
 			our_team.append(summoner)
 		else :
@@ -195,16 +179,10 @@ def parseRecentGames(recentGames, accountid):
 		win = True
 	else:	
 		win = False
-
-	print len(our_team)
-	print len(their_team)
 	#TODO Iterate over the list to make the match object ! :) 
 	match.objects.create(team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4])
 		
 	return summoner_id
-
-
-
 def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 
 	print accountId
@@ -227,6 +205,8 @@ def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 	#Build the summoner
 	
 	league = getLeagueForPlayerBySummonerID(summoner_id)	
+	if league==None :
+		return None
 	rank = league["requestorsRank"]
 	tier = league["tier"]
 	name = league["requestorsName"]	
@@ -262,6 +242,16 @@ def determineWin (game):
 		win = stat["statType"]
 		if win == "WIN" :
 			return stat["value"]
+def getSummonerIdByAccountId(AccountId):	
+	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getAllPublicSummonerDataByAccount/%s" % AccountId,
+	headers={
+    	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
+  	});
+  	values = json.loads(response.raw_body)  
+  	sumid = values["summoner"]["sumId"]
+
+  	
+  	return sumid
 def getAccountIdBySummonerId(summonerid):
 	print summonerid
 	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerBySummonerId/%s" % summonerid,
@@ -275,43 +265,25 @@ def getAccountIdBySummonerId(summonerid):
   		name = namez
   	
   	accountid =	getAccountIdByName(name)
-   
+  	 
   	return accountid
-import httplib
 def getAccountIdByName(name):
-
   	name = name.replace(' ', '')  
   	name = unicode_conversion(name);
  	print name
  	url = u"https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerByName/"
- 	url = url + name
- 	print url
- 	
-	#response = unirest.get(url,
-	#headers={
-    #	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-  	#},
-  	#encoding='utf-8');
+ 	url = url + name 	
+ 	url = url.encode('utf-8')
+	response = unirest.get(url,
+	headers={
+    	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
+  	},
+  	encoding='utf-8');
 
-  	values = json.loads(requester(url))  
- 
+ 	values = json.loads(response.raw_body)	
   	if 'acctId' in values:
   		return values['acctId']
   	return None
-def requester(url):
-    host = url.split('/')[2].replace('http://','')
-    req = url[url.find(host)+len(host):]
-    conn = httplib.HTTPSConnection(host)
-    headers = {"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"}
-    conn.request("GET","/"+req,"",headers)
-    response = conn.getresponse()
-    print response.status, response.reason
-    
-    data = response.read()
-    print data
-    return data
-
-
 def getInfoByaccountId(accountId):
    	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getAllPublicSummonerDataByAccount/%s" % accountId,
 	headers={
@@ -357,7 +329,38 @@ def getLeagueForPlayerBySummonerID(SummonerID):
 		"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 		});
 	values = json.loads(response.raw_body)
-
-	if values:
+	
+	try:
+		error = values['requestorsRank']
 		return values
-	return None
+	except KeyError:
+		print "Weird Error"
+		return None
+def unicode_conversion(text):
+    def fixup(m):
+        text = m.group(0)
+        if text[:1] == "<":
+            return "" # ignore tags
+        if text[:2] == "&#":
+            try:
+                if text[:3] == "&#x":
+                    return unichr(int(text[3:-1], 16))
+                else:
+                    return unichr(int(text[2:-1]))
+            except ValueError:
+                pass
+        elif text[:1] == "&":
+            import htmlentitydefs
+            entity = htmlentitydefs.entitydefs.get(text[1:-1])
+            if entity:
+                if entity[:2] == "&#":
+                    try:
+                        return unichr(int(entity[2:-1]))
+                    except ValueError:
+                        pass
+                else:
+                    return unicode(entity, "iso-8859-1")
+        return text # leave as is
+    return re.sub("(?s)<[^>]*>|&#?\w+;", fixup, text)
+
+
