@@ -1,8 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 import json
 import unirest
 import logging
+import codecs
+import re
 from  models import *
+
 logger = logging.getLogger(__name__)
 
 
@@ -85,6 +90,10 @@ def neural(request):
 
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
+
+	a=hex(252)
+	un = u'abc\' + a +'FC2a'	
+	print(a)
 	accountId = 28629167
 	rg = getRecentGamesByAccountId(accountId)
 	info = parseRecentGames(rg,accountId)
@@ -170,9 +179,10 @@ def parseRecentGames(recentGames, accountid):
 
 def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 
-
+	print accountId
 	accountstats = getAggregatedStatsByAccountID(accountId)
 	accountstats = accountstats["lifetimeStatistics"]["array"]
+
 	totalGamesPlayed =  0
 	totalGamesWon = 0 
 	for stat in accountstats:	
@@ -225,26 +235,35 @@ def determineWin (game):
 		if win == "WIN" :
 			return stat["value"]
 def getAccountIdBySummonerId(summonerid):
+	print summonerid
 	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerBySummonerId/%s" % summonerid,
 	headers={
     	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
   	});
-  	values = json.loads(response.raw_body)	
+  	values = json.loads(response.raw_body)  
   	values = values["array"]
-  	for namez in values:
-  		name = namez
 
+  	for namez in values:  		
+  		name = namez
+  	
   	accountid =	getAccountIdByName(name)
    
   	return accountid
 def getAccountIdByName(name):
 
   	name = name.replace(' ', '')  	
+  	pattern = re.compile(r'&#')
+  	if pattern.findall(name):
+  		name = name.replace('&#', '\\u')  
+  		name = name.replace(';', '')  
+  	print u''+name
+  	print unicode(name)
 	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerByName/%s" % name,
 	headers={
     	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
   	});
   	values = json.loads(response.raw_body)	
+
   	if 'acctId' in values:
   		return values['acctId']
   	return None
