@@ -8,6 +8,19 @@ import codecs
 import re
 from  models import *
 
+from pybrain.datasets            import ClassificationDataSet
+from pybrain.utilities           import percentError
+from pybrain.tools.shortcuts     import buildNetwork
+from pybrain.supervised.trainers import BackpropTrainer
+from pybrain.structure.modules   import SoftmaxLayer
+from pybrain.datasets 			 import SupervisedDataSet
+from django.http 				import HttpResponse
+from scipy import diag, arange, meshgrid, where
+from numpy.random import multivariate_normal
+from datetime import *
+
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -32,16 +45,7 @@ def index(request):
 		else:
 			return render(request, 'predictor/index.html')
 
-from pybrain.datasets            import ClassificationDataSet
-from pybrain.utilities           import percentError
-from pybrain.tools.shortcuts     import buildNetwork
-from pybrain.supervised.trainers import BackpropTrainer
-from pybrain.structure.modules   import SoftmaxLayer
-from pybrain.datasets 			 import SupervisedDataSet
-from django.http 				import HttpResponse
-from scipy import diag, arange, meshgrid, where
-from numpy.random import multivariate_normal
-from datetime import *
+
 
 
 def neural(request):
@@ -67,6 +71,19 @@ def neural(request):
 	trndata._convertToOneOfMany( )
 	tstdata._convertToOneOfMany( )
 
+	matches = match.objects.all()
+	for matc in matches:	
+		#s1 = Summoner.objects.filter( self.id() = )
+		ids = matc.team_1summoner1_id.id
+		print ids
+		print matc.team_1summoner1_id.rank
+	
+		print matc.team_1summoner1_id.leaguepoints
+		
+		
+				
+
+	
 
 	#First  arggument is number of  inputs.
 	#Second argument is number of hidden nodes 
@@ -91,7 +108,7 @@ def neural(request):
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
 
-	startId = 28629236
+	startId = 27124075
 	nrofMatches = 1000
 	nrofMatchescrawled=0
 	for accountId in range(startId, startId + nrofMatches):
@@ -127,7 +144,8 @@ def parseRecentGames(recentGames, accountid):
 			if win == 1 :
 				nrrecentrankedgameswon = nrrecentrankedgameswon +1 
 				
-	if nrrecentrankedgames ==0 :  
+	if nrrecentrankedgames ==0 :
+		print "Not enough Ranked matches"  
 		return None	
 	recentwinpercentage = float(nrrecentrankedgameswon) / float(nrrecentrankedgames) * 100
 	print nrrecentrankedgames

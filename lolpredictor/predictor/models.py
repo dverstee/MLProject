@@ -8,7 +8,8 @@ class ChampionPlayed(models.Model):
     nr_gameswonwithchamp    = models.SmallIntegerField()
     champid                 = models.SmallIntegerField()
 
-
+    def __unicode__(self):
+        return self.id()
 
 
 class Summoner(models.Model):
@@ -20,7 +21,8 @@ class Summoner(models.Model):
     rank                        = models.SmallIntegerField()
     recentwinpercentage         = models.FloatField ()
 
-
+    def __unicode__(self):
+        return self.id()
 
 class match(models.Model):
 
@@ -43,6 +45,7 @@ class match(models.Model):
     team_2summoner4_id = models.ForeignKey('Summoner' , related_name='team_2summoner4')
     team_2summoner5_id = models.ForeignKey('Summoner' , related_name='team_2summoner5')
 
-
+    def __unicode__(self):
+         return self.id()
 
 
