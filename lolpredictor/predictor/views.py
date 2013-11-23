@@ -50,12 +50,12 @@ def index(request):
 
 def neural(request):	
 
-	number_of_hidden_nodes = 200
-	number_of_training_epochs = 20
+	number_of_hidden_nodes = 1000
+	number_of_training_epochs = 200
 	#This is a dataset 
 	#first argument is the dimension of the input
 	# second argument is dimension of the output
-	alldata = ClassificationDataSet(10, 1, nb_classes=2)
+	alldata = ClassificationDataSet(73, 1, nb_classes=2)
 	
 
 	matches = match.objects.all()
@@ -98,7 +98,7 @@ def neural(request):
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
 
-	startId = 27124327
+	startId = 27125086
 	nrofMatches = 5000
 	nrofMatchescrawled=0
 	for accountId in range(startId, startId + nrofMatches):
@@ -106,7 +106,7 @@ def datacrawl(request):
 		rg = getRecentGamesByAccountId(accountId)		
 		if rg != None:
 			info = parseRecentGames(rg,accountId)
-			if info !=None :
+			if info != None :
 				nrofMatchescrawled = nrofMatchescrawled +1 
 				print "Match added"
 				print nrofMatchescrawled
@@ -126,26 +126,34 @@ def parseRecentGames(recentGames, accountid):
 
 	games = recentGames["gameStatistics"]["array"]	
 	nrrecentrankedgames = 0
-	nrrecentrankedgameswon = 0
-	for gamei in games:		
+	nrrecentnormalgames = 0
+	for game in games:		
 
-		if gamei["queueType"] == "RANKED_SOLO_5x5" :			
-			nrrecentrankedgames = nrrecentrankedgames + 1
-			game = gamei
-			#Op  basis van hotstreak !
-			#win = determineWin(game)
-			#if win == 1 :
-			#	nrrecentrankedgameswon = nrrecentrankedgameswon +1 
-				
-	if nrrecentrankedgames ==0 :
-		print "Not enough Ranked matches"  
+		if game["queueType"] == "RANKED_SOLO_5x5" :			
+			nrrecentrankedgames = nrrecentrankedgames + 1			
+			print "Storing Ranked game" 
+			storeMatch(game,"RANKED_SOLO_5x5",accountid)
+		if game["queueType"] == "NORMAL" :			
+			if game["level"] == "30" :
+				nrrecentnormalgames = nrrecentnormalgames + 1
+				print "Storing Normal game lvl 30" 
+				storeMatch(game,"NORMAL",accountid)
+
+
+
+
+	if nrrecentrankedgames == 0 and nrrecentnormalgames ==0 :
+		print "Not enough matches"  
 		return None	
 	#recentwinpercentage = float(nrrecentrankedgameswon) / float(nrrecentrankedgames) * 100
-	print nrrecentrankedgames
+	
 	#print recentwinpercentage
 
 	#TODO : SELECT MOST RECENT MATCH !!!! 
 
+
+	return nrrecentrankedgames
+def storeMatch(game , type ,accountid):
 	#Store yourself
 	print "Store Myself"
 	our_team = []
@@ -160,6 +168,8 @@ def parseRecentGames(recentGames, accountid):
 		summoner_id = getSummonerIdByAccountId(accountid)
 	print summoner_id
 	summoner = StoreSummonerandChampion(accountid, championid,summoner_id)
+	if summoner == None:
+			return None
 	our_team.append(summoner)
 	
 	#Store Others$
@@ -191,9 +201,8 @@ def parseRecentGames(recentGames, accountid):
 	else:	
 		win = False
 	#TODO Iterate over the list to make the match object ! :) 
-	match.objects.create(team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4])
-		
-	return summoner_id
+	match.objects.create(team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
+
 def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 
 	print accountId
@@ -388,8 +397,6 @@ def unicode_conversion(text):
                     return unicode(entity, "iso-8859-1")
         return text # leave as is
     return re.sub("(?s)<[^>]*>|&#?\w+;", fixup, text)
-
-
 def getDatafromMatch(matc):
 	input=[]
 
@@ -450,4 +457,4 @@ def getDatafromMatch(matc):
 	input.extend(summoner24input)
 	input.extend(summoner25input)
 	
-	return input
+	return inpu

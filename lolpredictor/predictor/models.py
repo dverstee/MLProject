@@ -31,7 +31,7 @@ class match(models.Model):
     nr_premade_team1    = models.SmallIntegerField()
     nr_premade_team2    = models.SmallIntegerField()
     won                 = models.BooleanField()
-    
+    match_type          = models.CharField(max_length=40)
 
     team_1summoner1_id = models.ForeignKey('Summoner' , related_name='team_1summoner1')
     team_1summoner2_id = models.ForeignKey('Summoner' , related_name='team_1summoner2')
