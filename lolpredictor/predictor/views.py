@@ -44,10 +44,6 @@ def index(request):
 			return render(request, 'predictor/info.html', my_hash)
 		else:
 			return render(request, 'predictor/index.html')
-
-
-
-
 def neural(request):	
 
 	number_of_hidden_nodes = 1000
@@ -65,10 +61,14 @@ def neural(request):
 		#s1 = Summoner.objects.filter( self.id() = )
 		
 		#todo nr of premades not correct yet ! And NR of wins ook niet!
-
-		input = getDatafromMatch(matc)		
-		alldata.addSample(input, matc.won)
-		
+		# als we willen kunnen we onderscheid maken tussen ranked of niet
+		if matc.match_type == "RANKED_SOLO_5x5" :
+			input = getDatafromMatch(matc)		
+			alldata.addSample(input, matc.won)
+		if matc.match_type == "NORMAL" :
+			input = getDatafromMatch(matc)		
+			alldata.addSample(input, matc.won)
+				
 		
 	tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
@@ -97,21 +97,27 @@ def neural(request):
 
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
+	if request.method == 'GET':
+		return render(request, 'predictor/datacrawl.html')
+	if request.method == 'POST':
 
-	startId = 27125086
-	nrofMatches = 5000
+		startId = 		int(request.POST["StartId"])
+		nrofMatches =	int(request.POST["Range"])	
 	nrofMatchescrawled=0
+
+
 	for accountId in range(startId, startId + nrofMatches):
 		print accountId
 		rg = getRecentGamesByAccountId(accountId)		
 		if rg != None:
-			info = parseRecentGames(rg,accountId)
-			if info != None :
-				nrofMatchescrawled = nrofMatchescrawled +1 
+			matchesadded = parseRecentGames(rg,accountId)
+			if matchesadded != None :
+				nrofMatchescrawled = nrofMatchescrawled + matchesadded 
 				print "Match added"
 				print nrofMatchescrawled
-	print info
-	return HttpResponse("hi")
+	my_hash = {}
+	my_hash["matchesadded"] = nrofMatchescrawled
+	return render(request, 'predictor/success.html', my_hash)
 
 def parseChampionlist(champions):
 	parsed_list = []
@@ -129,16 +135,19 @@ def parseRecentGames(recentGames, accountid):
 	nrrecentnormalgames = 0
 	for game in games:		
 
-		if game["queueType"] == "RANKED_SOLO_5x5" :			
-			nrrecentrankedgames = nrrecentrankedgames + 1			
+		if game["queueType"] == "RANKED_SOLO_5x5" :
 			print "Storing Ranked game" 
-			storeMatch(game,"RANKED_SOLO_5x5",accountid)
+			m = storeMatch(game,"RANKED_SOLO_5x5",accountid)
+			if m != None :
+				nrrecentrankedgames = nrrecentrankedgames + 1	
 		if game["queueType"] == "NORMAL" :			
 			if game["level"] == "30" :
 				nrrecentnormalgames = nrrecentnormalgames + 1
 				print "Storing Normal game lvl 30" 
-				storeMatch(game,"NORMAL",accountid)
-
+				m = storeMatch(game,"NORMAL",accountid)
+				m = storeMatch(game,"RANKED_SOLO_5x5",accountid)
+				if m != None :
+					nrrecentnormalgames = nrrecentnormalgames + 1
 
 
 
@@ -152,7 +161,7 @@ def parseRecentGames(recentGames, accountid):
 	#TODO : SELECT MOST RECENT MATCH !!!! 
 
 
-	return nrrecentrankedgames
+	return nrrecentrankedgames + nrrecentnormalgames
 def storeMatch(game , type ,accountid):
 	#Store yourself
 	print "Store Myself"
@@ -207,7 +216,14 @@ def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 
 	print accountId
 	accountstats = getAggregatedStatsByAccountID(accountId)
-	accountstats = accountstats["lifetimeStatistics"]["array"]
+	
+	try:
+		accountstats = accountstats["lifetimeStatistics"]["array"]
+	except KeyError, e:
+		print "couldn't find summoner"
+		return None
+	
+	
 
 	totalGamesPlayed =  0
 	totalGamesWon = 0 
@@ -368,8 +384,9 @@ def getLeagueForPlayerBySummonerID(SummonerID):
 	try:
 		error = values['requestorsRank']
 		return values
-	except KeyError:
+	except KeyError:		
 		print "Weird Error"
+		print SummonerID
 		return None
 def unicode_conversion(text):
     def fixup(m):
@@ -457,4 +474,4 @@ def getDatafromMatch(matc):
 	input.extend(summoner24input)
 	input.extend(summoner25input)
 	
-	return inpu
+	return input

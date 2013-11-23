@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Give your summoner name{% endblock %}
+
+{% block content %}
+	{% if error_message %}
+		<p><strong>{{ error_message }}</strong></p>
+	{% endif %}
+
+	<form action="" name="" method="post">
+		{% csrf_token %}
+		StartAccountID name: <input type="text" id="sn" name="StartId" value="">
+		<br /><br />
+		Range : <input type="text" id="sn" name="Range" value=""><br /><br />
+		<input type="submit" value="GetSummonr" />
+	</form>
+{% endblock %}
