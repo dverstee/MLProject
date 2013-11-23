@@ -23,7 +23,7 @@ from datetime import *
 
 logger = logging.getLogger(__name__)
 
-
+nrofgameswitherror = 0
 def index(request):
  	if request.method == 'GET':
 		return render(request, 'predictor/index.html')
@@ -115,8 +115,12 @@ def datacrawl(request):
 				nrofMatchescrawled = nrofMatchescrawled + matchesadded 
 				print "Match added"
 				print nrofMatchescrawled
+		else :
+			print "Error getting Recent Games"
 	my_hash = {}
 	my_hash["matchesadded"] = nrofMatchescrawled
+	my_hash["error"] = nrofgameswitherror
+	print nrofgameswitherror
 	return render(request, 'predictor/success.html', my_hash)
 
 def parseChampionlist(champions):
@@ -129,17 +133,24 @@ def parseChampionlist(champions):
 		parsed_list.append(champion_hash)
 	return parsed_list
 def parseRecentGames(recentGames, accountid):
+	try:
+		games = recentGames["gameStatistics"]["array"]		
+	except KeyError, e:
+		print "Error getting Recent Games"
+		return None
 
-	games = recentGames["gameStatistics"]["array"]	
+	
 	nrrecentrankedgames = 0
-	nrrecentnormalgames = 0
+	nrrecentnormalgames = 0	
 	for game in games:		
 
 		if game["queueType"] == "RANKED_SOLO_5x5" :
 			print "Storing Ranked game" 
 			m = storeMatch(game,"RANKED_SOLO_5x5",accountid)
 			if m != None :
-				nrrecentrankedgames = nrrecentrankedgames + 1	
+				nrrecentrankedgames = nrrecentrankedgames + 1
+			else :
+				nrofgameswitherror = nrofgameswitherror + 1 
 		if game["queueType"] == "NORMAL" :			
 			if game["level"] == "30" :
 				nrrecentnormalgames = nrrecentnormalgames + 1
@@ -148,7 +159,8 @@ def parseRecentGames(recentGames, accountid):
 				m = storeMatch(game,"RANKED_SOLO_5x5",accountid)
 				if m != None :
 					nrrecentnormalgames = nrrecentnormalgames + 1
-
+				else :
+					nrofgameswitherror = nrofgameswitherror + 1 
 
 
 	if nrrecentrankedgames == 0 and nrrecentnormalgames ==0 :
@@ -187,6 +199,7 @@ def storeMatch(game , type ,accountid):
 	for player in fellowplayers:	
 		champid = player["championId"]	
 		summoner_id = player["summonerId"]	
+
 		accountId = getAccountIdBySummonerId(summoner_id)	
 		summoner = StoreSummonerandChampion(accountId, champid,summoner_id)
 		if summoner == None:
@@ -210,8 +223,8 @@ def storeMatch(game , type ,accountid):
 	else:	
 		win = False
 	#TODO Iterate over the list to make the match object ! :) 
-	match.objects.create(team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
-
+	m = match.objects.create(team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
+	return m
 def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 
 	print accountId
@@ -311,7 +324,13 @@ def getAccountIdBySummonerId(summonerid):
     	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
   	});
   	values = json.loads(response.raw_body)  
-  	values = values["array"]
+  	
+  	
+	try:
+		values = values["array"]		
+	except KeyError, e:
+		print "AccountIdBySummonerId"
+		return None
 
   	for namez in values:  		
   		name = namez
@@ -359,7 +378,12 @@ def getRecentGamesByAccountId(accountId):
 	headers={
 		"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 		});
-	values = json.loads(response.raw_body)
+	try:
+		values = json.loads(response.raw_body)
+	except ValueError, e:
+		return None
+
+	
 
 	if values:
 		return values
