@@ -50,8 +50,8 @@ def index(request):
 
 def neural(request):	
 
-	number_of_hidden_nodes = 20 
-	number_of_training_epochs = 1
+	number_of_hidden_nodes = 200
+	number_of_training_epochs = 20
 	#This is a dataset 
 	#first argument is the dimension of the input
 	# second argument is dimension of the output
@@ -98,7 +98,7 @@ def neural(request):
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
 
-	startId = 27124175
+	startId = 27124327
 	nrofMatches = 5000
 	nrofMatchescrawled=0
 	for accountId in range(startId, startId + nrofMatches):
@@ -127,10 +127,11 @@ def parseRecentGames(recentGames, accountid):
 	games = recentGames["gameStatistics"]["array"]	
 	nrrecentrankedgames = 0
 	nrrecentrankedgameswon = 0
-	for game in games:		
+	for gamei in games:		
 
-		if game["queueType"] == "RANKED_SOLO_5x5" :			
-			nrrecentrankedgames = nrrecentrankedgames + 1 
+		if gamei["queueType"] == "RANKED_SOLO_5x5" :			
+			nrrecentrankedgames = nrrecentrankedgames + 1
+			game = gamei
 			#Op  basis van hotstreak !
 			#win = determineWin(game)
 			#if win == 1 :
@@ -296,7 +297,6 @@ def getAccountIdBySummonerId(summonerid):
 def getAccountIdByName(name):
   	name = name.replace(' ', '')  
   	name = unicode_conversion(name);
- 	print name
  	url = u"https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerByName/"
  	url = url + name 	
  	url = url.encode('utf-8')
