@@ -48,42 +48,32 @@ def index(request):
 
 
 
-def neural(request):
-	print "hallo"
+def neural(request):	
 
 	number_of_hidden_nodes = 20 
-	number_of_training_epochs = 20
+	number_of_training_epochs = 1
 	#This is a dataset 
 	#first argument is the dimension of the input
 	# second argument is dimension of the output
+	alldata = ClassificationDataSet(10, 1, nb_classes=2)
 	
 
-	means = [(-1,0),(2,4),(3,1)]
-	cov = [diag([1,1]), diag([0.5,1.2]), diag([1.5,0.7])]
-	alldata = ClassificationDataSet(2, 1, nb_classes=3)
-	for n in xrange(400):
-	    for klass in range(3):
-	        input = multivariate_normal(means[klass],cov[klass])
-	        alldata.addSample(input, [klass])
+	matches = match.objects.all()
+	print "Number of matches in db : " 
+	print  len(matches)
+	for matc in matches:	
+		#s1 = Summoner.objects.filter( self.id() = )
+		
+		#todo nr of premades not correct yet ! And NR of wins ook niet!
 
+		input = getDatafromMatch(matc)		
+		alldata.addSample(input, matc.won)
+		
+		
 	tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
 	trndata._convertToOneOfMany( )
-	tstdata._convertToOneOfMany( )
-
-	matches = match.objects.all()
-	for matc in matches:	
-		#s1 = Summoner.objects.filter( self.id() = )
-		ids = matc.team_1summoner1_id.id
-		print ids
-		print matc.team_1summoner1_id.rank
-	
-		print matc.team_1summoner1_id.leaguepoints
-		
-		
-				
-
-	
+	tstdata._convertToOneOfMany( )			
 
 	#First  arggument is number of  inputs.
 	#Second argument is number of hidden nodes 
@@ -108,8 +98,8 @@ def neural(request):
 	return render(request, 'predictor/neural.html' , my_hash )
 def datacrawl(request):
 
-	startId = 27124075
-	nrofMatches = 1000
+	startId = 27124175
+	nrofMatches = 5000
 	nrofMatchescrawled=0
 	for accountId in range(startId, startId + nrofMatches):
 		print accountId
@@ -119,6 +109,7 @@ def datacrawl(request):
 			if info !=None :
 				nrofMatchescrawled = nrofMatchescrawled +1 
 				print "Match added"
+				print nrofMatchescrawled
 	print info
 	return HttpResponse("hi")
 
@@ -140,16 +131,17 @@ def parseRecentGames(recentGames, accountid):
 
 		if game["queueType"] == "RANKED_SOLO_5x5" :			
 			nrrecentrankedgames = nrrecentrankedgames + 1 
-			win = determineWin(game)
-			if win == 1 :
-				nrrecentrankedgameswon = nrrecentrankedgameswon +1 
+			#Op  basis van hotstreak !
+			#win = determineWin(game)
+			#if win == 1 :
+			#	nrrecentrankedgameswon = nrrecentrankedgameswon +1 
 				
 	if nrrecentrankedgames ==0 :
 		print "Not enough Ranked matches"  
 		return None	
-	recentwinpercentage = float(nrrecentrankedgameswon) / float(nrrecentrankedgames) * 100
+	#recentwinpercentage = float(nrrecentrankedgameswon) / float(nrrecentrankedgames) * 100
 	print nrrecentrankedgames
-	print recentwinpercentage
+	#print recentwinpercentage
 
 	#TODO : SELECT MOST RECENT MATCH !!!! 
 
@@ -237,8 +229,13 @@ def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 			pn = player["playerOrTeamName"]
 			if pn == name :								
 				lp =  player["leaguePoints"]
+				hotstreak = player["hotStreak"]
+				if hotstreak == "false":
+					recentwinpercentage =33.0
+				else:					
+					recentwinpercentage =80.0
 				break
-	recentwinpercentage =50.0
+	
 	rank=ranktoint(rank) 
 	s1 = Summoner.objects.create(champion_played=c1 ,leaguepoints=lp ,tier=str(tier) ,rank=rank  ,recentwinpercentage=recentwinpercentage ) 
 	s1.save()	
@@ -253,6 +250,17 @@ def ranktoint(rank):
 	elif rank == "IV":
 		return 4
 	elif rank == "V":
+		return 5  
+def tiertoint(tier):
+	if tier == "BRONZE":
+		return 1	
+	elif tier == "SILVER":
+		return 2
+	elif tier == "GOLD":
+	 return 3
+	elif tier == "PLATINUM":
+		return 4
+	elif tier == "DIAMOND":
 		return 5  
 def determineWin (game):
 	stats =  game["statistics"]["array"]
@@ -382,3 +390,64 @@ def unicode_conversion(text):
     return re.sub("(?s)<[^>]*>|&#?\w+;", fixup, text)
 
 
+def getDatafromMatch(matc):
+	input=[]
+
+	tier11 = tiertoint(matc.team_1summoner1_id.tier)
+	tier12 = tiertoint(matc.team_1summoner2_id.tier)
+	tier13 = tiertoint(matc.team_1summoner3_id.tier)
+	tier14 = tiertoint(matc.team_1summoner4_id.tier)
+	tier15 = tiertoint(matc.team_1summoner5_id.tier)
+	tier21 = tiertoint(matc.team_2summoner1_id.tier)
+	tier22 = tiertoint(matc.team_2summoner2_id.tier)
+	tier23 = tiertoint(matc.team_2summoner3_id.tier)
+	tier24 = tiertoint(matc.team_2summoner4_id.tier)
+	tier25 = tiertoint(matc.team_2summoner5_id.tier)
+
+
+
+	matchinput =  [ matc.team1_is_red , matc.nr_premade_team1, matc.nr_premade_team2 ] 
+	summoner11input = [ matc.team_1summoner1_id.champion_played.nr_gameswithchamp , matc.team_1summoner1_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner1_id.champion_played.champid,
+	matc.team_1summoner1_id.leaguepoints , tier11 , matc.team_1summoner1_id.rank  , matc.team_1summoner1_id.recentwinpercentage ]
+		
+	summoner12input = [ matc.team_1summoner2_id.champion_played.nr_gameswithchamp , matc.team_1summoner2_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner2_id.champion_played.champid,
+	matc.team_1summoner2_id.leaguepoints , tier12 , matc.team_1summoner2_id.rank  , matc.team_1summoner2_id.recentwinpercentage ]
+
+	summoner13input = [ matc.team_1summoner3_id.champion_played.nr_gameswithchamp , matc.team_1summoner3_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner3_id.champion_played.champid,
+	matc.team_1summoner3_id.leaguepoints , tier13 , matc.team_1summoner3_id.rank  , matc.team_1summoner3_id.recentwinpercentage ]
+
+	summoner14input = [ matc.team_1summoner4_id.champion_played.nr_gameswithchamp , matc.team_1summoner4_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner4_id.champion_played.champid,
+	matc.team_1summoner4_id.leaguepoints , tier14, matc.team_1summoner3_id.rank  , matc.team_1summoner4_id.recentwinpercentage ]
+
+	summoner15input = [ matc.team_1summoner5_id.champion_played.nr_gameswithchamp , matc.team_1summoner5_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner5_id.champion_played.champid,
+	matc.team_1summoner5_id.leaguepoints , tier15 , matc.team_1summoner5_id.rank  , matc.team_1summoner5_id.recentwinpercentage ]
+
+	summoner21input = [ matc.team_2summoner1_id.champion_played.nr_gameswithchamp , matc.team_2summoner1_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner1_id.champion_played.champid,
+	matc.team_2summoner1_id.leaguepoints , tier21 , matc.team_2summoner1_id.rank  , matc.team_2summoner1_id.recentwinpercentage ]
+		
+	summoner22input = [ matc.team_2summoner2_id.champion_played.nr_gameswithchamp , matc.team_2summoner2_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner2_id.champion_played.champid,
+	matc.team_2summoner2_id.leaguepoints , tier22 , matc.team_2summoner2_id.rank  , matc.team_2summoner2_id.recentwinpercentage ]
+
+	summoner23input = [ matc.team_2summoner3_id.champion_played.nr_gameswithchamp , matc.team_2summoner3_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner3_id.champion_played.champid,
+	matc.team_2summoner3_id.leaguepoints , tier23 , matc.team_2summoner3_id.rank  , matc.team_2summoner3_id.recentwinpercentage ]
+
+	summoner24input = [ matc.team_2summoner4_id.champion_played.nr_gameswithchamp , matc.team_2summoner4_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner4_id.champion_played.champid,
+	matc.team_2summoner4_id.leaguepoints , tier24, matc.team_2summoner3_id.rank  , matc.team_2summoner4_id.recentwinpercentage ]
+
+	summoner25input = [ matc.team_2summoner5_id.champion_played.nr_gameswithchamp , matc.team_2summoner5_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner5_id.champion_played.champid,
+	matc.team_2summoner5_id.leaguepoints , tier25 , matc.team_2summoner5_id.rank  , matc.team_2summoner5_id.recentwinpercentage ]
+
+
+	input.extend(matchinput)
+	input.extend(summoner11input)
+	input.extend(summoner12input)
+	input.extend(summoner13input)
+	input.extend(summoner14input)
+	input.extend(summoner15input)
+	input.extend(summoner21input)
+	input.extend(summoner22input)
+	input.extend(summoner23input)
+	input.extend(summoner24input)
+	input.extend(summoner25input)
+	
+	return input
