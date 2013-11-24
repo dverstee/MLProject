@@ -1,22 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-import json
-import unirest
+
 import logging
-import codecs
-import re
 from  models import *
+from api import *
 
 from pybrain.datasets            import ClassificationDataSet
 from pybrain.utilities           import percentError
 from pybrain.tools.shortcuts     import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure.modules   import SoftmaxLayer
-from pybrain.datasets 			 import SupervisedDataSet
-from django.http 				import HttpResponse
-from scipy import diag, arange, meshgrid, where
-from numpy.random import multivariate_normal
 from datetime import *
 
 
@@ -65,9 +59,9 @@ def neural(request):
 		if matc.match_type == "RANKED_SOLO_5x5" :
 			input = getDatafromMatch(matc)		
 			alldata.addSample(input, matc.won)
-		if matc.match_type == "NORMAL" :
-			input = getDatafromMatch(matc)		
-			alldata.addSample(input, matc.won)
+		# if matc.match_type == "NORMAL" :
+		# 	input = getDatafromMatch(matc)		
+		# 	alldata.addSample(input, matc.won)
 				
 		
 	tstdata, trndata = alldata.splitWithProportion( 0.25 )
@@ -132,14 +126,9 @@ def parseChampionlist(champions):
 		champion_hash["image"] = "https://github.com/rwarasaurus/league-of-legends-database/blob/master/icons/%d.jpg?raw=true" % champion["championId"]
 		parsed_list.append(champion_hash)
 	return parsed_list
-def parseRecentGames(recentGames, accountid):
-	try:
-		games = recentGames["gameStatistics"]["array"]		
-	except KeyError, e:
-		print "Error getting Recent Games"
-		return None
 
-	
+def parseRecentGames(games, accountid):
+
 	nrrecentrankedgames = 0
 	nrrecentnormalgames = 0	
 	for game in games:		
@@ -164,7 +153,7 @@ def parseRecentGames(recentGames, accountid):
 
 
 	if nrrecentrankedgames == 0 and nrrecentnormalgames ==0 :
-		print "Not enough matches"  
+		logger.debug("Not enough matches")
 		return None	
 	#recentwinpercentage = float(nrrecentrankedgameswon) / float(nrrecentrankedgames) * 100
 	
@@ -227,15 +216,7 @@ def storeMatch(game , type ,accountid):
 	return m
 def StoreSummonerandChampion(accountId , championId, summoner_id)	:
 
-	print accountId
 	accountstats = getAggregatedStatsByAccountID(accountId)
-	
-	try:
-		accountstats = accountstats["lifetimeStatistics"]["array"]
-	except KeyError, e:
-		print "couldn't find summoner"
-		return None
-	
 	
 
 	totalGamesPlayed =  0
@@ -307,137 +288,7 @@ def determineWin (game):
 		win = stat["statType"]
 		if win == "WIN" :
 			return stat["value"]
-def getSummonerIdByAccountId(AccountId):	
-	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getAllPublicSummonerDataByAccount/%s" % AccountId,
-	headers={
-    	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-  	});
-  	values = json.loads(response.raw_body)  
-  	sumid = values["summoner"]["sumId"]
 
-  	
-  	return sumid
-def getAccountIdBySummonerId(summonerid):
-	print summonerid
-	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerBySummonerId/%s" % summonerid,
-	headers={
-    	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-  	});
-  	values = json.loads(response.raw_body)  
-  	
-  	
-	try:
-		values = values["array"]		
-	except KeyError, e:
-		print "AccountIdBySummonerId"
-		return None
-
-  	for namez in values:  		
-  		name = namez
-  	
-  	accountid =	getAccountIdByName(name)
-  	 
-  	return accountid
-def getAccountIdByName(name):
-  	name = name.replace(' ', '')  
-  	name = unicode_conversion(name);
- 	url = u"https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getSummonerByName/"
- 	url = url + name 	
- 	url = url.encode('utf-8')
-	response = unirest.get(url,
-	headers={
-    	"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-  	},
-  	encoding='utf-8');
-
- 	values = json.loads(response.raw_body)	
-  	if 'acctId' in values:
-  		return values['acctId']
-  	return None
-def getInfoByaccountId(accountId):
-   	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getAllPublicSummonerDataByAccount/%s" % accountId,
-	headers={
-		"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-		});
-	values = json.loads(response.raw_body)	
-	if values:
-		return values
-	return None
-def getTopPlayedChampionsBySummonerId(accountId):
-	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUNE/summoner/retrieveTopPlayedChampions/%s" % accountId,
-	headers={
-		"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-		});
-	values = json.loads(response.raw_body)
-
-	if values:
-		return values
-	return None
-def getRecentGamesByAccountId(accountId):
-	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getRecentGames/%s" % accountId,
-	headers={
-		"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-		});
-	try:
-		values = json.loads(response.raw_body)
-	except ValueError, e:
-		return None
-
-	
-
-	if values:
-		return values
-	return None
-def getAggregatedStatsByAccountID(accountId):
-	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getAggregatedStats/%s" % accountId,
-	headers={
-		"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-		});
-	values = json.loads(response.raw_body)
-
-	if values:
-		return values
-	return None
-def getLeagueForPlayerBySummonerID(SummonerID):
-	response = unirest.get("https://community-league-of-legends.p.mashape.com/api/v1.0/EUW/summoner/getLeagueForPlayer/%s" % SummonerID,
-	headers={
-		"X-Mashape-Authorization": "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
-		});
-	values = json.loads(response.raw_body)
-	
-	try:
-		error = values['requestorsRank']
-		return values
-	except KeyError:		
-		print "Weird Error"
-		print SummonerID
-		return None
-def unicode_conversion(text):
-    def fixup(m):
-        text = m.group(0)
-        if text[:1] == "<":
-            return "" # ignore tags
-        if text[:2] == "&#":
-            try:
-                if text[:3] == "&#x":
-                    return unichr(int(text[3:-1], 16))
-                else:
-                    return unichr(int(text[2:-1]))
-            except ValueError:
-                pass
-        elif text[:1] == "&":
-            import htmlentitydefs
-            entity = htmlentitydefs.entitydefs.get(text[1:-1])
-            if entity:
-                if entity[:2] == "&#":
-                    try:
-                        return unichr(int(entity[2:-1]))
-                    except ValueError:
-                        pass
-                else:
-                    return unicode(entity, "iso-8859-1")
-        return text # leave as is
-    return re.sub("(?s)<[^>]*>|&#?\w+;", fixup, text)
 def getDatafromMatch(matc):
 	input=[]
 
