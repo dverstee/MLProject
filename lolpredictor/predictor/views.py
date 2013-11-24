@@ -116,6 +116,17 @@ def datacrawl(request):
 	my_hash["error"] = nrofgameswitherror
 	print nrofgameswitherror
 	return render(request, 'predictor/success.html', my_hash)
+def search_form(request):
+	if request.method == 'GET':
+		return render(request, 'predictor/search.html')
+
+def search(request):
+	if 'q' in request.GET and request.GET['q']:
+		q = request.GET['q']
+        books = Summoner.objects.filter(title__icontains=q)
+        return render(request, 'search_results.html',
+            {'books': books, 'query': q})
+
 
 def parseChampionlist(champions):
 	parsed_list = []

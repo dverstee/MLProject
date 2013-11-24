@@ -2,6 +2,7 @@
 from django.db import models
 
 
+
 class ChampionPlayed(models.Model): 
 
     nr_gameswithchamp       = models.SmallIntegerField()
@@ -9,7 +10,7 @@ class ChampionPlayed(models.Model):
     champid                 = models.SmallIntegerField()
 
     def __unicode__(self):
-        return self.id()
+        return str(self.id)
 
 
 class Summoner(models.Model):
@@ -22,7 +23,7 @@ class Summoner(models.Model):
     recentwinpercentage         = models.FloatField ()
 
     def __unicode__(self):
-        return self.id()
+        return str(self.id)
 
 class match(models.Model):
 
@@ -46,6 +47,6 @@ class match(models.Model):
     team_2summoner5_id = models.ForeignKey('Summoner' , related_name='team_2summoner5')
 
     def __unicode__(self):
-         return self.id()
+         return str(self.id)
 
 

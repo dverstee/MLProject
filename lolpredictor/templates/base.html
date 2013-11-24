@@ -27,11 +27,14 @@
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/">Home page</a>
-						<li><a href="/search">Auto's zoeken</a>
-						<li><a href="/add">Auto's toevoegen</a>
-						<li><a href="">Contact</a>
-						<li><a href="">Links</a>
+						{% url 'predictor:index' as url %}
+						<li {% if request.path == url %} class="active"{% endif %}><a href="{{ url }}">Home page</a></li>
+						{% url 'predictor:neural' as url %}
+						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Neural network</a></li>
+						{% url 'predictor:datacrawl' as url %}
+						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Crawler</a></li>
+						{% url 'predictor:search' as url %}
+						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Search</a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
