@@ -1,52 +1,68 @@
 
 from django.db import models
 
-
+class Champion(models.Model):
+    name                    = models.CharField(max_length=40)
+    key                     = models.SmallIntegerField(primary_key=True)
+    tags                    = models.CharField(max_length=100)
+    difficulty              = models.SmallIntegerField()
+    magic                   = models.SmallIntegerField()
+    attack                  = models.SmallIntegerField()
+    defense                 = models.SmallIntegerField()
+    def __unicode__(self):
+        return self.name
 
 class ChampionPlayed(models.Model): 
+    champion                = models.ForeignKey('Champion')
+    summoner                = models.ForeignKey('Summoner')
 
     nr_gameswithchamp       = models.SmallIntegerField()
-    nr_gameswonwithchamp    = models.SmallIntegerField()
-    champid                 = models.SmallIntegerField()
-
+    average_kills           = models.SmallIntegerField()
+    average_deaths          = models.SmallIntegerField()
+    average_assists         = models.SmallIntegerField()
+    average_gold           = models.SmallIntegerField()
+    
+    class Meta:
+        unique_together = (("champion", "summoner"),)
     def __unicode__(self):
-        return str(self.id)
+        return str(self.champion)
 
 
 class Summoner(models.Model):
 
-
-    champion_played             = models.ForeignKey('ChampionPlayed')
-    leaguepoints                = models.SmallIntegerField()
-    tier                        = models.CharField(max_length=40)
+    name                        = models.CharField(max_length=20)
+    summoner_id                 = models.CharField(max_length=10)
+    account_id                  = models.CharField(max_length=10, primary_key=True)
+    tier                        = models.SmallIntegerField()
     rank                        = models.SmallIntegerField()
     recentwinpercentage         = models.FloatField ()
+    updated_at                  = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return str(self.id)
+        return str(self.name)
 
 class match(models.Model):
 
-
+    match_id            = models.CharField(max_length=10, primary_key=True)
     team1_is_red        = models.BooleanField()
     nr_premade_team1    = models.SmallIntegerField()
     nr_premade_team2    = models.SmallIntegerField()
     won                 = models.BooleanField()
     match_type          = models.CharField(max_length=40)
 
-    team_1summoner1_id = models.ForeignKey('Summoner' , related_name='team_1summoner1')
-    team_1summoner2_id = models.ForeignKey('Summoner' , related_name='team_1summoner2')
-    team_1summoner3_id = models.ForeignKey('Summoner' , related_name='team_1summoner3')
-    team_1summoner4_id = models.ForeignKey('Summoner' , related_name='team_1summoner4')
-    team_1summoner5_id = models.ForeignKey('Summoner' , related_name='team_1summoner5')
+    team_1summoner1_id = models.ForeignKey('ChampionPlayed' , related_name='team_1summoner1')
+    team_1summoner2_id = models.ForeignKey('ChampionPlayed' , related_name='team_1summoner2')
+    team_1summoner3_id = models.ForeignKey('ChampionPlayed' , related_name='team_1summoner3')
+    team_1summoner4_id = models.ForeignKey('ChampionPlayed' , related_name='team_1summoner4')
+    team_1summoner5_id = models.ForeignKey('ChampionPlayed' , related_name='team_1summoner5')
 
-    team_2summoner1_id = models.ForeignKey('Summoner' , related_name='team_2summoner1')
-    team_2summoner2_id = models.ForeignKey('Summoner' , related_name='team_2summoner2')
-    team_2summoner3_id = models.ForeignKey('Summoner' , related_name='team_2summoner3')
-    team_2summoner4_id = models.ForeignKey('Summoner' , related_name='team_2summoner4')
-    team_2summoner5_id = models.ForeignKey('Summoner' , related_name='team_2summoner5')
+    team_2summoner1_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner1')
+    team_2summoner2_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner2')
+    team_2summoner3_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner3')
+    team_2summoner4_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner4')
+    team_2summoner5_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner5')
 
     def __unicode__(self):
-         return str(self.id)
+         return str(self.match_id)
 
 

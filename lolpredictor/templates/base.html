@@ -31,7 +31,7 @@
 						<li {% if request.path == url %} class="active"{% endif %}><a href="{{ url }}">Home page</a></li>
 						{% url 'predictor:neural' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Neural network</a></li>
-						{% url 'predictor:datacrawl' as url %}
+						{% url 'predictor:crawler' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Crawler</a></li>
 						{% url 'predictor:search' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Search</a></li>

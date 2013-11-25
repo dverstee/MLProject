@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lolpredictor.predictor'
+    'lolpredictor.predictor',
+    'django.contrib.webdesign'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,7 +126,7 @@ LOGGING = {
         'django': {
             'handlers':['file'],
             'propagate': True,
-            'level':'DEBUG',
+            'level':'ERROR',
         },
         '': {
             'handlers': ['file'],
