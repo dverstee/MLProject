@@ -11,7 +11,6 @@ class Champion(models.Model):
     defense                 = models.SmallIntegerField()
     def __unicode__(self):
         return self.name
-
 class ChampionPlayed(models.Model): 
     champion                = models.ForeignKey('Champion')
     summoner                = models.ForeignKey('Summoner')
@@ -25,9 +24,7 @@ class ChampionPlayed(models.Model):
     class Meta:
         unique_together = (("champion", "summoner"),)
     def __unicode__(self):
-        return str(self.champion)
-
-
+        return str(self.champion) +" " +str(self.summoner)
 class Summoner(models.Model):
 
     name                        = models.CharField(max_length=20)
@@ -40,7 +37,6 @@ class Summoner(models.Model):
 
     def __unicode__(self):
         return str(self.name)
-
 class match(models.Model):
 
     match_id            = models.CharField(max_length=10, primary_key=True)

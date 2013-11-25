@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from api import getRecentGamesByAccountId
-from util import parse_ranked_games
+from api import *
+from util import *
 def crawler(request):
     if request.method == 'GET':
         return render(request, 'predictor/datacrawl.html')
