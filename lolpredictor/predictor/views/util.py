@@ -59,7 +59,7 @@ def store_match(game , type ,account_id):
 	champPlayed=ChampionPlayed.objects.get(summoner = summoner, champion=champion )		
 	our_team.append(champPlayed)
 	
-	#Store Others$
+	#Store Others
 	fellowplayers = game["fellowPlayers"]["array"]
 	for player in fellowplayers:	
 		champion_id = player["championId"]	
@@ -78,6 +78,7 @@ def store_match(game , type ,account_id):
 		else :
 			their_team.append(champion_played)
 
+
 	if 	teamid == 100:
 		team1_is_red = True
 	else:	
@@ -91,6 +92,7 @@ def store_match(game , type ,account_id):
 		win = True
 	else:	
 		win = False
+	
 	#TODO Iterate over the list to make the match object ! :) 
 	try:
 		m = match.objects.create(match_id= match_id,team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
@@ -118,7 +120,7 @@ def store_summoner(summoner_id, account_id):
 	param_hash["tier"] = tiertoint(league_information["tier"])
 	param_hash["name"] = league_information["requestorsName"]
 	param_hash["summoner_id"] = summoner_id
-	param_hash["account_id"] = account_id
+	param_hash["account_id"] = account_id	
 	leagues = league_information["entries"]["array"]
 	summoner_info = filter(lambda x: int(x["playerOrTeamId"]) == summoner_id, leagues)
 	summoner_info = summoner_info[0]
@@ -126,7 +128,6 @@ def store_summoner(summoner_id, account_id):
 	# Todo improve win percentage
 	param_hash["hotstreak"] = summoner_info["hotStreak"]
 	s1 = Summoner.objects.create( **param_hash )
-	s1.save()
 	print_summoner(s1, updated)
 	return s1 
 
@@ -179,7 +180,6 @@ def store_champions_played(accountId):
 		params["average_kills"] = params["average_kills"] // params["nr_gameswithchamp"]
 		params["average_gold"] = params["average_gold"] // params["nr_gameswithchamp"]
 		c1 = ChampionPlayed.objects.create(**params)
-		c1.save()
 	print_champion_played(summoner)	
 
 def ranktoint(rank):

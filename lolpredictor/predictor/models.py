@@ -19,8 +19,8 @@ class ChampionPlayed(models.Model):
     average_kills           = models.SmallIntegerField()
     average_deaths          = models.SmallIntegerField()
     average_assists         = models.SmallIntegerField()
-    average_gold           = models.SmallIntegerField()
-    
+    average_gold            = models.SmallIntegerField()
+ 
     class Meta:
         unique_together = (("champion", "summoner"),)
     def __unicode__(self):

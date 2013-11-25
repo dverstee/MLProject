@@ -31,9 +31,7 @@ def neural(request):
             alldata.addSample(input, matc.won)
         # if matc.match_type == "NORMAL" :
         #   input = getDatafromMatch(matc)      
-        #   alldata.addSample(input, matc.won)
-                
-        
+        #   alldata.addSample(input, matc.won)     
     tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
     trndata._convertToOneOfMany( )
@@ -58,3 +56,25 @@ def neural(request):
     my_hash["tstresult"] = tstresult
     my_hash["trnresult"] = trnresult
     return render(request, 'predictor/neural.html' , my_hash )
+def preprocessingChampionPlayed(request):   
+
+    #Preprocessing 
+    champsplayed = ChampionPlayed.objects.all()
+    nr=0
+    kills=0
+    deaths=0
+    assits=0
+    gold=0
+
+    for cp in champsplayed:
+        nr = nr +  cp.nr_gameswithchamp
+        kills = kills + cp.average_kills
+        deaths =deaths + cp.average_deaths
+        assits=assits + cp.average_assists
+        gold=gold + cp.average_gold
+
+    nr = nr /len(champsplayed)
+    kills = kills /len(champsplayed)
+    deaths =deaths /len(champsplayed)
+    assits=assits/len(champsplayed)
+    gold=gold /len(champsplayed)
