@@ -35,17 +35,16 @@ def parse_ranked_games(games, accountid):
 def store_match(game , type ,account_id):
 	our_team = []
 	their_team = []
-	championid = int(game["championId"])
+	championid = game["championId"]
 	summoner_id = getSummonerIdByAccountId(account_id)
 	teamid = game["teamId"]
 
 	if summoner_id is None:
 		return None
 	try:
-		summoner = Summoner.objects.get(pk=summoner_id)
+		summoner = Summoner.objects.get(pk=account_id)
 	except:
 		summoner = None
-	print account_id
 	# Check if this summoner has been updated recently
 	if not summoner or datetime.now() - summoner.updated_at.replace(tzinfo=None) > timedelta(seconds=REFRESH_SUMMONER_INTERVAL):
 		summoner = store_summoner(summoner_id, account_id)
@@ -96,7 +95,6 @@ def store_match(game , type ,account_id):
 	return m
 
 def store_summoner(summoner_id, account_id):
-	
 	try:
 		summoner = Summoner.objects.get(pk=account_id)
 	except Summoner.DoesNotExist:
@@ -120,7 +118,7 @@ def store_summoner(summoner_id, account_id):
 	summoner_info = summoner_info[0]
 
 	# Todo improve win percentage
-	param_hash["recentwinpercentage"] = 33.0 if summoner_info["hotStreak"] == "false" else 80.0
+	param_hash["hotstreak"] = summoner_info["hotStreak"]
 	s1 = Summoner.objects.create( **param_hash )
 	s1.save()
 	print_summoner(s1, updated)

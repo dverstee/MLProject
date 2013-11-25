@@ -35,7 +35,7 @@ class Summoner(models.Model):
     account_id                  = models.CharField(max_length=10, primary_key=True)
     tier                        = models.SmallIntegerField()
     rank                        = models.SmallIntegerField()
-    recentwinpercentage         = models.FloatField ()
+    hotstreak                   = models.BooleanField ()
     updated_at                  = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
