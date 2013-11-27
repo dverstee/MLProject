@@ -63,12 +63,17 @@ def getAccountIdBySummonerId(summoner_id):
     method = 'getSummonerBySummonerId'
     values = get_data(method, summoner_id)
     try:
-        name = values["array"][0]        
+        name = values["array"][0] 
+
     except KeyError, e:
         log_error(e, method, summoner_id)
         raise KeyError
-
-    accountid = getAccountIdByName(name)
+    try:
+        accountid = getAccountIdByName(name)
+    except ValueError, e:
+        log_error(e, method, name)
+        return None
+   
      
     return accountid
 @retry(KeyError)
