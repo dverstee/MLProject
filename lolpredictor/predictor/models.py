@@ -20,6 +20,7 @@ class ChampionPlayed(models.Model):
     average_deaths          = models.SmallIntegerField()
     average_assists         = models.SmallIntegerField()
     average_gold            = models.SmallIntegerField()
+    champions_updated_at    = models.DateTimeField(auto_now=True)
  
     class Meta:
         unique_together = (("champion", "summoner"),)
@@ -33,8 +34,7 @@ class Summoner(models.Model):
     tier                        = models.SmallIntegerField()
     rank                        = models.SmallIntegerField()
     hotstreak                   = models.BooleanField ()
-    updated_at                  = models.DateTimeField(auto_now=True)
-
+    updated_at                  = models.DateTimeField(auto_now=True)   
     def __unicode__(self):
         return str(self.name)
 class match(models.Model):

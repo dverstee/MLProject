@@ -10,7 +10,7 @@ REGION = "EUW"
 API_DOMAIN = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION
 
 logger = logging.getLogger(__name__)
-def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=logger):
+def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
     """Retry calling the decorated function using an exponential backoff.
 
     http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/
@@ -49,7 +49,7 @@ def retry(ExceptionToCheck, tries=4, delay=3, backoff=2, logger=logger):
 
     return deco_retry     
  
-@retry(KeyError, tries=3)        
+@retry(KeyError)        
 def getSummonerIdByAccountId(account_id):    
     method = 'getAllPublicSummonerDataByAccount'
     values = get_data(method, account_id) 
@@ -58,7 +58,7 @@ def getSummonerIdByAccountId(account_id):
     except KeyError, e:
         log_error(e, method, account_id)
         raise KeyError
-@retry(KeyError, tries=3) 
+@retry(KeyError) 
 def getAccountIdBySummonerId(summoner_id):
     method = 'getSummonerBySummonerId'
     values = get_data(method, summoner_id)
@@ -71,7 +71,7 @@ def getAccountIdBySummonerId(summoner_id):
     accountid = getAccountIdByName(name)
      
     return accountid
-@retry(KeyError, tries=3)
+@retry(KeyError)
 def getAccountIdByName(name):
     method = 'getSummonerByName'
     name = re.sub(r'\s+', '', name)
@@ -82,7 +82,7 @@ def getAccountIdByName(name):
     except KeyError,e:
         log_error(e, method, name)
         raise KeyError
-@retry(KeyError, tries=3)        
+@retry(KeyError)        
 def getRecentGamesByAccountId(account_id):
     method = 'getRecentGames'
     values = get_data(method, account_id)
@@ -91,16 +91,16 @@ def getRecentGamesByAccountId(account_id):
     except KeyError,e:
         raise KeyError
         log_error(e, method, account_id)
-@retry(KeyError, tries=3)  
+@retry(KeyError)  
 def getAggregatedStatsByAccountID(account_id):
     method = 'getAggregatedStats'
     values = get_data(method, account_id)
     try:
         return values["lifetimeStatistics"]["array"]
     except KeyError, e:        
-        log_error(e, method)
+        log_error(e, method,account_id)
         raise KeyError
-@retry(KeyError, tries=3)         
+@retry(KeyError)         
 def getLeagueForPlayerBySummonerID(summoner_ID):
     method = 'getLeagueForPlayer'
     values = get_data( method, summoner_ID)
@@ -119,13 +119,14 @@ def log_error(error, method, argument):
 
 def get_data( method, parameters):
     url = "%s%s/%s" % (API_DOMAIN, method, parameters);
-    # print url
+   
     response =  unirest.get(url.encode('utf-8'),
     headers={
         "X-Mashape-Authorization": API_KEY
         },
-    encoding='utf-8'
-        );
+    encoding='utf-8',
+    timeout=7000
+        );  
     return json.loads(response.raw_body)
 
 def unicode_conversion(text):
