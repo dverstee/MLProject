@@ -8,7 +8,9 @@ def crawler(request):
 
         startId =       int(request.POST["StartId"])
         nrofMatches =   int(request.POST["Range"])  
-        nrofMatchescrawled=0
+        nrofMatchescrawled=0     
+      
+
 
         for accountId in range(startId, startId + nrofMatches):
             recent_games = getRecentGamesByAccountId(accountId)       

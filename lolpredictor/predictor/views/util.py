@@ -28,6 +28,8 @@ def parse_ranked_games(games, accountid):
 		if game["queueType"] == "RANKED_SOLO_5x5" :
 			print "Storing Ranked game" 
 			m = store_match(game,"RANKED_SOLO_5x5",accountid)
+			nrrecentrankedgames=nrrecentrankedgames+1
+
 	if nrrecentrankedgames == 0 and nrrecentnormalgames ==0 :
 		logger.debug("Not enough matches")
 		return None	
@@ -66,6 +68,8 @@ def store_match(game , type ,account_id):
 		summoner_id = player["summonerId"]	
 
 		accountId = getAccountIdBySummonerId(summoner_id)	
+		if accountId is None:
+			return None
 		summoner = store_summoner(summoner_id, accountId)
 		champion = Champion.objects.get(pk=champion_id)
 		if summoner:
@@ -103,6 +107,7 @@ def store_match(game , type ,account_id):
 	return m
 
 def store_summoner(summoner_id, account_id):
+	
 	try:
 		summoner = Summoner.objects.get(pk=account_id)
 	except Summoner.DoesNotExist:
@@ -181,7 +186,6 @@ def store_champions_played(accountId):
 		params["average_gold"] = params["average_gold"] // params["nr_gameswithchamp"]
 		c1 = ChampionPlayed.objects.create(**params)
 	print_champion_played(summoner)	
-
 def ranktoint(rank):
 	if rank == "I":
 		return 1	
@@ -210,7 +214,6 @@ def determineWin (game):
 		win = stat["statType"]
 		if win == "WIN" :
 			return stat["value"]
-
 def getDatafromMatch(matc):
 	input=[]
 
@@ -272,7 +275,6 @@ def getDatafromMatch(matc):
 	input.extend(summoner25input)
 	
 	return input
-
 def print_summoner(summoner, updated):
 	if updated:
 		print "Summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
@@ -280,6 +282,5 @@ def print_summoner(summoner, updated):
 		print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
 def print_champion_played(summoner):
 	print "champions for summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
-
 def print_match(match):
 	print match
