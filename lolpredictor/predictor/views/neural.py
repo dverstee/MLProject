@@ -3,35 +3,83 @@ from pybrain.utilities           import percentError
 from pybrain.tools.shortcuts     import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure.modules   import SoftmaxLayer
-from django.shortcuts import render
 
-from util import getDatafromMatch
+
+
+from django.shortcuts import render
+import itertools, collections
+import logging
+from util import getBasicDatafromMatch
 from lolpredictor.predictor.models import match
+logger = logging.getLogger(__name__)
 
 def neural(request):    
-
-    number_of_hidden_nodes = 1000
-    number_of_training_epochs = 200
-    #This is a dataset 
-    #first argument is the dimension of the input
-    # second argument is dimension of the output
-    alldata = ClassificationDataSet(73, 1, nb_classes=2)
-    
-
     matches = match.objects.all()
     print "Number of matches in db : " 
     print  len(matches)
+    
+
+    number_of_hidden_nodes = [ 20 , 40 ,80 ,100 ,200 ,500 ,1000]   
+    number_of_training_epochs = 100
+    iterator = number_of_hidden_nodes.__iter__()
+    alldata = getdata()
+
+    for number_of_hidden_node in iterator:       
+        basicneuralnetwork(number_of_hidden_node,number_of_training_epochs,alldata)
+
+    #print "epoch: %4d" %trainer.totalepochs
+    #print "  train error: %5.2f%%" %trnresult
+    #print "  test error: %5.2f%%" %tstresult
+    
+    figure(1)
+    ioff()  # interactive graphics off
+    clf()   # clear the plot
+    hold(True) # overplot on
+    for c in [0,1,2]:
+        here, _ = where(tstdata['class']==c)
+        plot(tstdata['input'][here,0],tstdata['input'][here,1],'o')
+    if out.max()!=out.min():  # safety check against flat field
+        contourf(X, Y, out)   # plot the contour
+    ion()   # interactive graphics on
+    draw()  # update the plot
+    return render(request, 'predictor/neural.html'  )
+
+def log_debug(number_of_hidden_nodes, number_of_training_epochs,trnresult,tstresult):
+    logger.debug("%s, %s , %s , %s" % (number_of_hidden_nodes, number_of_training_epochs, trnresult ,tstresult ))
+    print "%s, %s , %s , %s" % (number_of_hidden_nodes, number_of_training_epochs, trnresult ,tstresult )
+
+
+
+
+def getdata():
+    matches = match.objects.all()
+    init=True
     for matc in matches:    
-        #s1 = Summoner.objects.filter( self.id() = )
         
-        #todo nr of premades not correct yet ! And NR of wins ook niet!
-        # als we willen kunnen we onderscheid maken tussen ranked of niet
-        if matc.match_type == "RANKED_SOLO_5x5" :
-            input = getDatafromMatch(matc)      
+        if init:
+            input = getBasicDatafromMatch(matc)
+            dimensions = len(input)
+            alldata = ClassificationDataSet(dimensions, 1, nb_classes=2)     
+            alldata.addSample(input, matc.won) 
+            init = False           
+        else :       
+            input = getBasicDatafromMatch(matc)      
             alldata.addSample(input, matc.won)
-        # if matc.match_type == "NORMAL" :
-        #   input = getDatafromMatch(matc)      
-        #   alldata.addSample(input, matc.won)     
+            dimensions = len(input)
+    return alldata
+def basicneuralnetwork(number_of_hidden_nodes,number_of_training_epochs, alldata):
+
+   
+    #This is a dataset 
+    #first argument is the dimension of the input
+    # second argument is dimension of the output
+    
+    
+    print number_of_hidden_nodes
+    print number_of_training_epochs
+
+   
+
     tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
     trndata._convertToOneOfMany( )
@@ -40,7 +88,7 @@ def neural(request):
     #First  arggument is number of  inputs.
     #Second argument is number of hidden nodes 
     #Third is number of outputs
-    
+
     fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
     trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=0.01)
     trainer.trainEpochs(number_of_training_epochs)
@@ -48,14 +96,17 @@ def neural(request):
 
     trnresult = percentError( trainer.testOnClassData(), trndata['class'] )
     tstresult = percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
-
-    print "epoch: %4d" %trainer.totalepochs
-    print "  train error: %5.2f%%" %trnresult
-    print "  test error: %5.2f%%" %tstresult
     my_hash = {}
     my_hash["tstresult"] = tstresult
     my_hash["trnresult"] = trnresult
-    return render(request, 'predictor/neural.html' , my_hash )
+
+    log_debug(number_of_hidden_nodes, number_of_training_epochs,trnresult,tstresult)
+
+    return my_hash
+
+#def basicneuralnetworkpreprocessing():
+
+
 def preprocessingChampionPlayed(request):   
 
     #Preprocessing 

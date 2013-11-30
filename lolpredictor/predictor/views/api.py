@@ -49,6 +49,8 @@ def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
 
     return deco_retry     
  
+
+
 @retry(KeyError)        
 def getSummonerIdByAccountId(account_id):    
     method = 'getAllPublicSummonerDataByAccount'
@@ -68,12 +70,8 @@ def getAccountIdBySummonerId(summoner_id):
     except KeyError, e:
         log_error(e, method, summoner_id)
         raise KeyError
-    try:
-        accountid = getAccountIdByName(name)
-    except ValueError, e:
-        log_error(e, method, name)
-        return None
-   
+    
+    accountid = getAccountIdByName(name) 
      
     return accountid
 @retry(KeyError)
@@ -119,7 +117,7 @@ def getLeagueForPlayerBySummonerID(summoner_ID):
 # Helper functions
 
 def log_error(error, method, argument):
-    logger.error("%s(%s) : %s" % (method, argument, argument))
+    logger.error("%s(%s) : %s" % (method, error, argument))
 
 
 def get_data( method, parameters):
@@ -130,10 +128,16 @@ def get_data( method, parameters):
         "X-Mashape-Authorization": API_KEY
         },
     encoding='utf-8',
-    timeout=7000
+    #timeout=7000
         );  
-    return json.loads(response.raw_body)
-
+    try:
+        s= response.raw_body.replace('\\', '')        
+        a= json.loads(s)
+    except Exception, e:
+        log_error("get_data", method, s)
+        raise e
+   
+    return a
 def unicode_conversion(text):
     def fixup(m):
         text = m.group(0)
