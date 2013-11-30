@@ -77,19 +77,9 @@ def store_match(game , type ,account_id):
 		store_champions_played(account_id)
 	except KeyError, e:
 		print "Error storing champions"
-		return None
+		return None	
 
-	
 
-	#Deze logica heb zit in store_summoner
-	# Check if this summoner has been updated recently
-	#if not summoner or datetime.now() - summoner.updated_at.replace(tzinfo=None) > timedelta(seconds=REFRESH_SUMMONER_INTERVAL):
-		
-	#	if summoner == None:
-	#		return None
-	#	store_champions_played(account_id)	
-	#champion = Champion.objects.get(pk=championid)
-	
 	try:
 		champPlayed=ChampionPlayed.objects.get(summoner = summoner, champion=champion )	
 	except ChampionPlayed.DoesNotExist:		
@@ -103,15 +93,13 @@ def store_match(game , type ,account_id):
 		champion_id = player["championId"]	
 		summoner_id = player["summonerId"]	
 
-		accountId = getAccountIdBySummonerId(summoner_id)
-		if accountId is None:
-			return None			
-		summoner = store_summoner(summoner_id, accountId)		
+			
+		summoner = store_summoner(summoner_id, None)		
 		if summoner == None:
 			return None
 						
 		try:
-			store_champions_played(accountId)
+			store_champions_played(summoner.account_id)
 		except KeyError, e:
 			print "Error storing champions"
 			return None
@@ -154,10 +142,10 @@ def store_match(game , type ,account_id):
 		return None
 	return m
 
-def store_summoner(summoner_id, account_id):
-	
+def store_summoner(summoner_id,account_id):
+	print summoner_id
 	try:
-		summoner = Summoner.objects.get(pk=account_id)
+		summoner = Summoner.objects.get(summoner_id=summoner_id)
 		diff =datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
 		if diff.days < 0:			
 			print_summoner(summoner,True,False)
@@ -168,6 +156,13 @@ def store_summoner(summoner_id, account_id):
 	if summoner:
 		summoner.delete()
 		updated = True
+
+	if account_id is None:
+		account_id = getAccountIdBySummonerId(summoner_id)
+	if account_id is None:
+		return None	
+	print account_id
+	
 	league_information = getLeagueForPlayerBySummonerID(summoner_id)
 	if league_information is None:
 		print summoner_id
@@ -285,67 +280,107 @@ def determineWin (game):
 		win = stat["statType"]
 		if win == "WIN" :
 			return stat["value"]
-def getDatafromMatch(matc):
+def getBasicDatafromMatch(matc):
 	input=[]
 
-	tier11 = tiertoint(matc.team_1summoner1_id.tier)
-	tier12 = tiertoint(matc.team_1summoner2_id.tier)
-	tier13 = tiertoint(matc.team_1summoner3_id.tier)
-	tier14 = tiertoint(matc.team_1summoner4_id.tier)
-	tier15 = tiertoint(matc.team_1summoner5_id.tier)
-	tier21 = tiertoint(matc.team_2summoner1_id.tier)
-	tier22 = tiertoint(matc.team_2summoner2_id.tier)
-	tier23 = tiertoint(matc.team_2summoner3_id.tier)
-	tier24 = tiertoint(matc.team_2summoner4_id.tier)
-	tier25 = tiertoint(matc.team_2summoner5_id.tier)
+	tier11 = tiertoint(matc.team_1summoner1_id.summoner.tier)
+	tier12 = tiertoint(matc.team_1summoner2_id.summoner.tier)
+	tier13 = tiertoint(matc.team_1summoner3_id.summoner.tier)
+	tier14 = tiertoint(matc.team_1summoner4_id.summoner.tier)
+	tier15 = tiertoint(matc.team_1summoner5_id.summoner.tier)
+	tier21 = tiertoint(matc.team_2summoner1_id.summoner.tier)
+	tier22 = tiertoint(matc.team_2summoner2_id.summoner.tier)
+	tier23 = tiertoint(matc.team_2summoner3_id.summoner.tier)
+	tier24 = tiertoint(matc.team_2summoner4_id.summoner.tier)
+	tier25 = tiertoint(matc.team_2summoner5_id.summoner.tier)
+
+	
+
+	matchinput =  [ matc.team1_is_red ] 
 
 
+	summoner11input = [ matc.team_1summoner1_id.summoner.tier ,  matc.team_1summoner1_id.summoner.rank, 
+	matc.team_1summoner1_id.summoner.hotstreak ]
+	championplayed11input = [matc.team_1summoner1_id.nr_gameswithchamp ,matc.team_1summoner1_id.average_kills,
+	matc.team_1summoner1_id.average_deaths, matc.team_1summoner1_id.average_assists,matc.team_1summoner1_id.average_gold]
 
-	matchinput =  [ matc.team1_is_red , matc.nr_premade_team1, matc.nr_premade_team2 ] 
-	summoner11input = [ matc.team_1summoner1_id.champion_played.nr_gameswithchamp , matc.team_1summoner1_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner1_id.champion_played.champid.key,
-	matc.team_1summoner1_id.leaguepoints , tier11 , matc.team_1summoner1_id.rank  , matc.team_1summoner1_id.recentwinpercentage ]
 		
-	summoner12input = [ matc.team_1summoner2_id.champion_played.nr_gameswithchamp , matc.team_1summoner2_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner2_id.champion_played.champid.key,
-	matc.team_1summoner2_id.leaguepoints , tier12 , matc.team_1summoner2_id.rank  , matc.team_1summoner2_id.recentwinpercentage ]
+	summoner12input = [ matc.team_1summoner2_id.summoner.tier ,  matc.team_1summoner2_id.summoner.rank, 
+	matc.team_1summoner2_id.summoner.hotstreak ]
+	championplayed12input = [matc.team_1summoner2_id.nr_gameswithchamp ,matc.team_1summoner2_id.average_kills,
+	matc.team_1summoner2_id.average_deaths, matc.team_1summoner2_id.average_assists,matc.team_1summoner2_id.average_gold]
 
-	summoner13input = [ matc.team_1summoner3_id.champion_played.nr_gameswithchamp , matc.team_1summoner3_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner3_id.champion_played.champid.key,
-	matc.team_1summoner3_id.leaguepoints , tier13 , matc.team_1summoner3_id.rank  , matc.team_1summoner3_id.recentwinpercentage ]
+	summoner13input = [ matc.team_1summoner3_id.summoner.tier ,  matc.team_1summoner3_id.summoner.rank, 
+	matc.team_1summoner3_id.summoner.hotstreak ]
+	championplayed13input = [matc.team_1summoner3_id.nr_gameswithchamp ,matc.team_1summoner3_id.average_kills,
+	matc.team_1summoner3_id.average_deaths, matc.team_1summoner3_id.average_assists,matc.team_1summoner3_id.average_gold]
 
-	summoner14input = [ matc.team_1summoner4_id.champion_played.nr_gameswithchamp , matc.team_1summoner4_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner4_id.champion_played.champid.key,
-	matc.team_1summoner4_id.leaguepoints , tier14, matc.team_1summoner3_id.rank  , matc.team_1summoner4_id.recentwinpercentage ]
+	summoner14input = [ matc.team_1summoner4_id.summoner.tier ,  matc.team_1summoner4_id.summoner.rank, 
+	matc.team_1summoner4_id.summoner.hotstreak ]
+	championplayed14input = [matc.team_1summoner4_id.nr_gameswithchamp ,matc.team_1summoner4_id.average_kills,
+	matc.team_1summoner4_id.average_deaths, matc.team_1summoner4_id.average_assists,matc.team_1summoner4_id.average_gold]
 
-	summoner15input = [ matc.team_1summoner5_id.champion_played.nr_gameswithchamp , matc.team_1summoner5_id.champion_played.nr_gameswonwithchamp , matc.team_1summoner5_id.champion_played.champid.key,
-	matc.team_1summoner5_id.leaguepoints , tier15 , matc.team_1summoner5_id.rank  , matc.team_1summoner5_id.recentwinpercentage ]
+	summoner15input = [ matc.team_1summoner5_id.summoner.tier ,  matc.team_1summoner5_id.summoner.rank, 
+	matc.team_1summoner5_id.summoner.hotstreak ]
+	championplayed15input = [matc.team_1summoner5_id.nr_gameswithchamp ,matc.team_1summoner5_id.average_kills,
+	matc.team_1summoner5_id.average_deaths, matc.team_1summoner5_id.average_assists,matc.team_1summoner5_id.average_gold]
 
-	summoner21input = [ matc.team_2summoner1_id.champion_played.nr_gameswithchamp , matc.team_2summoner1_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner1_id.champion_played.champid.key,
-	matc.team_2summoner1_id.leaguepoints , tier21 , matc.team_2summoner1_id.rank  , matc.team_2summoner1_id.recentwinpercentage ]
+	summoner21input = [ matc.team_2summoner1_id.summoner.tier ,  matc.team_2summoner1_id.summoner.rank, 
+	matc.team_2summoner1_id.summoner.hotstreak ]
+	championplayed21input = [matc.team_2summoner1_id.nr_gameswithchamp ,matc.team_2summoner1_id.average_kills,
+	matc.team_2summoner2_id.average_deaths, matc.team_2summoner1_id.average_assists,matc.team_2summoner1_id.average_gold]
+
 		
-	summoner22input = [ matc.team_2summoner2_id.champion_played.nr_gameswithchamp , matc.team_2summoner2_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner2_id.champion_played.champid.key,
-	matc.team_2summoner2_id.leaguepoints , tier22 , matc.team_2summoner2_id.rank  , matc.team_2summoner2_id.recentwinpercentage ]
+	summoner22input = [ matc.team_2summoner2_id.summoner.tier ,  matc.team_2summoner2_id.summoner.rank, 
+	matc.team_2summoner2_id.summoner.hotstreak ]
+	championplayed22input = [matc.team_2summoner2_id.nr_gameswithchamp ,matc.team_2summoner2_id.average_kills,
+	matc.team_2summoner2_id.average_deaths, matc.team_2summoner2_id.average_assists,matc.team_2summoner2_id.average_gold]
 
-	summoner23input = [ matc.team_2summoner3_id.champion_played.nr_gameswithchamp , matc.team_2summoner3_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner3_id.champion_played.champid.key,
-	matc.team_2summoner3_id.leaguepoints , tier23 , matc.team_2summoner3_id.rank  , matc.team_2summoner3_id.recentwinpercentage ]
+	summoner23input = [ matc.team_2summoner3_id.summoner.tier ,  matc.team_2summoner3_id.summoner.rank, 
+	matc.team_2summoner3_id.summoner.hotstreak ]
+	championplayed23input = [matc.team_2summoner3_id.nr_gameswithchamp ,matc.team_2summoner3_id.average_kills,
+	matc.team_2summoner3_id.average_deaths, matc.team_2summoner3_id.average_assists,matc.team_2summoner3_id.average_gold]
 
-	summoner24input = [ matc.team_2summoner4_id.champion_played.nr_gameswithchamp , matc.team_2summoner4_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner4_id.champion_played.champid.key,
-	matc.team_2summoner4_id.leaguepoints , tier24, matc.team_2summoner3_id.rank  , matc.team_2summoner4_id.recentwinpercentage ]
+	summoner24input = [ matc.team_2summoner4_id.summoner.tier ,  matc.team_2summoner4_id.summoner.rank, 
+	matc.team_2summoner4_id.summoner.hotstreak ]
+	championplayed24input = [matc.team_2summoner4_id.nr_gameswithchamp ,matc.team_2summoner4_id.average_kills,
+	matc.team_2summoner4_id.average_deaths, matc.team_2summoner4_id.average_assists,matc.team_2summoner4_id.average_gold]
 
-	summoner25input = [ matc.team_2summoner5_id.champion_played.nr_gameswithchamp , matc.team_2summoner5_id.champion_played.nr_gameswonwithchamp , matc.team_2summoner5_id.champion_played.champid.key,
-	matc.team_2summoner5_id.leaguepoints , tier25 , matc.team_2summoner5_id.rank  , matc.team_2summoner5_id.recentwinpercentage ]
+	summoner25input = [ matc.team_2summoner5_id.summoner.tier ,  matc.team_2summoner5_id.summoner.rank, 
+	matc.team_2summoner5_id.summoner.hotstreak ]
+	championplayed25input = [matc.team_2summoner5_id.nr_gameswithchamp ,matc.team_2summoner5_id.average_kills,
+	matc.team_2summoner5_id.average_deaths, matc.team_2summoner5_id.average_assists,matc.team_2summoner5_id.average_gold]
+
+
+
+
 
 
 	input.extend(matchinput)
 	input.extend(summoner11input)
+	input.extend(championplayed11input)
 	input.extend(summoner12input)
+	input.extend(championplayed12input)
 	input.extend(summoner13input)
+	input.extend(championplayed13input)
 	input.extend(summoner14input)
+	input.extend(championplayed14input)
 	input.extend(summoner15input)
+	input.extend(championplayed15input)
 	input.extend(summoner21input)
+	input.extend(championplayed21input)
 	input.extend(summoner22input)
+	input.extend(championplayed22input)
 	input.extend(summoner23input)
+	input.extend(championplayed23input)
 	input.extend(summoner24input)
+	input.extend(championplayed24input)
 	input.extend(summoner25input)
+	input.extend(championplayed25input)
 	
 	return input
+
+
 def print_summoner(summoner, updated, realupdate):
 	if updated:
 		if realupdate : 
