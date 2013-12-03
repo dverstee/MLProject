@@ -1,0 +1,2042 @@
+[25/Nov/2013 13:49:00] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[25/Nov/2013 13:49:01] WARNING [django.request:142] Not Found: /favicon.ico
+[25/Nov/2013 13:49:01] WARNING [django.request:142] Not Found: /favicon.ico
+[25/Nov/2013 13:49:22] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views.py", line 32, in index
+    most_played_champions = getTopPlayedChampionsBySummonerId(summoner_id)
+NameError: global name 'getTopPlayedChampionsBySummonerId' is not defined
+[25/Nov/2013 13:49:22] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views.py", line 32, in index
+    most_played_champions = getTopPlayedChampionsBySummonerId(summoner_id)
+NameError: global name 'getTopPlayedChampionsBySummonerId' is not defined
+[03/Dec/2013 15:56:36] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:01:06] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:05:53] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:05:53] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/index.py", line 5, in index
+    return render(request, 'index.html')
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 138, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: index.html
+[03/Dec/2013 16:05:53] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/index.py", line 5, in index
+    return render(request, 'index.html')
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 138, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: index.html
+[03/Dec/2013 16:05:56] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/index.py", line 5, in index
+    return render(request, 'index.html')
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 138, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: index.html
+[03/Dec/2013 16:05:56] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/index.py", line 5, in index
+    return render(request, 'index.html')
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 138, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: index.html
+[03/Dec/2013 16:06:05] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:12:45] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 8, in <module>
+    url(r'^', direct_to_template, {'template': 'home.html'}, namespace='home'),
+TypeError: url() got an unexpected keyword argument 'namespace'
+[03/Dec/2013 16:12:45] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 8, in <module>
+    url(r'^', direct_to_template, {'template': 'home.html'}, namespace='home'),
+TypeError: url() got an unexpected keyword argument 'namespace'
+[03/Dec/2013 16:12:48] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 8, in <module>
+    url(r'^', direct_to_template, {'template': 'home.html'}, namespace='home'),
+TypeError: url() got an unexpected keyword argument 'namespace'
+[03/Dec/2013 16:12:48] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 8, in <module>
+    url(r'^', direct_to_template, {'template': 'home.html'}, namespace='home'),
+TypeError: url() got an unexpected keyword argument 'namespace'
+[03/Dec/2013 16:12:59] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:13:05] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:50:54] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:50:54] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:50:55] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:50:55] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:12] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:12] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:12] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:12] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:24] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''lolpredictor.predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:24] ERROR [django.request:215] Internal Server Error: /
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''lolpredictor.predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:25] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''lolpredictor.predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:51:25] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/views/generic/simple.py", line 28, in direct_to_template
+    return HttpResponse(t.render(c), content_type=mimetype)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''lolpredictor.predictor.search'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 16:52:39] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:53:11] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:56:54] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:56:54] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:56:54] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:12] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:12] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:13] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:13] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:14] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:14] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:15] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:15] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/$', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 9, in <module>
+    url(r'^search/', views.search.search, name='search'),
+AttributeError: 'function' object has no attribute 'search'
+[03/Dec/2013 16:57:35] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:57:53] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 16:58:01] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:04:17] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:04:17] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 7, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 134, in find_template
+    source, display_name = loader(name, dirs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 42, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 48, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 214, in do_extends
+    nodelist = parser.parse()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 189, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 900, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 265, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 320, in invalid_block_tag
+    (command, get_text_list(["'%s'" % p for p in parse_until])))
+TemplateSyntaxError: Invalid block tag: 'endblock', expected 'elif', 'else' or 'endif'
+[03/Dec/2013 17:04:17] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 7, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 134, in find_template
+    source, display_name = loader(name, dirs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 42, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 48, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 214, in do_extends
+    nodelist = parser.parse()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 189, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 900, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 265, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 320, in invalid_block_tag
+    (command, get_text_list(["'%s'" % p for p in parse_until])))
+TemplateSyntaxError: Invalid block tag: 'endblock', expected 'elif', 'else' or 'endif'
+[03/Dec/2013 17:06:03] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 5, in search
+    if request.method == 'GET' and request.GET['srch-term']:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/datastructures.py", line 258, in __getitem__
+    raise MultiValueDictKeyError("Key %r not found in %r" % (key, self))
+MultiValueDictKeyError: "Key 'srch-term' not found in <QueryDict: {}>"
+[03/Dec/2013 17:06:03] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 5, in search
+    if request.method == 'GET' and request.GET['srch-term']:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/datastructures.py", line 258, in __getitem__
+    raise MultiValueDictKeyError("Key %r not found in %r" % (key, self))
+MultiValueDictKeyError: "Key 'srch-term' not found in <QueryDict: {}>"
+[03/Dec/2013 17:07:48] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:15:29] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:26:54] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:30:01] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:33:28] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:33:48] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:56:17] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:57:53] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 17:58:31] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''lolpredictor.predictor.crawlstats' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:58:31] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''lolpredictor.predictor.crawlstats' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:58:46] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.crawlstats' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:58:46] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.crawlstats' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:58:54] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.crawlstats'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:58:54] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''predictor.crawlstats'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:59:04] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''crawlstats'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:59:04] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: Reverse for ''crawlstats'' with arguments '()' and keyword arguments '{}' not found.
+[03/Dec/2013 17:59:34] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 17:59:34] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 17:59:42] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 17:59:42] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:00:57] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 18:00:57] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:00:57] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:00:59] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:00:59] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:01:00] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:01:00] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:01:48] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:01:48] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:02:45] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 18:02:45] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:02:45] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:03:35] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 18:03:35] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:03:35] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:03:37] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:03:37] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'predictor" is not a registered namespace
+[03/Dec/2013 18:04:28] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 18:04:28] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'lolpredictor" is not a registered namespace
+[03/Dec/2013 18:04:28] ERROR [django.request:215] Internal Server Error: /predictor/search/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/views/search.py", line 12, in search
+    return render(request, 'predictor/search.html', {'summoner': summoner, 'query': summonerName})
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/shortcuts/__init__.py", line 44, in render
+    return HttpResponse(loader.render_to_string(*args, **kwargs),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader.py", line 176, in render_to_string
+    return t.render(context_instance)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 140, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/debug.py", line 74, in render_node
+    return node.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/template/defaulttags.py", line 426, in render
+    raise e
+NoReverseMatch: u"'lolpredictor" is not a registered namespace
+[03/Dec/2013 18:06:32] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 18:06:32] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:06:32] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:06:35] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:06:35] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:16] INFO [root:15] No fast networks available: No module named arac.pybrainbridge
+[03/Dec/2013 18:07:16] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:16] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:38] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:38] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:39] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:39] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:40] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/middleware/common.py", line 67, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:07:40] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/middleware/common.py", line 67, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:11] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:11] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:12] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/middleware/common.py", line 67, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:12] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/middleware/common.py", line 67, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:12] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:12] ERROR [django.request:215] Internal Server Error: /predictor/crawlstats/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:13] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/middleware/common.py", line 67, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
+[03/Dec/2013 18:08:13] ERROR [django.request:215] Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/middleware/common.py", line 67, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/urls.py", line 9, in <module>
+    url(r'^predictor/', include('lolpredictor.predictor.url', namespace='predictor')),
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/urls/__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/arthur/Documents/league-of-legends-predictor/lolpredictor/predictor/url.py", line 8, in <module>
+    url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
+AttributeError: 'module' object has no attribute 'crawlstats'
