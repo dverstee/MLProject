@@ -264,6 +264,7 @@ def ranktoint(rank):
 	elif rank == "V":
 		return 5  
 def tiertoint(tier):
+	
 	if tier == "BRONZE":
 		return 1	
 	elif tier == "SILVER":
@@ -280,24 +281,108 @@ def determineWin (game):
 		win = stat["statType"]
 		if win == "WIN" :
 			return stat["value"]
-def getBasicDatafromMatch(matc):
+
+def getMinimalDatafromMatch(matc,preprocessing):
+
+
+
+	if preprocessing==True:
+		preprocessdata(matc)
+		return
 	input=[]
 
-	tier11 = tiertoint(matc.team_1summoner1_id.summoner.tier)
-	tier12 = tiertoint(matc.team_1summoner2_id.summoner.tier)
-	tier13 = tiertoint(matc.team_1summoner3_id.summoner.tier)
-	tier14 = tiertoint(matc.team_1summoner4_id.summoner.tier)
-	tier15 = tiertoint(matc.team_1summoner5_id.summoner.tier)
-	tier21 = tiertoint(matc.team_2summoner1_id.summoner.tier)
-	tier22 = tiertoint(matc.team_2summoner2_id.summoner.tier)
-	tier23 = tiertoint(matc.team_2summoner3_id.summoner.tier)
-	tier24 = tiertoint(matc.team_2summoner4_id.summoner.tier)
-	tier25 = tiertoint(matc.team_2summoner5_id.summoner.tier)
+	
+	tier11 = matc.team_1summoner1_id.summoner.tier
+	tier12 = matc.team_1summoner2_id.summoner.tier
+	tier13 = matc.team_1summoner3_id.summoner.tier
+	tier14 = matc.team_1summoner4_id.summoner.tier
+	tier15 = matc.team_1summoner5_id.summoner.tier
+	tier21 = matc.team_2summoner1_id.summoner.tier
+	tier22 = matc.team_2summoner2_id.summoner.tier
+	tier23 = matc.team_2summoner3_id.summoner.tier
+	tier24 = matc.team_2summoner4_id.summoner.tier
+	tier25 = matc.team_2summoner5_id.summoner.tier
+	print tier11
+	print tier12
+
+	summoner11input = [ matc.team_1summoner1_id.summoner.tier ,  matc.team_1summoner1_id.summoner.rank]
+	championplayed11input = [matc.team_1summoner1_id.nr_gameswithchamp]
+
+		
+	summoner12input = [ matc.team_1summoner2_id.summoner.tier ,  matc.team_1summoner2_id.summoner.rank]
+	championplayed12input = [matc.team_1summoner2_id.nr_gameswithchamp]
+
+	summoner13input = [ matc.team_1summoner3_id.summoner.tier ,  matc.team_1summoner3_id.summoner.rank ]
+	championplayed13input = [matc.team_1summoner3_id.nr_gameswithchamp]
+
+	summoner14input = [ matc.team_1summoner4_id.summoner.tier ,  matc.team_1summoner4_id.summoner.rank]
+	championplayed14input = [matc.team_1summoner4_id.nr_gameswithchamp]
+
+	summoner15input = [ matc.team_1summoner5_id.summoner.tier ,  matc.team_1summoner5_id.summoner.rank]
+	championplayed15input = [matc.team_1summoner5_id.nr_gameswithchamp]
+
+	summoner21input = [ matc.team_2summoner1_id.summoner.tier ,  matc.team_2summoner1_id.summoner.rank ]
+	championplayed21input = [matc.team_2summoner1_id.nr_gameswithchamp ]
+
+		
+	summoner22input = [ matc.team_2summoner2_id.summoner.tier ]
+	championplayed22input = [matc.team_2summoner2_id.nr_gameswithchamp]
+
+	summoner23input = [ matc.team_2summoner3_id.summoner.tier ,  matc.team_2summoner3_id.summoner.rank]
+	championplayed23input = [matc.team_2summoner3_id.nr_gameswithchamp ]
+
+	summoner24input = [ matc.team_2summoner4_id.summoner.tier ,  matc.team_2summoner4_id.summoner.rank]
+	championplayed24input = [matc.team_2summoner4_id.nr_gameswithchamp ]
+
+	summoner25input = [ matc.team_2summoner5_id.summoner.tier ,  matc.team_2summoner5_id.summoner.rank]
+	championplayed25input = [matc.team_2summoner5_id.nr_gameswithchamp]
+
+
+
+
+	if preprocessing==False:
+		#input.extend(matchinput)
+		input.extend(summoner11input)
+		input.extend(championplayed11input)
+		input.extend(summoner12input)
+		input.extend(championplayed12input)
+		input.extend(summoner13input)
+		input.extend(championplayed13input)
+		input.extend(summoner14input)
+		input.extend(championplayed14input)
+		input.extend(summoner15input)
+		input.extend(championplayed15input)
+		input.extend(summoner21input)
+		input.extend(championplayed21input)
+		input.extend(summoner22input)
+		input.extend(championplayed22input)
+		input.extend(summoner23input)
+		input.extend(championplayed23input)
+		input.extend(summoner24input)
+		input.extend(championplayed24input)
+		input.extend(summoner25input)
+		input.extend(championplayed25input)
+	
+	return input
+
+def getBasicDatafromMatch(matc,preprocessing):
 
 	
 
-	matchinput =  [ matc.team1_is_red ] 
 
+
+	input=[]
+
+
+	if preprocessing==True  :		
+		return preprocessdata(matc)
+		
+
+
+		
+
+	matchinput =  [ matc.team1_is_red ] 
+	
 
 	summoner11input = [ matc.team_1summoner1_id.summoner.tier ,  matc.team_1summoner1_id.summoner.rank, 
 	matc.team_1summoner1_id.summoner.hotstreak ]
@@ -328,7 +413,7 @@ def getBasicDatafromMatch(matc):
 	summoner21input = [ matc.team_2summoner1_id.summoner.tier ,  matc.team_2summoner1_id.summoner.rank, 
 	matc.team_2summoner1_id.summoner.hotstreak ]
 	championplayed21input = [matc.team_2summoner1_id.nr_gameswithchamp ,matc.team_2summoner1_id.average_kills,
-	matc.team_2summoner2_id.average_deaths, matc.team_2summoner1_id.average_assists,matc.team_2summoner1_id.average_gold]
+	matc.team_2summoner1_id.average_deaths, matc.team_2summoner1_id.average_assists,matc.team_2summoner1_id.average_gold]
 
 		
 	summoner22input = [ matc.team_2summoner2_id.summoner.tier ,  matc.team_2summoner2_id.summoner.rank, 
@@ -354,31 +439,177 @@ def getBasicDatafromMatch(matc):
 
 
 
+	if preprocessing==False:
 
 
-	input.extend(matchinput)
-	input.extend(summoner11input)
-	input.extend(championplayed11input)
-	input.extend(summoner12input)
-	input.extend(championplayed12input)
-	input.extend(summoner13input)
-	input.extend(championplayed13input)
-	input.extend(summoner14input)
-	input.extend(championplayed14input)
-	input.extend(summoner15input)
-	input.extend(championplayed15input)
-	input.extend(summoner21input)
-	input.extend(championplayed21input)
-	input.extend(summoner22input)
-	input.extend(championplayed22input)
-	input.extend(summoner23input)
-	input.extend(championplayed23input)
-	input.extend(summoner24input)
-	input.extend(championplayed24input)
-	input.extend(summoner25input)
-	input.extend(championplayed25input)
+		input.extend(matchinput)
+		input.extend(summoner11input)
+		input.extend(championplayed11input)
+		input.extend(summoner12input)
+		input.extend(championplayed12input)
+		input.extend(summoner13input)
+		input.extend(championplayed13input)
+		input.extend(summoner14input)
+		input.extend(championplayed14input)
+		input.extend(summoner15input)
+		input.extend(championplayed15input)
+		input.extend(summoner21input)
+		input.extend(championplayed21input)
+		input.extend(summoner22input)
+		input.extend(championplayed22input)
+		input.extend(summoner23input)
+		input.extend(championplayed23input)
+		input.extend(summoner24input)
+		input.extend(championplayed24input)
+		input.extend(summoner25input)
+		input.extend(championplayed25input)
+	
+	
 	
 	return input
+
+
+
+
+def preprocessdata(matc):
+
+	tiers=[]
+	tiers.append(matc.team_1summoner1_id.summoner.tier)
+	tiers.append(matc.team_1summoner2_id.summoner.tier)
+	tiers.append(matc.team_1summoner3_id.summoner.tier)
+	tiers.append(matc.team_1summoner4_id.summoner.tier)
+	tiers.append(matc.team_1summoner5_id.summoner.tier)
+	tiers2=[]
+	tiers2.append(matc.team_2summoner1_id.summoner.tier)
+	tiers2.append(matc.team_2summoner2_id.summoner.tier)
+	tiers2.append(matc.team_2summoner3_id.summoner.tier)
+	tiers2.append(matc.team_2summoner4_id.summoner.tier)
+	tiers2.append(matc.team_2summoner5_id.summoner.tier)
+	ranks=[]
+	ranks.append(matc.team_1summoner1_id.summoner.rank)	
+	ranks.append(matc.team_1summoner2_id.summoner.rank)	
+	ranks.append(matc.team_1summoner3_id.summoner.rank)	
+	ranks.append(matc.team_1summoner4_id.summoner.rank)	
+	ranks.append(matc.team_1summoner5_id.summoner.rank)	
+	ranks2=[]
+	ranks2.append(matc.team_2summoner1_id.summoner.rank)	
+	ranks2.append(matc.team_2summoner2_id.summoner.rank)	
+	ranks2.append(matc.team_2summoner3_id.summoner.rank)	
+	ranks2.append(matc.team_2summoner4_id.summoner.rank)	
+	ranks2.append(matc.team_2summoner5_id.summoner.rank)	
+
+	our_tiers = [0, 0, 0 , 0 , 0 ]
+	their_tiers = [0, 0, 0 , 0 , 0]
+	our_ranks= [0, 0, 0 , 0 , 0]
+	their_ranks= [0, 0, 0 , 0 , 0]
+	our_hotsreaks=int(matc.team_1summoner1_id.summoner.hotstreak)
+	+int(matc.team_1summoner2_id.summoner.hotstreak )
+	+int(matc.team_1summoner3_id.summoner.hotstreak )
+	+int(matc.team_1summoner4_id.summoner.hotstreak )
+	+int(matc.team_1summoner5_id.summoner.hotstreak )
+
+	their_hotsreaks=int(matc.team_1summoner1_id.summoner.hotstreak)
+	+int(matc.team_2summoner2_id.summoner.hotstreak )
+	+int(matc.team_2summoner3_id.summoner.hotstreak )
+	+int(matc.team_2summoner4_id.summoner.hotstreak )
+	+int(matc.team_2summoner5_id.summoner.hotstreak)
+
+
+	our_kills=matc.team_1summoner1_id.average_kills
+	+matc.team_1summoner2_id.average_kills 
+	+matc.team_1summoner3_id.average_kills 
+	+matc.team_1summoner4_id.average_kills 
+	+matc.team_1summoner5_id.average_kills 
+
+	their_kills=matc.team_1summoner1_id.average_kills
+	+matc.team_2summoner2_id.average_kills 
+	+matc.team_2summoner3_id.average_kills 
+	+matc.team_2summoner4_id.average_kills 
+	+matc.team_2summoner5_id.average_kills 
+
+
+	our_games=matc.team_1summoner1_id.nr_gameswithchamp
+	+matc.team_1summoner2_id.nr_gameswithchamp 
+	+matc.team_1summoner3_id.nr_gameswithchamp 
+	+matc.team_1summoner4_id.nr_gameswithchamp 
+	+matc.team_1summoner5_id.nr_gameswithchamp 
+
+	their_games=matc.team_1summoner1_id.nr_gameswithchamp
+	+matc.team_2summoner2_id.nr_gameswithchamp 
+	+matc.team_2summoner3_id.nr_gameswithchamp 
+	+matc.team_2summoner4_id.nr_gameswithchamp 
+	+matc.team_2summoner5_id.nr_gameswithchamp 
+
+	our_assists=matc.team_1summoner1_id.average_assists
+	+matc.team_1summoner2_id.average_assists 
+	+matc.team_1summoner3_id.average_assists 
+	+matc.team_1summoner4_id.average_assists 
+	+matc.team_1summoner5_id.average_assists 
+
+	their_assists=matc.team_1summoner1_id.average_assists
+	+matc.team_2summoner2_id.average_assists 
+	+matc.team_2summoner3_id.average_assists 
+	+matc.team_2summoner4_id.average_assists 
+	+matc.team_2summoner5_id.average_assists 
+
+
+	our_deaths=matc.team_1summoner1_id.average_deaths
+	+matc.team_1summoner2_id.average_deaths 
+	+matc.team_1summoner3_id.average_deaths 
+	+matc.team_1summoner4_id.average_deaths 
+	+matc.team_1summoner5_id.average_deaths 
+
+	their_deaths=matc.team_1summoner1_id.average_deaths
+	+matc.team_2summoner2_id.average_deaths 
+	+matc.team_2summoner3_id.average_deaths 
+	+matc.team_2summoner4_id.average_deaths 
+	+matc.team_2summoner5_id.average_deaths 
+
+	our_gold=matc.team_1summoner1_id.average_gold
+	+matc.team_1summoner2_id.average_gold 
+	+matc.team_1summoner3_id.average_gold 
+	+matc.team_1summoner4_id.average_gold 
+	+matc.team_1summoner5_id.average_gold 
+
+	their_gold=matc.team_1summoner1_id.average_gold
+	+matc.team_2summoner2_id.average_gold 
+	+matc.team_2summoner3_id.average_gold 
+	+matc.team_2summoner4_id.average_gold 
+	+matc.team_2summoner5_id.average_gold 
+
+
+	for t in tiers:		
+		our_tiers[t-1]=our_tiers[t-1]+1
+	for t in tiers2:		
+		their_tiers[t-1]=their_tiers[t-1]+1
+	for t in ranks:		
+		our_ranks[t-1]=our_ranks[t-1]+1
+	for t in ranks2:	
+		their_ranks[t-1]=their_ranks[t-1]+1	
+
+	matchinput =  [ matc.team1_is_red ]	
+
+	input=[]
+	input.extend(matchinput)
+	input.extend(our_tiers)
+	input.extend(their_tiers)
+	input.extend(our_ranks)
+	input.extend(their_ranks)
+	input.append(our_hotsreaks)
+	input.append(their_hotsreaks)
+	input.append(our_kills)
+	input.append(their_kills)
+	input.append(our_games)
+	input.append(their_games)
+	input.append(our_assists)
+	input.append(their_assists)
+	input.append(our_deaths)
+	input.append(their_deaths)
+	input.append(our_gold)
+	input.append(their_gold)
+	return input
+
+
 
 
 def print_summoner(summoner, updated, realupdate):
