@@ -1,7 +1,6 @@
-[30/Nov/2013 09:07:33] DEBUG [lolpredictor.predictor.views.neural:34] 20, 100 , 48.1203007519 , 51.1363636364
-[30/Nov/2013 09:08:14] DEBUG [lolpredictor.predictor.views.neural:34] 40, 100 , 47.7443609023 , 40.9090909091
-[30/Nov/2013 09:08:50] DEBUG [lolpredictor.predictor.views.neural:34] 80, 100 , 50.3759398496 , 53.4090909091
-[30/Nov/2013 09:09:25] DEBUG [lolpredictor.predictor.views.neural:34] 100, 100 , 48.1203007519 , 43.1818181818
-[30/Nov/2013 09:10:05] DEBUG [lolpredictor.predictor.views.neural:34] 200, 100 , 43.984962406 , 55.6818181818
-[30/Nov/2013 09:11:15] DEBUG [lolpredictor.predictor.views.neural:34] 500, 100 , 49.6240601504 , 53.4090909091
-[30/Nov/2013 09:13:17] DEBUG [lolpredictor.predictor.views.neural:34] 1000, 100 , 49.6240601504 , 54.5454545455
+[30/Nov/2013 14:19:42] DEBUG [lolpredictor.predictor.views.neural:39] 20, 100 , 34.962406015 , 39.7727272727
+[30/Nov/2013 14:20:13] DEBUG [lolpredictor.predictor.views.neural:39] 40, 100 , 41.3533834586 , 48.8636363636
+[30/Nov/2013 14:20:44] DEBUG [lolpredictor.predictor.views.neural:39] 80, 100 , 30.0751879699 , 54.5454545455
+[30/Nov/2013 14:21:19] DEBUG [lolpredictor.predictor.views.neural:39] 100, 100 , 34.5864661654 , 44.3181818182
+[30/Nov/2013 14:21:58] DEBUG [lolpredictor.predictor.views.neural:39] 200, 100 , 25.1879699248 , 53.4090909091
+[30/Nov/2013 14:22:45] DEBUG [lolpredictor.predictor.views.neural:39] 500, 100 , 37.969924812 , 51.1363636364
