@@ -372,104 +372,93 @@ def getBasicDatafromMatch(matc,preprocessing):
 
 
 	input=[]
-
+	goldnormalization =1000
 
 	if preprocessing==True  :		
 		return preprocessdata(matc)
-		
+				
 
-
-		
-
-	matchinput =  [ matc.team1_is_red ] 
-	
+	matchinput =  [ int(matc.team1_is_red) ] 	
 
 	summoner11input = [ matc.team_1summoner1_id.summoner.tier ,  matc.team_1summoner1_id.summoner.rank, 
-	matc.team_1summoner1_id.summoner.hotstreak ]
+	int(matc.team_1summoner1_id.summoner.hotstreak) ]
 	championplayed11input = [matc.team_1summoner1_id.nr_gameswithchamp ,matc.team_1summoner1_id.average_kills,
-	matc.team_1summoner1_id.average_deaths, matc.team_1summoner1_id.average_assists,matc.team_1summoner1_id.average_gold]
+	matc.team_1summoner1_id.average_deaths, matc.team_1summoner1_id.average_assists,float(matc.team_1summoner1_id.average_gold)/float(goldnormalization)]
 
 		
 	summoner12input = [ matc.team_1summoner2_id.summoner.tier ,  matc.team_1summoner2_id.summoner.rank, 
-	matc.team_1summoner2_id.summoner.hotstreak ]
+	int(matc.team_1summoner2_id.summoner.hotstreak) ]
 	championplayed12input = [matc.team_1summoner2_id.nr_gameswithchamp ,matc.team_1summoner2_id.average_kills,
-	matc.team_1summoner2_id.average_deaths, matc.team_1summoner2_id.average_assists,matc.team_1summoner2_id.average_gold]
+	matc.team_1summoner2_id.average_deaths, matc.team_1summoner2_id.average_assists,float(matc.team_1summoner2_id.average_gold)/float(goldnormalization)]
 
 	summoner13input = [ matc.team_1summoner3_id.summoner.tier ,  matc.team_1summoner3_id.summoner.rank, 
-	matc.team_1summoner3_id.summoner.hotstreak ]
+	int(matc.team_1summoner3_id.summoner.hotstreak) ]
 	championplayed13input = [matc.team_1summoner3_id.nr_gameswithchamp ,matc.team_1summoner3_id.average_kills,
-	matc.team_1summoner3_id.average_deaths, matc.team_1summoner3_id.average_assists,matc.team_1summoner3_id.average_gold]
+	matc.team_1summoner3_id.average_deaths, matc.team_1summoner3_id.average_assists,float(matc.team_1summoner3_id.average_gold)/float(goldnormalization)]
 
 	summoner14input = [ matc.team_1summoner4_id.summoner.tier ,  matc.team_1summoner4_id.summoner.rank, 
-	matc.team_1summoner4_id.summoner.hotstreak ]
+	int(matc.team_1summoner4_id.summoner.hotstreak) ]
 	championplayed14input = [matc.team_1summoner4_id.nr_gameswithchamp ,matc.team_1summoner4_id.average_kills,
-	matc.team_1summoner4_id.average_deaths, matc.team_1summoner4_id.average_assists,matc.team_1summoner4_id.average_gold]
+	matc.team_1summoner4_id.average_deaths, matc.team_1summoner4_id.average_assists,float(matc.team_1summoner4_id.average_gold)/float(goldnormalization)]
 
 	summoner15input = [ matc.team_1summoner5_id.summoner.tier ,  matc.team_1summoner5_id.summoner.rank, 
-	matc.team_1summoner5_id.summoner.hotstreak ]
+	int(matc.team_1summoner5_id.summoner.hotstreak) ]
 	championplayed15input = [matc.team_1summoner5_id.nr_gameswithchamp ,matc.team_1summoner5_id.average_kills,
-	matc.team_1summoner5_id.average_deaths, matc.team_1summoner5_id.average_assists,matc.team_1summoner5_id.average_gold]
+	matc.team_1summoner5_id.average_deaths, matc.team_1summoner5_id.average_assists,float(matc.team_1summoner5_id.average_gold)/float(goldnormalization)]
 
 	summoner21input = [ matc.team_2summoner1_id.summoner.tier ,  matc.team_2summoner1_id.summoner.rank, 
-	matc.team_2summoner1_id.summoner.hotstreak ]
+	int(matc.team_2summoner1_id.summoner.hotstreak) ]
 	championplayed21input = [matc.team_2summoner1_id.nr_gameswithchamp ,matc.team_2summoner1_id.average_kills,
-	matc.team_2summoner1_id.average_deaths, matc.team_2summoner1_id.average_assists,matc.team_2summoner1_id.average_gold]
+	matc.team_2summoner1_id.average_deaths, matc.team_2summoner1_id.average_assists,float(matc.team_2summoner1_id.average_gold)/float(goldnormalization)]
 
 		
 	summoner22input = [ matc.team_2summoner2_id.summoner.tier ,  matc.team_2summoner2_id.summoner.rank, 
-	matc.team_2summoner2_id.summoner.hotstreak ]
+	int(matc.team_2summoner2_id.summoner.hotstreak )]
 	championplayed22input = [matc.team_2summoner2_id.nr_gameswithchamp ,matc.team_2summoner2_id.average_kills,
-	matc.team_2summoner2_id.average_deaths, matc.team_2summoner2_id.average_assists,matc.team_2summoner2_id.average_gold]
+	matc.team_2summoner2_id.average_deaths, matc.team_2summoner2_id.average_assists,float(matc.team_2summoner2_id.average_gold)/float(goldnormalization)]
 
 	summoner23input = [ matc.team_2summoner3_id.summoner.tier ,  matc.team_2summoner3_id.summoner.rank, 
-	matc.team_2summoner3_id.summoner.hotstreak ]
+	int(matc.team_2summoner3_id.summoner.hotstreak )]
 	championplayed23input = [matc.team_2summoner3_id.nr_gameswithchamp ,matc.team_2summoner3_id.average_kills,
-	matc.team_2summoner3_id.average_deaths, matc.team_2summoner3_id.average_assists,matc.team_2summoner3_id.average_gold]
+	matc.team_2summoner3_id.average_deaths, matc.team_2summoner3_id.average_assists,float(matc.team_2summoner3_id.average_gold)/float(goldnormalization)]
 
 	summoner24input = [ matc.team_2summoner4_id.summoner.tier ,  matc.team_2summoner4_id.summoner.rank, 
-	matc.team_2summoner4_id.summoner.hotstreak ]
+	int(matc.team_2summoner4_id.summoner.hotstreak )]
 	championplayed24input = [matc.team_2summoner4_id.nr_gameswithchamp ,matc.team_2summoner4_id.average_kills,
-	matc.team_2summoner4_id.average_deaths, matc.team_2summoner4_id.average_assists,matc.team_2summoner4_id.average_gold]
+	matc.team_2summoner4_id.average_deaths, matc.team_2summoner4_id.average_assists,float(matc.team_2summoner4_id.average_gold)/float(goldnormalization)]
 
 	summoner25input = [ matc.team_2summoner5_id.summoner.tier ,  matc.team_2summoner5_id.summoner.rank, 
-	matc.team_2summoner5_id.summoner.hotstreak ]
+	int(matc.team_2summoner5_id.summoner.hotstreak) ]
 	championplayed25input = [matc.team_2summoner5_id.nr_gameswithchamp ,matc.team_2summoner5_id.average_kills,
-	matc.team_2summoner5_id.average_deaths, matc.team_2summoner5_id.average_assists,matc.team_2summoner5_id.average_gold]
+	matc.team_2summoner5_id.average_deaths, matc.team_2summoner5_id.average_assists,float(matc.team_2summoner5_id.average_gold)/float(goldnormalization)]
 
 
 
-
-	if preprocessing==False:
-
-
-		input.extend(matchinput)
-		input.extend(summoner11input)
-		input.extend(championplayed11input)
-		input.extend(summoner12input)
-		input.extend(championplayed12input)
-		input.extend(summoner13input)
-		input.extend(championplayed13input)
-		input.extend(summoner14input)
-		input.extend(championplayed14input)
-		input.extend(summoner15input)
-		input.extend(championplayed15input)
-		input.extend(summoner21input)
-		input.extend(championplayed21input)
-		input.extend(summoner22input)
-		input.extend(championplayed22input)
-		input.extend(summoner23input)
-		input.extend(championplayed23input)
-		input.extend(summoner24input)
-		input.extend(championplayed24input)
-		input.extend(summoner25input)
-		input.extend(championplayed25input)
+	input.extend(matchinput)
+	input.extend(summoner11input)
+	input.extend(championplayed11input)
+	input.extend(summoner12input)
+	input.extend(championplayed12input)
+	input.extend(summoner13input)
+	input.extend(championplayed13input)
+	input.extend(summoner14input)
+	input.extend(championplayed14input)
+	input.extend(summoner15input)
+	input.extend(championplayed15input)
+	input.extend(summoner21input)
+	input.extend(championplayed21input)
+	input.extend(summoner22input)
+	input.extend(championplayed22input)
+	input.extend(summoner23input)
+	input.extend(championplayed23input)
+	input.extend(summoner24input)
+	input.extend(championplayed24input)
+	input.extend(summoner25input)
+	input.extend(championplayed25input)
 	
-	
+
 	
 	return input
-
-
-
 
 def preprocessdata(matc):
 
@@ -608,9 +597,6 @@ def preprocessdata(matc):
 	input.append(our_gold)
 	input.append(their_gold)
 	return input
-
-
-
 
 def print_summoner(summoner, updated, realupdate):
 	if updated:

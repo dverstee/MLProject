@@ -1,6 +1,18 @@
-[30/Nov/2013 14:19:42] DEBUG [lolpredictor.predictor.views.neural:39] 20, 100 , 34.962406015 , 39.7727272727
-[30/Nov/2013 14:20:13] DEBUG [lolpredictor.predictor.views.neural:39] 40, 100 , 41.3533834586 , 48.8636363636
-[30/Nov/2013 14:20:44] DEBUG [lolpredictor.predictor.views.neural:39] 80, 100 , 30.0751879699 , 54.5454545455
-[30/Nov/2013 14:21:19] DEBUG [lolpredictor.predictor.views.neural:39] 100, 100 , 34.5864661654 , 44.3181818182
-[30/Nov/2013 14:21:58] DEBUG [lolpredictor.predictor.views.neural:39] 200, 100 , 25.1879699248 , 53.4090909091
-[30/Nov/2013 14:22:45] DEBUG [lolpredictor.predictor.views.neural:39] 500, 100 , 37.969924812 , 51.1363636364
+04/Dec/2013 11:19:50] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 20; 200; 52,2292993631;43,2692307692
+[04/Dec/2013 11:20:09] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 40; 200; 50,3184713376;49,0384615385
+[04/Dec/2013 11:21:53] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 60; 200; 49,3630573248;51,9230769231
+[04/Dec/2013 11:22:03] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 80; 200; 50,6369426752;48,0769230769
+[04/Dec/2013 11:23:29] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 100; 200; 50,6369426752;48,0769230769
+[04/Dec/2013 11:28:22] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 120; 200; 51,2738853503;46,1538461538
+[04/Dec/2013 11:28:47] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 140; 200; 51,2738853503;46,1538461538
+[04/Dec/2013 11:30:30] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 160; 200; 48,7261146497;53,8461538462
+[04/Dec/2013 11:30:36] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 180; 200; 50,0;50,0
+[04/Dec/2013 11:31:02] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 200; 200; 48,7261146497;53,8461538462
+[04/Dec/2013 11:32:51] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 220; 200; 50,6369426752;48,0769230769
+[04/Dec/2013 11:34:33] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 240; 200; 48,7261146497;53,8461538462
+[04/Dec/2013 11:36:03] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 260; 200; 49,6815286624;50,9615384615
+[04/Dec/2013 11:37:49] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 280; 200; 52,2292993631;43,2692307692
+[04/Dec/2013 11:41:10] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 300; 200; 52,8662420382;41,3461538462
+[04/Dec/2013 11:44:27] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 320; 200; 50,0;50,0
+[04/Dec/2013 11:45:48] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 340; 200; 48,0891719745;55,7692307692
+[04/Dec/2013 11:49:13] DEBUG [lolpredictor,predictor,views,neural:44] ;33; 360; 200; 47,4522292994;57,6923076923
