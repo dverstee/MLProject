@@ -37,8 +37,7 @@ class Summoner(models.Model):
     updated_at                  = models.DateTimeField(auto_now=True)   
     def __unicode__(self):
         return str(self.name)
-class match(models.Model):
-
+class Match(models.Model):
     match_id            = models.CharField(max_length=10, primary_key=True)
     team1_is_red        = models.BooleanField()
     nr_premade_team1    = models.SmallIntegerField()

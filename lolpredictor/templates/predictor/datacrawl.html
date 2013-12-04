@@ -1,17 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Give your summoner name{% endblock %}
+{% block title %}Start a crawl{% endblock %}
 
 {% block content %}
 	{% if error_message %}
 		<p><strong>{{ error_message }}</strong></p>
 	{% endif %}
 
-	<form action="" name="" method="post">
-		{% csrf_token %}
-		StartAccountID name: <input type="text" id="sn" name="StartId" value="">
-		<br /><br />
-		Range : <input type="text" id="sn" name="Range" value=""><br /><br />
-		<input type="submit" value="GetSummonr" />
-	</form>
+	<div class="well well-lg">
+		<form class="form-horizontal" role="form" action="" name="" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="StartId" class="col-sm-2 control-label">StartAccountID</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="StartId" placeholder="ID">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="Range" class="col-sm-2 control-label">Range</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="Range" placeholder="Range">
+				</div>
+			</div>
+			<div class="form-group">
+	    		<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default">Start!</button>
+				</div>
+			</div>
+		</form>
+	</div>
 {% endblock %}

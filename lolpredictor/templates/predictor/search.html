@@ -6,42 +6,104 @@
 	{% elif query %}
 		<small>No results found for</small> {{ query }}
 	{% else %}
-		Search a summoner
+		Search for a summoner
 	{% endif %}
 {% endblock %}
 
 {% block content %}
 	{% if summoner %}
-		Tier: {{ summoner.tier }}<br />
-		Rank: {{ summoner.rank }}<br />
-		Hotstreak: {{ summoner.hotstreak }}<br />
-		Updated at: {{ summoner.updated_at|date:"Y-m-d" }}<br />
-		<br />
+		<div class="row">
+			<div class="col-sm-6 col-md-6">
+				<table class="table">
+					<tr><th>Tier</th><td>{{ summoner.tier }}</td></tr>
+					<tr><th>Rank</th><td>{{ summoner.rank }}</td></tr>
+					<tr><th>Hotstreak</th><td>{{ summoner.hotstreak }}</td></tr>
+					<tr><th>Updated at</th><td>{{ summoner.updated_at|date:"Y-m-d" }}</td></tr>
+				</table>
+			</div>
+		</div>
 
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Champion</th>
-					<th># Plays</th>
-					<th>Avg. Kills</th>
-					<th>Avg. Deaths</th>
-					<th>Avg. Assists</th>
-					<th>Avg. Gold</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for champion in championPlayed %}
-					<tr>
-						<td>{{ champion.champion.name }}</td>
-						<td>{{ champion.nr_gameswithchamp }}</td>
-						<td>{{ champion.average_kills }}</td>
-						<td>{{ champion.average_deaths }}</td>
-						<td>{{ champion.average_assists }}</td>
-						<td>{{ champion.average_gold }}</td>
-					</tr>
-				{% endfor %}
-			</body>
-		</table>
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#matches" data-toggle="tab">Matches</a></li>
+			<li><a href="#champs" data-toggle="tab">Champions</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="matches">
+				<br />
+				<div class="well well-sm">{{ matches.count }} {% if matches.count == 1 %}match{% else %}matches{% endif %} crawled.</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Champion</th>
+							<th>Premade</th>
+							<th>Win/Loss</th>
+							<th>Match type</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for match in matches %}
+							<tr style="background-color:{% if match.won %}#E0FFE0{% else %}#FFE0E0{% endif %}">
+								<td>{{ match.match_id }}</td>
+								<td>
+									{% if match.team_1summoner1_id.summoner == summoner %}{{ match.team_1summoner1_id.champion.name }}
+									{% elif match.team_1summoner2_id.summoner == summoner %}{{ match.team_1summoner2_id.champion.name }}
+									{% elif match.team_1summoner3_id.summoner == summoner %}{{ match.team_1summoner3_id.champion.name }}
+									{% elif match.team_1summoner4_id.summoner == summoner %}{{ match.team_1summoner4_id.champion.name }}
+									{% elif match.team_1summoner5_id.summoner == summoner %}{{ match.team_1summoner5_id.champion.name }}
+									{% elif match.team_2summoner1_id.summoner == summoner %}{{ match.team_2summoner1_id.champion.name }}
+									{% elif match.team_2summoner2_id.summoner == summoner %}{{ match.team_2summoner2_id.champion.name }}
+									{% elif match.team_2summoner3_id.summoner == summoner %}{{ match.team_2summoner3_id.champion.name }}
+									{% elif match.team_2summoner4_id.summoner == summoner %}{{ match.team_2summoner4_id.champion.name }}
+									{% elif match.team_2summoner5_id.summoner == summoner %}{{ match.team_2summoner5_id.champion.name }}
+									{% endif %}
+								</td>
+								<td>{{ match.nr_premade_team1 }}/{{ match.nr_premade_team2 }}</td>
+								<td>{% if match.won %}Won{% else %}Loss{% endif %}</td>
+								<td>{{ match.match_type }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="tab-pane" id="champs">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Champion</th>
+							<th><center># Plays</center></th>
+							<th><center>Avg. Kills</center></th>
+							<th><center>Avg. Deaths</center></th>
+							<th><center>Avg. Assists</center></th>
+							<th>Avg. Gold</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% load resolve %}
+						{% for champion in championPlayed %}
+							{% resolve championStats champion.champion.key as stat %}
+							<tr>
+								<td>{{ champion.champion.name }}</td>
+								<td><center>{{ champion.nr_gameswithchamp }}</center></td>
+								<td style="color:{% if champion.average_kills > stat.average_kills %}green{% else %}red{% endif %}">
+									<center><b>{{ champion.average_kills }}</b></center>
+								</td>
+								<td style="color:{% if champion.average_deaths > stat.average_deaths %}red{% else %}green{% endif %}">
+									<center><b>{{ champion.average_deaths }}</b></center>
+								</td>
+								<td style="color:{% if champion.average_assists > stat.average_assists %}green{% else %}red{% endif %}">
+									<center><b>{{ champion.average_assists }}</b></center>
+								</td>
+								<td style="color:{% if champion.average_gold > stat.average_gold %}green{% else %}red{% endif %}">
+									<b>{{ champion.average_gold }}</b>
+								</td>
+							</tr>
+						{% endfor %}
+					</body>
+				</table>
+			</div>
+		</div>
 	{% else %}
 		<div class="row">
 			<div class="col-sm-6 col-md-6">
@@ -56,4 +118,13 @@
 			</div>
 		</div>
 	{% endif %}
+{% endblock %}
+
+{% block extrascript %}
+	<script type="text/javascript">
+		$('.nav-tabs a').click(function (e) {
+			e.preventDefault()
+			$(this).tab('show')
+		});
+	</script>
 {% endblock %}

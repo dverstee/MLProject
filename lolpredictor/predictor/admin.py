@@ -14,4 +14,4 @@ class ChampionPlayedAdmin(admin.ModelAdmin):
 admin.site.register(ChampionPlayed, ChampionPlayedAdmin)
 
 admin.site.register(Summoner)
-admin.site.register(match)
+admin.site.register(Match)

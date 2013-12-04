@@ -61,11 +61,11 @@ def store_match(game , type ,account_id):
 	match_id = game["gameId"]
 	
 	try:
-		m = match.objects.get(match_id=match_id)
+		m = Match.objects.get(match_id=match_id)
 		print "This match was already stored"
 		globals.nrofupdates += 1
 		return m
-	except match.DoesNotExist, e:
+	except Match.DoesNotExist, e:
 		pass
 
 	
@@ -134,7 +134,7 @@ def store_match(game , type ,account_id):
 	
 	#TODO Iterate over the list to make the match object ! :) 
 	try:
-		m = match.objects.create(match_id= match_id,team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
+		m = Match.objects.create(match_id= match_id,team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
 		print_match(m)
 	
 	except IntegrityError  as e:
