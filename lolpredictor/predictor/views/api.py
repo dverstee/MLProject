@@ -128,7 +128,7 @@ def get_data( method, parameters):
         "X-Mashape-Authorization": API_KEY
         },
     encoding='utf-8',
-    #timeout=7000
+    timeout=7000
         );  
     try:
         s= response.raw_body.replace('\\', '')        
