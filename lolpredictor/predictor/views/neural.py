@@ -22,15 +22,15 @@ def neural(request):
     print  len(matches)
     
 
-    weightdecaymax = 5 
+    weightdecaymax = 4 
     alldata = getdata(False)
     globals.best_number_of_hidden_nodes=120
     globals.best_weight_decay=0.01
 
-    buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
+    #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
     #sweep over all parameters to find the one that have the best mean performance
-    for number_of_hidden_node in xrange(120,200,20):       
-        for decay in xrange(2,weightdecaymax,1):
+    for number_of_hidden_node in range(80,160,20):       
+        for decay in range(2,weightdecaymax,1):
             weightdecay = 10**(-decay)            
             basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
 
@@ -101,7 +101,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
   
     trnresult=0
     tstresult=0
-    nr_of_iterations = 25
+    nr_of_iterations = 5
 
     tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
@@ -113,7 +113,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     #Second argument is number of hidden nodes 
     #Third is number of outputs
 
-    for i in  xrange(1,nr_of_iterations,1):
+    for i in  xrange(1,nr_of_iterations+1,1):
         print i
         fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
@@ -123,8 +123,8 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
         tstresult = tstresult + percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
        
 
-    trnresult =trnresult/nr_of_iterations
-    tstresult = tstresult/nr_of_iterations
+    trnresult =trnresult/(nr_of_iterations)
+    tstresult = tstresult/(nr_of_iterations)
 
     if globals.best_error_rate > tstresult : 
         globals.best_error_rate = tstresult
