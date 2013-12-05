@@ -15,7 +15,6 @@ from util import getMinimalDatafromMatch
 from lolpredictor.predictor.models import Match
 import globals
 logger = logging.getLogger(__name__)
-
 def neural(request):    
     matches = Match.objects.all()
     print "Number of matches in db : " 
@@ -29,8 +28,8 @@ def neural(request):
 
     #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
     #sweep over all parameters to find the one that have the best mean performance
-    for number_of_hidden_node in range(80,120,20):       
-        for decay in range(2,weightdecaymax,1):
+    for decay in range(2,weightdecaymax,1):
+        for number_of_hidden_node in range(500,620,20):       
             weightdecay = 10**(-decay)            
             basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
 
@@ -51,9 +50,6 @@ def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresul
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
     print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
 
-def print_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
-   
-    print " improved test_error %s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
 
 def getMinimaldata():
     matches = match.objects.all()
@@ -105,7 +101,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     meantrnresult=0
     meantstresult=0
     besttstresult=100    
-    nr_of_iterations = 3
+    nr_of_iterations = 10
 
     tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
@@ -125,11 +121,13 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
         trainer.trainUntilConvergence(continueEpochs=5)   
         trnresult = percentError( trainer.testOnClassData(), trndata['class'] )  
         tstresult = percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
+       
         meantrnresult = meantrnresult + trnresult
-        meantstresult = meantstresult + tstresult      
+        meantstresult = meantstresult + tstresult   
+        log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,meantrnresult,meantstresult)
+       
         if tstresult < besttstresult:
-            #store network 
-            print_debug(trndata.indim,number_of_hidden_nodes, weightdecay,trnresult,tstresult)           
+            #store network                       
             besttstresult=tstresult            
             neuralnetwork = 'neuralHiddenNode%sdecay%s'%(number_of_hidden_nodes, weightdecay)
             fileObject = open(neuralnetwork, 'w')
@@ -139,8 +137,8 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     meantrnresult =meantrnresult/(nr_of_iterations)
     meantstresult = meantstresult/(nr_of_iterations)
 
-    if globals.best_error_rate > tstresult : 
-        globals.best_error_rate = tstresult
+    if globals.best_error_rate > meantstresult : 
+        globals.best_error_rate = meantstresult
         globals.best_weight_decay = weightdecay
         globals.best_number_of_hidden_nodes = number_of_hidden_nodes
 
@@ -148,7 +146,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     my_hash["tstresult"] = tstresult
     my_hash["trnresult"] = trnresult
 
-    log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,trnresult,tstresult)
+    
     
     return my_hash
 
