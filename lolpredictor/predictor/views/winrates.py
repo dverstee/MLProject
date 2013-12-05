@@ -26,7 +26,7 @@ def winrates(request):
 				matchup.delete()
 			except:
 				pass
-				# new_matchup = Synergy.objects.create(champion_1=champion_1, champion_2=champion_2, win_rate=i["dataColor"][index])
-				# print new_matchup
+			new_matchup = Synergy.objects.create(champion_1=champion_1, champion_2=champion_2, win_rate=i["dataColor"][index])
+			print new_matchup
 
 
