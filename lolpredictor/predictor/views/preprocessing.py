@@ -3,15 +3,15 @@ from  lolpredictor.predictor.models import *
 from django.shortcuts import render
 
 def test(request):
-	for _match in match.objects.all():
-		sort_match_champions(_match.match_id)
+	for match in Match.objects.all():
+		sort_match_champions(match.match_id)
 	return render(request, 'predictor/neural.html'  )
 # Sort the list of the champions according to
 # most probable position
 def sort_match_champions(match_id):
 
 	try:
-		my_match = match.objects.get(pk=match_id)
+		my_match = Match.objects.get(pk=match_id)
 	except Error as e:
 		# Match does not exist
 		print e

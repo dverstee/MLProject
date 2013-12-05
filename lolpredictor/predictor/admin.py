@@ -26,4 +26,4 @@ class MatchAdmin(admin.ModelAdmin):
 			  "team_2summoner4_id",
 			  "team_2summoner5_id")
 admin.site.register(Summoner)
-admin.site.register(match, MatchAdmin)
+admin.site.register(Match, MatchAdmin)
