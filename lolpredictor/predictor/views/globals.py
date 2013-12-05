@@ -77,7 +77,8 @@ junglematchups = [
 
 
 
-botsynergy= [{'name':'Caitlyn', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/51_32.png', 'url' : '/champions/caitlyn', 'dataSize':[455552,523188,361349,284714,284613,182991,222794,108586,128655,89574,80074,55032], 'dataColor':[50.52,50.41,51.96,49.29,53.14,52.7,49.06,48.27,46.68,44.02,47.77,46.13]},
+botsynergy_adc= [
+            {'name':'Caitlyn', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/51_32.png', 'url' : '/champions/caitlyn', 'dataSize':[455552,523188,361349,284714,284613,182991,222794,108586,128655,89574,80074,55032], 'dataColor':[50.52,50.41,51.96,49.29,53.14,52.7,49.06,48.27,46.68,44.02,47.77,46.13]},
             {'name':'Vayne', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/67_32.png', 'url' : '/champions/vayne', 'dataSize':[348905,409885,276077,227286,215114,142683,180509,63669,103282,82632,66602,38603], 'dataColor':[47.88,47.85,49.99,47.94,51.8,49.97,47.67,43.88,44.32,43.07,44.83,42.93]},
             {'name':'Ezreal', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/81_32.png', 'url' : '/champions/ezreal', 'dataSize':[331261,359406,283302,209314,163997,132774,131972,92254,85015,60105,42717,36649], 'dataColor':[49.69,47.4,50.12,47.56,50.04,51.2,47.5,45.86,43.77,42.56,45.71,44.03]},
             {'name':'Jinx', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/222_32.png', 'url' : '/champions/jinx', 'dataSize':[291454,283349,186522,154878,124222,113791,112933,63966,63529,54387,41659,30012], 'dataColor':[52.8,52.71,53.37,51.56,54.45,55.17,51.42,49.84,48.64,46.82,48.99,47.88]},
@@ -93,3 +94,19 @@ botsynergy= [{'name':'Caitlyn', 'image':'http://lkimg.zamimg.com/shared/riot/ima
             {'name':'Corki', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/42_32.png', 'url' : '/champions/corki', 'dataSize':[89121,78247,52082,46274,32707,26524,26485,16535,16909,13690,9763,7081], 'dataColor':[48.58,48.02,48.56,47.38,50.26,51.33,47.19,45.59,42.05,40.16,46.53,42.28]},
             {'name':'Quinn', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/133_32.png', 'url' : '/champions/quinn', 'dataSize':[48731,41422,28290,24882,18575,18840,17022,10355,10232,9045,7103,5004], 'dataColor':[50.76,51.59,54.62,49.67,53.23,52.45,49.86,46.83,46.98,43.83,48.46,46.88]}
            ]
+
+
+botsynergy_support =[
+            {'name':'Leona', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/89_32.png', 'url' : '/champions/leona'},
+            {'name':'Thresh', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/412_32.png', 'url' : '/champions/thresh'},
+            {'name':'Sona', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/37_32.png', 'url' : '/champions/sona'},
+            {'name':'Blitzcrank', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/53_32.png', 'url' : '/champions/blitzcrank'},
+            {'name':'Janna', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/40_32.png', 'url' : '/champions/janna'},
+            {'name':'Taric', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/44_32.png', 'url' : '/champions/taric'},
+            {'name':'Nami', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/267_32.png', 'url' : '/champions/nami'},
+            {'name':'Soraka', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/16_32.png', 'url' : '/champions/soraka'},
+            {'name':'Lulu', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/117_32.png', 'url' : '/champions/lulu'},
+            {'name':'Alistar', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/12_32.png', 'url' : '/champions/alistar'},
+            {'name':'Nunu', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/20_32.png', 'url' : '/champions/nunu'},
+            {'name':'Karma', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/43_32.png', 'url' : '/champions/karma'}
+            ]
