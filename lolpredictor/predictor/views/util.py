@@ -6,7 +6,7 @@ from  lolpredictor.predictor.models import *
 from datetime import *
 from api import *
 from django.db import IntegrityError
-from preprocessing import sort_match_champions
+from preprocessing import *
 import globals
 logger = logging.getLogger(__name__)
 
@@ -457,7 +457,7 @@ def getBasicDatafromMatch(matc,preprocessing):
 	input.extend(championplayed24input)
 	input.extend(summoner25input)
 	input.extend(championplayed25input)
-	
+	input.extend(get_win_rates(matc))
 
 	
 	return input

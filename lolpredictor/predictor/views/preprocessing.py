@@ -89,8 +89,44 @@ def classify(champion):
 		roles.append(4)
 	return roles
 
+def get_win_rates(match):
+	winrates=[]
+	try:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner1_id.champion.key,
+		champion_2=match.team_2summoner1_id.champion.key)
+		winrates.append(matchup.winrate)
+	except Exception, e:
+		winrates.append(0.5)
+	try:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner2_id.champion.key,
+		champion_2=match.team_2summoner2_id.champion.key)
+		winrates.append(matchup.winrate)
+	except Exception, e:
+		winrates.append(0.5)
+
+	try:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner3_id.champion.key,
+		champion_2=match.team_2summoner3_id.champion.key)
+		winrates.append(matchup.winrate)
+	except Exception, e:
+		winrates.append(0.5)
+
+	try:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner4_id.champion.key,
+		champion_2=match.team_2summoner4_id.champion.key)
+		winrates.append(matchup.winrate)
+	except Exception, e:
+		winrates.append(0.5)
+
+	try:
+		synergy = Synergy.objects.get(champion_1=match.team_1summoner4_id.champion.key,
+		champion_2=match.team_2summoner4_id.champion.key)
+		winrates.append(synergy.winrate)
+	except Exception, e:
+		winrates.append(0.5)
 
 
+	return synergy
 
 
 	
