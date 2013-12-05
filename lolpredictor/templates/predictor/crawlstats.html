@@ -21,28 +21,36 @@
 	</div>
 
 	<div class="panel panel-default">
-		<div class="panel-heading">Crawled summoners</div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>
-							<div class="input-group pull-right">
-								<input type="text" class="form-control" id="summonerSearch" placeholder="Search" /><br />
-							</div>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for summoner in summoners %}
-						<tr class="summoner">
-							<td><a href="{% url 'predictor:search' %}?sn={{ summoner.name|urlencode }}">{{ summoner.name }}</a></td>
-							<td></td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+		<div class="panel-heading">
+			Crawled summoners
 		</div>
+		<div class="panel-body">
+			<div class="input-group pull-right">
+				<input type="text" class="form-control" id="summonerSearch" placeholder="Search" /><br />
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Summoner ID</th>
+					<th>Account ID</th>
+					<th>Division</th>
+					<th>Updated At</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for summoner in summoners %}
+					<tr class="summoner">
+						<td><a href="{% url 'predictor:search' %}?sn={{ summoner.name|urlencode }}">{{ summoner.name|safe }}</a></td>
+						<td>{{ summoner.summoner_id }}</td>
+						<td>{{ summoner.account_id }}</td>
+						<td>{{ summoner.getDivision }}</td>
+						<td>{{ summoner.updated_at|date:"Y-m-d" }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 {% endblock %}
 

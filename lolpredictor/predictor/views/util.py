@@ -258,7 +258,7 @@ def ranktoint(rank):
 	elif rank == "II":
 		return 2
 	elif rank == "III":
-	 return 3
+		return 3
 	elif rank == "IV":
 		return 4
 	elif rank == "V":
@@ -270,7 +270,7 @@ def tiertoint(tier):
 	elif tier == "SILVER":
 		return 2
 	elif tier == "GOLD":
-	 return 3
+		return 3
 	elif tier == "PLATINUM":
 		return 4
 	elif tier == "DIAMOND":
