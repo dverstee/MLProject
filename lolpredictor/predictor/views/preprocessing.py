@@ -92,41 +92,41 @@ def classify(champion):
 def get_win_rates(match):
 	winrates=[]
 	try:
-		matchup = Matchup.objects.get(champion_1=match.team_1summoner1_id.champion.key,
-		champion_2=match.team_2summoner1_id.champion.key)
-		winrates.append(matchup.winrate)
-	except Exception, e:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner1_id.champion,
+		champion_2=match.team_2summoner1_id.champion)
+		winrates.append(matchup.win_rate)
+	except Matchup.DoesNotExist, e:
 		winrates.append(0.5)
 	try:
-		matchup = Matchup.objects.get(champion_1=match.team_1summoner2_id.champion.key,
-		champion_2=match.team_2summoner2_id.champion.key)
-		winrates.append(matchup.winrate)
-	except Exception, e:
-		winrates.append(0.5)
-
-	try:
-		matchup = Matchup.objects.get(champion_1=match.team_1summoner3_id.champion.key,
-		champion_2=match.team_2summoner3_id.champion.key)
-		winrates.append(matchup.winrate)
-	except Exception, e:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner2_id.champion,
+		champion_2=match.team_2summoner2_id.champion)
+		winrates.append(matchup.win_rate)
+	except Matchup.DoesNotExist, e:
 		winrates.append(0.5)
 
 	try:
-		matchup = Matchup.objects.get(champion_1=match.team_1summoner4_id.champion.key,
-		champion_2=match.team_2summoner4_id.champion.key)
-		winrates.append(matchup.winrate)
-	except Exception, e:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner3_id.champion,
+		champion_2=match.team_2summoner3_id.champion)
+		winrates.append(matchup.win_rate)
+	except Matchup.DoesNotExist, e:
 		winrates.append(0.5)
 
 	try:
-		synergy = Synergy.objects.get(champion_1=match.team_1summoner4_id.champion.key,
-		champion_2=match.team_2summoner4_id.champion.key)
-		winrates.append(synergy.winrate)
-	except Exception, e:
+		matchup = Matchup.objects.get(champion_1=match.team_1summoner4_id.champion,
+		champion_2=match.team_2summoner4_id.champion)
+		winrates.append(matchup.win_rate)
+	except Matchup.DoesNotExist, e:
+		winrates.append(0.5)
+
+	try:
+		synergy = Synergy.objects.get(champion_1=match.team_1summoner4_id.champion,
+		champion_2=match.team_2summoner4_id.champion)
+		winrates.append(synergy.win_rate)
+	except Synergy.DoesNotExist, e:
 		winrates.append(0.5)
 
 
-	return synergy
+	return winrates
 
 
 	
