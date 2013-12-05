@@ -15,8 +15,7 @@
 		<div class="row">
 			<div class="col-sm-6 col-md-6">
 				<table class="table">
-					<tr><th>Tier</th><td>{{ summoner.tier }}</td></tr>
-					<tr><th>Rank</th><td>{{ summoner.rank }}</td></tr>
+					<tr><th>Division</th><td>{{ summoner.getDivision }}</td></tr>
 					<tr><th>Hotstreak</th><td>{{ summoner.hotstreak }}</td></tr>
 					<tr><th>Updated at</th><td>{{ summoner.updated_at|date:"Y-m-d" }}</td></tr>
 				</table>
@@ -87,16 +86,16 @@
 								<td>{{ champion.champion.name }}</td>
 								<td><center>{{ champion.nr_gameswithchamp }}</center></td>
 								<td style="color:{% if champion.average_kills > stat.average_kills %}green{% else %}red{% endif %}">
-									<center><b>{{ champion.average_kills }}</b></center>
+									<center><b>{{ champion.average_kills }}</b> <span style="color:gray">({{stat.average_kills|floatformat:1}})</span></center>
 								</td>
 								<td style="color:{% if champion.average_deaths > stat.average_deaths %}red{% else %}green{% endif %}">
-									<center><b>{{ champion.average_deaths }}</b></center>
+									<center><b>{{ champion.average_deaths }}</b> <span style="color:gray">({{stat.average_deaths|floatformat:1}})</span></center>
 								</td>
 								<td style="color:{% if champion.average_assists > stat.average_assists %}green{% else %}red{% endif %}">
-									<center><b>{{ champion.average_assists }}</b></center>
+									<center><b>{{ champion.average_assists }}</b> <span style="color:gray">({{stat.average_assists|floatformat:1}})</span></center>
 								</td>
 								<td style="color:{% if champion.average_gold > stat.average_gold %}green{% else %}red{% endif %}">
-									<b>{{ champion.average_gold }}</b>
+									<b>{{ champion.average_gold }}</b> <span style="color:gray">({{stat.average_gold|floatformat:0}})</span>
 								</td>
 							</tr>
 						{% endfor %}

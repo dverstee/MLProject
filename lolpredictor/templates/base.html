@@ -35,6 +35,8 @@
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Crawler</a></li>
 						{% url 'predictor:crawlstats' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Crawlstats</a></li>
+						{% url 'predictor:summoners' as url %}
+						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Summoners</a></li>
 						{% url 'predictor:search' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Search</a></li>
 					</ul>

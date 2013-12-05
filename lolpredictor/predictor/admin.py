@@ -14,16 +14,18 @@ class ChampionPlayedAdmin(admin.ModelAdmin):
 admin.site.register(ChampionPlayed, ChampionPlayedAdmin)
 
 class MatchAdmin(admin.ModelAdmin):
-	list_display = ("match_id",
-			  "team_1summoner1_id", 
-			  "team_1summoner2_id",
-			  "team_1summoner3_id",
-			  "team_1summoner4_id",
-			  "team_1summoner5_id",
-			  "team_2summoner1_id", 
-			  "team_2summoner2_id",
-			  "team_2summoner3_id",
-			  "team_2summoner4_id",
-			  "team_2summoner5_id")
+	raw_id_fields = ('team_1summoner1_id',
+					'team_1summoner1_id',
+					'team_1summoner2_id',
+					'team_1summoner3_id',
+					'team_1summoner4_id',
+					'team_1summoner5_id',
+					'team_2summoner1_id',
+					'team_2summoner2_id',
+					'team_2summoner3_id',
+					'team_2summoner4_id',
+					'team_2summoner5_id')
+	list_display = ('match_id',)
+
 admin.site.register(Summoner)
 admin.site.register(Match, MatchAdmin)

@@ -14,6 +14,4 @@ def crawlstats(request):
     stats['nrOfDiamond'] = Summoner.objects.filter(tier=5).count()
     stats['nrOfMatches'] = Match.objects.count()
     stats['nrOfChampionPlayed'] = ChampionPlayed.objects.count()
-
-    stats['summoners'] = Summoner.objects.order_by('name')
     return render(request, 'predictor/crawlstats.html', stats)

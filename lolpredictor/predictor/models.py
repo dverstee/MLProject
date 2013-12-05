@@ -21,10 +21,10 @@ class ChampionPlayed(models.Model):
     summoner                = models.ForeignKey('Summoner')
 
     nr_gameswithchamp       = models.SmallIntegerField()
-    average_kills           = models.SmallIntegerField()
-    average_deaths          = models.SmallIntegerField()
-    average_assists         = models.SmallIntegerField()
-    average_gold            = models.SmallIntegerField()
+    average_kills           = models.FloatField()
+    average_deaths          = models.FloatField()
+    average_assists         = models.FloatField()
+    average_gold            = models.FloatField()
     champions_updated_at    = models.DateTimeField(auto_now=True)
  
     class Meta:

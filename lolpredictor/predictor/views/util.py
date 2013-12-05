@@ -244,10 +244,10 @@ def store_champions_played(accountId):
 			champ_played.delete()
 		except ChampionPlayed.DoesNotExist:
 			pass
-		params["average_assists"] = params["average_assists"] // params["nr_gameswithchamp"]
-		params["average_deaths"] = params["average_deaths"] // params["nr_gameswithchamp"]
-		params["average_kills"] = params["average_kills"] // params["nr_gameswithchamp"]
-		params["average_gold"] = params["average_gold"] // params["nr_gameswithchamp"]
+		params["average_assists"] = params["average_assists"] / params["nr_gameswithchamp"]
+		params["average_deaths"] = params["average_deaths"] / params["nr_gameswithchamp"]
+		params["average_kills"] = params["average_kills"] / params["nr_gameswithchamp"]
+		params["average_gold"] = params["average_gold"] / params["nr_gameswithchamp"]
 		c1 = ChampionPlayed.objects.create(**params)
 	print_champion_played(summoner,True)	
 	return True

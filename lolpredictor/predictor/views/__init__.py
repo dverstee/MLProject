@@ -3,4 +3,5 @@ from crawlstats import crawlstats
 from index import index
 from neural import neural
 from search import search
+from summoners import summoners
 from preprocessing import test

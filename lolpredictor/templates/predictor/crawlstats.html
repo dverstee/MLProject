@@ -20,56 +20,53 @@
 		</div>
 	</div>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			Crawled summoners
-		</div>
-		<div class="panel-body">
-			<div class="input-group pull-right">
-				<input type="text" class="form-control" id="summonerSearch" placeholder="Search" /><br />
+	<div class="row">
+		<div class="col-sm-6 col-md-6 panel panel-default">
+			<div class="panel-heading">
+				Crawled tiers
 			</div>
+			<div class="panel-body" id="piechart" style="height: 500px"></div>
 		</div>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Summoner ID</th>
-					<th>Account ID</th>
-					<th>Division</th>
-					<th>Updated At</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for summoner in summoners %}
-					<tr class="summoner">
-						<td><a href="{% url 'predictor:search' %}?sn={{ summoner.name|urlencode }}">{{ summoner.name|safe }}</a></td>
-						<td>{{ summoner.summoner_id }}</td>
-						<td>{{ summoner.account_id }}</td>
-						<td>{{ summoner.getDivision }}</td>
-						<td>{{ summoner.updated_at|date:"Y-m-d" }}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+		<div class="col-sm-6 col-md-6 panel panel-default">
+			<div class="panel-heading">
+				Real tiers
+			</div>
+			<div class="panel-body" id="realpiechart" style="height: 500px"></div>
+		</div>
 	</div>
 {% endblock %}
 
 {% block extrascript %}
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
-		$('#summonerSearch').keyup(function (e) {
-			var query = $(this).val().toLowerCase();
-			if(query.length === 0) {
-				$('.summoner').show();
-			} else {
-				$('.summoner').each(function () {
-					var name = $(this).find('a').html().toLowerCase();
-					if(name.indexOf(query) == -1) {
-						$(this).hide();
-					} else {
-						$(this).show();
-					}
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+				['Tier', 'Nr of summoners'],
+				['Bronze', {{nrOfBronze}}],
+				['Silver', {{nrOfSilver}}],
+				['Gold', {{nrOfGold}}],
+				['Platinum', {{nrOfPlatinum}}],
+				['Diamond', {{nrOfDiamond}}]
+			]);
+			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+			chart.draw(data, {
+					colors: ['#CD7F32', '#C4AEAD', '#FFD700', '#E5E4E2', '#82EDBD'],
 				});
-			}
-		});
+
+			var data2 = google.visualization.arrayToDataTable([
+				['Tier', 'Nr of summoners'],
+				['Bronze', 3240731],
+				['Silver', 1320716],
+				['Gold', 211901],
+				['Platinum', 39757],
+				['Diamond', 8067]
+			]);
+			var chart = new google.visualization.PieChart(document.getElementById('realpiechart'));
+			chart.draw(data2, {
+					colors: ['#CD7F32', '#C4AEAD', '#FFD700', '#E5E4E2', '#82EDBD'],
+				});
+		}
 	</script>
 {% endblock %}
