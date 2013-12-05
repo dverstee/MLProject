@@ -11,7 +11,7 @@ def search(request):
         except Summoner.DoesNotExist:
             return render(request, 'predictor/search.html', {'summoner': None, 'query': summonerName})
 
-        championPlayed = ChampionPlayed.objects.filter(summoner=summoner).order_by('-nr_gameswithchamp')
+        championPlayed = ChampionPlayed.objects.filter(summoner=summoner).order_by('-nr_gameswithchamp').select_related('champion')
         stats = ChampionPlayed.objects.values('champion').annotate(
             average_kills=Avg('average_kills'),
             average_deaths=Avg('average_deaths'),
