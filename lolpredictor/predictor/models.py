@@ -4,12 +4,15 @@ from django.db import models
 class Champion(models.Model):
     name                    = models.CharField(max_length=40)
     key                     = models.SmallIntegerField(primary_key=True)
-    tags                    = models.CharField(max_length=100)
     difficulty              = models.SmallIntegerField()
     magic                   = models.SmallIntegerField()
     attack                  = models.SmallIntegerField()
     defense                 = models.SmallIntegerField()
-
+    can_jungle              = models.BooleanField(default=False)
+    can_mid                 = models.BooleanField(default=False)
+    can_top                 = models.BooleanField(default=False)
+    can_adc                 = models.BooleanField(default=False)
+    can_support             = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
 

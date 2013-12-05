@@ -8,4 +8,5 @@ urlpatterns = patterns('',
  	url(r'^crawlstats/$', views.crawlstats, name='crawlstats'),
  	url(r'^crawler/$', views.crawler, name='crawler'),
     url(r'^search/', views.search, name='search'),
+    url(r'^test/', views.test, name='test'),
 )

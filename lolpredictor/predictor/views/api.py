@@ -3,11 +3,9 @@ import unirest
 import re
 import logging
 import time
+import globals
 from functools import wraps
 
-API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
-REGION = "EUW"
-API_DOMAIN = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION
 
 logger = logging.getLogger(__name__)
 def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
