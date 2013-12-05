@@ -60,8 +60,13 @@ class Match(models.Model):
     team_2summoner3_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner3')
     team_2summoner4_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner4')
     team_2summoner5_id = models.ForeignKey('ChampionPlayed' , related_name='team_2summoner5')
-
     def __unicode__(self):
          return str(self.match_id)
+
+class Matchup(models.Model):
+    champion_1 = models.ForeignKey('Champion' , related_name='champion_1')
+    champion_2 = models.ForeignKey('Champion' , related_name='champion_2')
+    win_rate   = models.FloatField()
+    
 
 
