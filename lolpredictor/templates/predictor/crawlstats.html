@@ -5,10 +5,71 @@
 {% endblock %}
 
 {% block content %}
-	# Summoners: {{nrOfSummoners}}<br />
-	# Bronze: {{nrOfBronze}}<br />
-	# Silver: {{nrOfSilver}}<br />
-	# Gold: {{nrOfGold}}<br />
-	# Platinum: {{nrOfPlatinum}}<br />
-	# Diamond: {{nrOfDiamond}}
+	<div class="row">
+		<div class="col-sm-6 col-md-6">
+			<table class="table">
+				<tr><th>Summoners</th><td>{{nrOfSummoners}}</td></tr>
+				<tr><th>Bronze</th><td>{{nrOfBronze}}</td></tr>
+				<tr><th>Silver</th><td>{{nrOfSilver}}</td></tr>
+				<tr><th>Gold</th><td>{{nrOfGold}}</td></tr>
+				<tr><th>Platinum</th><td>{{nrOfPlatinum}}</td></tr>
+				<tr><th>Diamond</th><td>{{nrOfDiamond}}</td></tr>
+				<tr><th>Matches</th><td>{{nrOfMatches}}</td></tr>
+				<tr><th>Summoner champion stats</th><td>{{nrOfChampionPlayed}}</td></tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Crawled summoners
+		</div>
+		<div class="panel-body">
+			<div class="input-group pull-right">
+				<input type="text" class="form-control" id="summonerSearch" placeholder="Search" /><br />
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Summoner ID</th>
+					<th>Account ID</th>
+					<th>Division</th>
+					<th>Updated At</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for summoner in summoners %}
+					<tr class="summoner">
+						<td><a href="{% url 'predictor:search' %}?sn={{ summoner.name|urlencode }}">{{ summoner.name|safe }}</a></td>
+						<td>{{ summoner.summoner_id }}</td>
+						<td>{{ summoner.account_id }}</td>
+						<td>{{ summoner.getDivision }}</td>
+						<td>{{ summoner.updated_at|date:"Y-m-d" }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+
+{% block extrascript %}
+	<script type="text/javascript">
+		$('#summonerSearch').keyup(function (e) {
+			var query = $(this).val().toLowerCase();
+			if(query.length === 0) {
+				$('.summoner').show();
+			} else {
+				$('.summoner').each(function () {
+					var name = $(this).find('a').html().toLowerCase();
+					if(name.indexOf(query) == -1) {
+						$(this).hide();
+					} else {
+						$(this).show();
+					}
+				});
+			}
+		});
+	</script>
 {% endblock %}

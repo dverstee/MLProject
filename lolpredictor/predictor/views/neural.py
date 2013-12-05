@@ -12,12 +12,12 @@ import logging
 import pickle
 from util import getBasicDatafromMatch
 from util import getMinimalDatafromMatch
-from lolpredictor.predictor.models import match
+from lolpredictor.predictor.models import Match
 import globals
 logger = logging.getLogger(__name__)
 
 def neural(request):    
-    matches = match.objects.all()
+    matches = Match.objects.all()
     print "Number of matches in db : " 
     print  len(matches)
     
@@ -71,7 +71,7 @@ def getMinimaldata():
     return alldata
 
 def getdata(Preprocessing):
-    matches = match.objects.all()
+    matches = Match.objects.all()
     init=True
 
     for matc in matches:    

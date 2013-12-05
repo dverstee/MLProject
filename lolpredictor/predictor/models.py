@@ -4,13 +4,18 @@ from django.db import models
 class Champion(models.Model):
     name                    = models.CharField(max_length=40)
     key                     = models.SmallIntegerField(primary_key=True)
-    tags                    = models.CharField(max_length=100)
     difficulty              = models.SmallIntegerField()
     magic                   = models.SmallIntegerField()
     attack                  = models.SmallIntegerField()
     defense                 = models.SmallIntegerField()
+    can_jungle              = models.BooleanField(default=False)
+    can_mid                 = models.BooleanField(default=False)
+    can_top                 = models.BooleanField(default=False)
+    can_adc                 = models.BooleanField(default=False)
+    can_support             = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
+
 class ChampionPlayed(models.Model): 
     champion                = models.ForeignKey('Champion')
     summoner                = models.ForeignKey('Summoner')
@@ -24,21 +29,28 @@ class ChampionPlayed(models.Model):
  
     class Meta:
         unique_together = (("champion", "summoner"),)
+
     def __unicode__(self):
         return str(self.champion) +" " +str(self.summoner)
-class Summoner(models.Model):
 
+class Summoner(models.Model):
     name                        = models.CharField(max_length=20)
     summoner_id                 = models.CharField(max_length=10)
     account_id                  = models.CharField(max_length=10, primary_key=True)
     tier                        = models.SmallIntegerField()
     rank                        = models.SmallIntegerField()
     hotstreak                   = models.BooleanField ()
-    updated_at                  = models.DateTimeField(auto_now=True)   
+    updated_at                  = models.DateTimeField(auto_now=True)
+
     def __unicode__(self):
         return str(self.name)
-class match(models.Model):
 
+    def getDivision(self):
+        tiers = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']
+        divisions = ['I', 'II', 'III', 'IV', 'V']
+        return tiers[self.tier-1] + ' ' + divisions[self.rank-1]
+
+class Match(models.Model):
     match_id            = models.CharField(max_length=10, primary_key=True)
     team1_is_red        = models.BooleanField()
     nr_premade_team1    = models.SmallIntegerField()
@@ -60,5 +72,3 @@ class match(models.Model):
 
     def __unicode__(self):
          return str(self.match_id)
-
-
