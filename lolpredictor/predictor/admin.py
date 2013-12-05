@@ -29,3 +29,9 @@ class MatchAdmin(admin.ModelAdmin):
 
 admin.site.register(Summoner)
 admin.site.register(Match, MatchAdmin)
+class MatchupAdmin(admin.ModelAdmin):
+	list_display = ("champion_1", "champion_2", "win_rate")
+admin.site.register(Matchup, MatchupAdmin)
+class SynergyAdmin(admin.ModelAdmin):
+	list_display = ("champion_1", "champion_2", "win_rate")
+admin.site.register(Synergy, SynergyAdmin)

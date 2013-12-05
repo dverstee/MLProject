@@ -6,6 +6,7 @@ from  lolpredictor.predictor.models import *
 from datetime import *
 from api import *
 from django.db import IntegrityError
+from preprocessing import *
 import globals
 logger = logging.getLogger(__name__)
 
@@ -135,6 +136,7 @@ def store_match(game , type ,account_id):
 	#TODO Iterate over the list to make the match object ! :) 
 	try:
 		m = Match.objects.create(match_id= match_id,team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
+		sort_match_champions(m.match_id)
 		print_match(m)
 	
 	except IntegrityError  as e:
@@ -455,7 +457,7 @@ def getBasicDatafromMatch(matc,preprocessing):
 	input.extend(championplayed24input)
 	input.extend(summoner25input)
 	input.extend(championplayed25input)
-	
+	input.extend(get_win_rates(matc))
 
 	
 	return input
