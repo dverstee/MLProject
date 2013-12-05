@@ -29,7 +29,7 @@ def neural(request):
 
     #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
     #sweep over all parameters to find the one that have the best mean performance
-    for number_of_hidden_node in range(80,160,20):       
+    for number_of_hidden_node in range(80,120,20):       
         for decay in range(2,weightdecaymax,1):
             weightdecay = 10**(-decay)            
             basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
@@ -51,6 +51,9 @@ def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresul
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
     print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
 
+def print_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
+   
+    print " improved test_error %s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
 
 def getMinimaldata():
     matches = match.objects.all()
@@ -99,9 +102,10 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     
    
   
-    trnresult=0
-    tstresult=0
-    nr_of_iterations = 5
+    meantrnresult=0
+    meantstresult=0
+    besttstresult=100    
+    nr_of_iterations = 3
 
     tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
@@ -118,20 +122,27 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
         fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
-        trainer.trainUntilConvergence(continueEpochs=5)         
-        trnresult = trnresult + percentError( trainer.testOnClassData(), trndata['class'] )
-        tstresult = tstresult + percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
-       
+        trainer.trainUntilConvergence(continueEpochs=5)   
+        trnresult = percentError( trainer.testOnClassData(), trndata['class'] )  
+        tstresult = percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
+        meantrnresult = meantrnresult + trnresult
+        meantstresult = meantstresult + tstresult      
+        if tstresult < besttstresult:
+            #store network 
+            print_debug(trndata.indim,number_of_hidden_nodes, weightdecay,trnresult,tstresult)           
+            besttstresult=tstresult            
+            neuralnetwork = 'neuralHiddenNode%sdecay%s'%(number_of_hidden_nodes, weightdecay)
+            fileObject = open(neuralnetwork, 'w')
+            pickle.dump(fnn, fileObject)
+            fileObject.close()
 
-    trnresult =trnresult/(nr_of_iterations)
-    tstresult = tstresult/(nr_of_iterations)
+    meantrnresult =meantrnresult/(nr_of_iterations)
+    meantstresult = meantstresult/(nr_of_iterations)
 
     if globals.best_error_rate > tstresult : 
         globals.best_error_rate = tstresult
         globals.best_weight_decay = weightdecay
         globals.best_number_of_hidden_nodes = number_of_hidden_nodes
-
-  
 
     my_hash = {}
     my_hash["tstresult"] = tstresult
@@ -145,7 +156,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
 def buildbestneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     trnresult=0
     tstresult=0
-    nr_of_iterations = 25
+    nr_of_iterations = 10
 
     tstdata, trndata = alldata.splitWithProportion( 0.25 )
 
