@@ -22,18 +22,20 @@ def neural(request):
     print  len(matches)
     
 
-    weightdecaymax = 6 
+    weightdecaymax = 5 
     alldata = getdata(False)
-    buildbestneuralnetwork(40,0.01,alldata)
+    globals.best_number_of_hidden_nodes=120
+    globals.best_weight_decay=0.01
 
+    buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
     #sweep over all parameters to find the one that have the best mean performance
-    for number_of_hidden_node in xrange(20,400,20):       
-        for decay in xrange(1,weightdecaymax,1):
+    for number_of_hidden_node in xrange(120,200,20):       
+        for decay in xrange(2,weightdecaymax,1):
             weightdecay = 10**(-decay)            
             basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
 
     #build the best network with the parameters that performed best on mean
-    buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)        
+           
    
     #alldata = getMinimaldata()    
     #for number_of_hidden_node in xrange(20,1000,20):       
@@ -116,7 +118,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
         fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
-        trainer.trainUntilConvergence(continueEpochs=5) 
+        trainer.trainUntilConvergence(continueEpochs=5)         
         trnresult = trnresult + percentError( trainer.testOnClassData(), trndata['class'] )
         tstresult = tstresult + percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
        
@@ -135,7 +137,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     my_hash["tstresult"] = tstresult
     my_hash["trnresult"] = trnresult
 
-    log_debug(trndata.indim,weightdecay, weightdecay,trnresult,tstresult)
+    log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,trnresult,tstresult)
     
     return my_hash
 
@@ -150,7 +152,7 @@ def buildbestneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     trndata._convertToOneOfMany( )
     tstdata._convertToOneOfMany( )         
 
-    print "number_of_hidden_nodes : %s; weight decay : %s" % (number_of_hidden_nodes, weightdecay)
+    print "The best network : number_of_hidden_nodes : %s; weight decay : %s" % (number_of_hidden_nodes, weightdecay)
     #First  arggument is number of  inputs.
     #Second argument is number of hidden nodes 
     #Third is number of outputs
