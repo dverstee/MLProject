@@ -2,7 +2,7 @@
 
 {% block title %}
 	{% if summoner %}
-		{{ summoner.name }} <small>(#{{ summoner.summoner_id }})</small>
+		{{ summoner.name|safe }} <small>(#{{ summoner.summoner_id }})</small>
 	{% elif query %}
 		<small>No results found for</small> {{ query }}
 	{% else %}
