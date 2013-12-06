@@ -2,9 +2,8 @@ from pybrain.datasets            import ClassificationDataSet
 from pybrain.utilities           import percentError
 from pybrain.tools.shortcuts     import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
-from pybrain.structure.modules   import SoftmaxLayer
-
-
+from pybrain.structure.modules   import SoftmaxLayer, BiasUnit
+from pybrain.structure           import FullConnection, FeedForwardNetwork, LinearLayer, SigmoidLayer
 
 from django.shortcuts import render
 import itertools, collections
@@ -62,11 +61,11 @@ def getMinimaldata():
             dimensions = len(input)
             print dimensions
             alldata = ClassificationDataSet(dimensions, 1, nb_classes=2)     
-            alldata.addSample(input, matc.won) 
+            alldata.addSample(input, [matc.won]) 
             init = False           
         else :       
             input = getMinimalDatafromMatch(matc,True)      
-            alldata.addSample(input, matc.won)
+            alldata.addSample(input, [matc.won])
             dimensions = len(input)
     return alldata
 
@@ -101,26 +100,52 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
   
     trnresult=0
     tstresult=0
-    nr_of_iterations = 5
+    nr_of_iterations = 1
 
-    tstdata, trndata = alldata.splitWithProportion( 0.25 )
-
-    trndata._convertToOneOfMany( )
-    tstdata._convertToOneOfMany( )       
+    tstdata, trndata = alldata.splitWithProportion( 0.1 )
+    trndata._convertToOneOfMany()
+    tstdata._convertToOneOfMany()
 
     print "number_of_hidden_nodes : %s; weight decay : %s" % (number_of_hidden_nodes, weightdecay)
     #First  arggument is number of  inputs.
     #Second argument is number of hidden nodes 
     #Third is number of outputs
 
-    for i in  xrange(1,nr_of_iterations+1,1):
-        print i
-        fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
+    for i in  xrange(1,nr_of_iterations+1):
+        print "Fold #%d" % i
+        input_layer = LinearLayer(trndata.indim)
+        hidden_layers = []
+        output_layer = SoftmaxLayer(trndata.outdim)
+        # Nodes of the neural network
+        fnn = FeedForwardNetwork()
+        fnn.addInputModule(input_layer)
+        for i in range(globals.number_of_hidden_layers):
+            sigm = SigmoidLayer(number_of_hidden_nodes)
+            hidden_layers.append(sigm)
+            fnn.addModule(sigm)
+        fnn.addOutputModule(output_layer)
+        bias = BiasUnit()
+        fnn.addModule(bias)
+        # Connections of the neural network
+        input_connection = FullConnection(input_layer, hidden_layers[0])
+        fnn.addConnection(input_connection)
+        fnn.addConnection(FullConnection(bias, hidden_layers[0]))
+        for i in range(len(hidden_layers) - 1):
+            full = FullConnection(hidden_layers[i], hidden_layers[i+1])
+            fnn.addConnection(full)
+            fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
+        output_connection = FullConnection(hidden_layers[-1], output_layer)
+        fnn.addConnection(output_connection)
+        fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
+        fnn.sortModules()
+
+        #fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
         trainer.trainUntilConvergence(continueEpochs=5)         
         trnresult = trnresult + percentError( trainer.testOnClassData(), trndata['class'] )
         tstresult = tstresult + percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
+        print tstresult
        
 
     trnresult =trnresult/(nr_of_iterations)
@@ -134,10 +159,10 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
   
 
     my_hash = {}
+
     my_hash["tstresult"] = tstresult
     my_hash["trnresult"] = trnresult
-
-    log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,trnresult,tstresult)
+    log_debug(len(trndata),number_of_hidden_nodes, weightdecay,trnresult,tstresult)
     
     return my_hash
 
@@ -147,7 +172,7 @@ def buildbestneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     tstresult=0
     nr_of_iterations = 25
 
-    tstdata, trndata = alldata.splitWithProportion( 0.25 )
+    data = alldata.splitWithProportion( 0.25 )
 
     trndata._convertToOneOfMany( )
     tstdata._convertToOneOfMany( )         
@@ -158,8 +183,10 @@ def buildbestneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     #Third is number of outputs
     bestresult = 100
     for i in  xrange(1,nr_of_iterations,1):
-        print i
-        fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
+        
+        
+
+        fnn = buildNetwork(trndata.indim , number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
         trainer.trainUntilConvergence(continueEpochs=5)         

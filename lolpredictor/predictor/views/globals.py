@@ -7,6 +7,7 @@ nrofupdates=0
 best_number_of_hidden_nodes=0
 best_weight_decay=0
 best_error_rate=100
+number_of_hidden_layers=2
 midmatchups =[
             {'name':'Annie', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/1_32.png', 'url' : '/champions/annie', 'dataSize':[0,175890,149450,146515,70248,90992,112296,101390,112280,87136,74303,81035,63316,74600], 'dataColor':[0,49.29,52.37,50.72,52.24,49.04,51.51,48.62,50.36,52.06,47.77,53.56,50.07,47.51]},
             {'name':'Lux', 'image':'http://lkimg.zamimg.com/shared/riot/images/champions/99_32.png', 'url' : '/champions/lux', 'dataSize':[175890,0,96168,108997,92009,104778,82539,80553,73692,62810,66326,58702,61708,74963], 'dataColor':[50.71,0,51.83,50.64,50.52,49.89,51.92,48.91,51.58,50.82,48.07,55.71,48.57,49]},
