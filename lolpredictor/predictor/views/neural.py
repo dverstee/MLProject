@@ -9,168 +9,133 @@ from django.shortcuts import render
 import itertools, collections
 import logging
 import pickle
-from util import getBasicDatafromMatch
-from util import getMinimalDatafromMatch
+import json
+from util import getBasicDatafromMatch, getMinimalDatafromMatch
 from lolpredictor.predictor.models import Match
 import globals
 logger = logging.getLogger(__name__)
 
 def neural(request):    
-    matches = Match.objects.all()
-    print "Number of matches in db : " 
-    print  len(matches)
+    print "Starting neural network training"
     
+    WEIGHT_DECAY_RANGE      = range(2,4) 
+    NUMBER_OF_NODES_RANGE   = range(40,60,10)
 
-    weightdecaymax = 4 
-    alldata = getdata(False)
-    globals.best_number_of_hidden_nodes=120
-    globals.best_weight_decay=0.01
+    print "Preparing the data ...."
+    alldata = getdata(False, 1)
 
-    #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
-    #sweep over all parameters to find the one that have the best mean performance
-    for number_of_hidden_node in range(80,160,20):       
-        for decay in range(2,weightdecaymax,1):
+    results = []
+    #Grid search over all parameters to find the one that have the best mean performance
+    for decay in WEIGHT_DECAY_RANGE:
+        for number_of_hidden_nodes in NUMBER_OF_NODES_RANGE:       
             weightdecay = 10**(-decay)            
-            basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
+            train_error, test_error = basicneuralnetwork(number_of_hidden_nodes,weightdecay,alldata)
+            results.append((number_of_hidden_nodes, decay, train_error, test_error))
+    print results
+    optimal_configuration = min(results, key=lambda x: x[3])
+    print "optimal_configuration:"
+    print "    number of hidden nodes: %d" % optimal_configuration[0]
+    print "    decay                 : %d" % optimal_configuration[1]
+    print "    train error           : %f" % optimal_configuration[2]
+    print "    test error            : %f" % optimal_configuration[3]
 
-    #build the best network with the parameters that performed best on mean
-           
-   
-    #alldata = getMinimaldata()    
-    #for number_of_hidden_node in xrange(20,1000,20):       
-    #    basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
-    
-    #print "epoch: %4d" %trainer.totalepochs
-    #print "  train error: %5.2f%%" %trnresult
-    #print "  test error: %5.2f%%" %tstresult
-    
-    
 
 def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
     print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
 
 
-def getMinimaldata():
-    matches = match.objects.all()
-    init=True
-    for matc in matches:    
-        
-        if init:
-            input = getMinimalDatafromMatch(matc,True)
-            dimensions = len(input)
-            print dimensions
-            alldata = ClassificationDataSet(dimensions, 1, nb_classes=2)     
-            alldata.addSample(input, [matc.won]) 
-            init = False           
-        else :       
-            input = getMinimalDatafromMatch(matc,True)      
-            alldata.addSample(input, [matc.won])
-            dimensions = len(input)
-    return alldata
 
-def getdata(Preprocessing):
-    matches = Match.objects.all()
-    init=True
 
-    for matc in matches:    
-        
-        if init:
-            input = getBasicDatafromMatch(matc,Preprocessing)
-            dimensions = len(input)
-            print dimensions
-            alldata = ClassificationDataSet(dimensions, 1, nb_classes=2)     
-            alldata.addSample(input, matc.won) 
-            init = False  
-            print input       
-        else :       
-            input = getBasicDatafromMatch(matc,Preprocessing)      
-            alldata.addSample(input, matc.won)
-            dimensions = len(input)
-    return alldata
+def getdata(do_preprocessing, full_data):
+    '''
+    fetch and format the match data according to the given flags
+    do_preprocessing: bool: true if preprocessing needs to be do_preprocessing
+    full_data: bool: false if the minimal data should be used
+    '''
+    if full_data == 0 :
+        fn = getMinimalDatafromMatch
+    else:
+        fn = getBasicDatafromMatch
+    if globals.use_saved_data:
+        try:
+            with open('processed_data%d' % full_data) as outfile:
+                data = json.load(outfile)
+        except IOError:
+            matches = Match.objects.all()
+            data = map(lambda x: (fn(x,do_preprocessing), x.won), matches )
+            with open('processed_data%d' % full_data, 'w') as outfile:
+                json.dump(data,outfile)
+    else:
+        matches = Match.objects.all()
+        data = map(lambda x: (fn(x,do_preprocessing), x.won), matches )
+        with open('processed_data%d' % full_data, 'w') as outfile:
+                json.dump(data,outfile)
+
+    all_data = None
+    for input, won in data:           
+            if all_data is None:
+                all_data = ClassificationDataSet(len(input), 1, nb_classes=2)       
+            all_data.addSample(input, won)
+    return all_data
 
 def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
+    '''
+    This is a dataset 
+    first argument is the dimension of the input
+     second argument is dimension of the output
+    '''  
+    nr_of_iterations = 2
 
-   
-    #This is a dataset 
-    #first argument is the dimension of the input
-    # second argument is dimension of the output
-    
-   
-  
-    trnresult=0
-    tstresult=0
-    nr_of_iterations = 1
 
-    tstdata, trndata = alldata.splitWithProportion( 0.1 )
+    # Prepare the data
+    print "Splitting data..."
+    tstdata, trndata = alldata.splitWithProportion( 0.25 )
     trndata._convertToOneOfMany()
     tstdata._convertToOneOfMany()
 
+    # Construct neural network
+    print "Constructing network"
+    
+
     print "number_of_hidden_nodes : %s; weight decay : %s" % (number_of_hidden_nodes, weightdecay)
-    #First  arggument is number of  inputs.
-    #Second argument is number of hidden nodes 
-    #Third is number of outputs
 
+    train_results   = []
+    test_results    = []
+    neural_networks = []
     for i in  xrange(1,nr_of_iterations+1):
-        print "Fold #%d" % i
-        input_layer = LinearLayer(trndata.indim)
-        hidden_layers = []
-        output_layer = SoftmaxLayer(trndata.outdim)
-        # Nodes of the neural network
-        fnn = FeedForwardNetwork()
-        fnn.addInputModule(input_layer)
-        for i in range(globals.number_of_hidden_layers):
-            sigm = SigmoidLayer(number_of_hidden_nodes)
-            hidden_layers.append(sigm)
-            fnn.addModule(sigm)
-        fnn.addOutputModule(output_layer)
-        bias = BiasUnit()
-        fnn.addModule(bias)
-        # Connections of the neural network
-        input_connection = FullConnection(input_layer, hidden_layers[0])
-        fnn.addConnection(input_connection)
-        fnn.addConnection(FullConnection(bias, hidden_layers[0]))
-        for i in range(len(hidden_layers) - 1):
-            full = FullConnection(hidden_layers[i], hidden_layers[i+1])
-            fnn.addConnection(full)
-            fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
-        output_connection = FullConnection(hidden_layers[-1], output_layer)
-        fnn.addConnection(output_connection)
-        fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
-        fnn.sortModules()
-
-        #fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
+        print "Iteration %d" % i
+        # construct a neural network
+        fnn = construct_neural_network(number_of_hidden_nodes, 2, trndata.indim, trndata.outdim)
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
-        trainer.trainUntilConvergence(continueEpochs=5)         
-        trnresult = trnresult + percentError( trainer.testOnClassData(), trndata['class'] )
-        tstresult = tstresult + percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
-        print tstresult
-       
+        trainer.trainUntilConvergence(continueEpochs=5)   
+        train_results.append(percentError( trainer.testOnClassData(), trndata['class'] ))
+        test_results.append(percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] ))
+        neural_networks.append(fnn)
+        log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,train_results[-1],test_results[-1])         
+            
+    # Compute means
+    mean_train_error    = sum(train_results)/len(train_results)
+    mean_test_error     = sum(test_results)/len(test_results)
 
-    trnresult =trnresult/(nr_of_iterations)
-    tstresult = tstresult/(nr_of_iterations)
+    # Compute optimal network configuration
+    optimal_test_error  = min(test_results)
+    optimal_index       = test_results.index(optimal_test_error)
 
-    if globals.best_error_rate > tstresult : 
-        globals.best_error_rate = tstresult
-        globals.best_weight_decay = weightdecay
-        globals.best_number_of_hidden_nodes = number_of_hidden_nodes
+    # Save the optimal configuration to the file system
+    neuralnetwork = 'neuralHiddenNode%sdecay%s'%(number_of_hidden_nodes, weightdecay)
+    fileObject = open(neuralnetwork, 'w')
+    pickle.dump(neural_networks[optimal_index], fileObject)
+    fileObject.close()
 
-  
-
-    my_hash = {}
-
-    my_hash["tstresult"] = tstresult
-    my_hash["trnresult"] = trnresult
-    log_debug(len(trndata),number_of_hidden_nodes, weightdecay,trnresult,tstresult)
-    
-    return my_hash
+    return (mean_train_error, mean_test_error)
 
 
 def buildbestneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     trnresult=0
     tstresult=0
-    nr_of_iterations = 25
+    nr_of_iterations = 10
 
     data = alldata.splitWithProportion( 0.25 )
 
@@ -184,8 +149,6 @@ def buildbestneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     bestresult = 100
     for i in  xrange(1,nr_of_iterations,1):
         
-        
-
         fnn = buildNetwork(trndata.indim , number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
@@ -229,3 +192,34 @@ def preprocessingChampionPlayed(request):
     deaths =deaths /len(champsplayed)
     assits=assits/len(champsplayed)
     gold=gold /len(champsplayed)
+
+def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, inputdim, outputdim):
+    """
+    Constructs a neural network with a given amount of hidden layers and nodes per hidden layer
+    """
+    input_layer = LinearLayer(inputdim)
+    hidden_layers = []
+    output_layer = SoftmaxLayer(outputdim)
+    # Nodes of the neural network
+    fnn = FeedForwardNetwork()
+    fnn.addInputModule(input_layer)
+    for i in range(number_of_hidden_layers):
+        sigm = SigmoidLayer(number_of_hidden_nodes)
+        hidden_layers.append(sigm)
+        fnn.addModule(sigm)
+    fnn.addOutputModule(output_layer)
+    bias = BiasUnit()
+    fnn.addModule(bias)
+    # Connections of the neural network
+    input_connection = FullConnection(input_layer, hidden_layers[0])
+    fnn.addConnection(input_connection)
+    fnn.addConnection(FullConnection(bias, hidden_layers[0]))
+    for i in range(len(hidden_layers) - 1):
+        full = FullConnection(hidden_layers[i], hidden_layers[i+1])
+        fnn.addConnection(full)
+        fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
+    output_connection = FullConnection(hidden_layers[-1], output_layer)
+    fnn.addConnection(output_connection)
+    fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
+    fnn.sortModules()
+    return fnn
