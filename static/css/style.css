@@ -54,7 +54,7 @@ table.table img.champicon {
 	border-radius: 2px;
 }
 table.table div.well img.champicon {
-	margin: 5px 2px 5px 0;
+	margin: 5px 2px 5px 2px;
 }
 
 
@@ -62,3 +62,12 @@ table.table div.well img.champicon {
 tr.match {
 	cursor: pointer;
 }
+
+tr.match div.well {
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	border-top: none;
+	border-bottom: none;
+	margin-bottom: 0;
+} 

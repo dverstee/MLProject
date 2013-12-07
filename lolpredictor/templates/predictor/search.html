@@ -55,34 +55,34 @@
 								<td>{% if match.won %}Won{% else %}Loss{% endif %}</td>
 								<td>{{ match.match_type }}</td>
 							</tr>
-							<tr>
+							<tr class="match">
 								<td colspan="5" class="hiddenRow">
 									<div class="accordian-body collapse" id="match{{ match.match_id }}">
 										<div class="well well-sm">
 											<div class="row">
-												<div class="col-sm-6 col-md-6">
-													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner1_id.champion.key }}_32.png" />
-													{{ match.team_1summoner1_id.champion.name }}<br />
-													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner2_id.champion.key }}_32.png" />
-													{{ match.team_1summoner2_id.champion.name }}<br />
-													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner3_id.champion.key }}_32.png" />
-													{{ match.team_1summoner3_id.champion.name }}<br />
-													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner4_id.champion.key }}_32.png" />
-													{{ match.team_1summoner4_id.champion.name }}<br />
-													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner5_id.champion.key }}_32.png" />
-													{{ match.team_1summoner5_id.champion.name }}<br />
+												<div class="col-sm-6 col-md-6" style="text-align:right">
+													<span style="{% if champion == match.team_1summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner1_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner1_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner2_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner2_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner2_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner3_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner3_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner3_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner4_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner4_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner4_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner5_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner5_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner5_id.champion.key }}_32.png" /><br />
 												</div>
 												<div class="col-sm-6 col-md-6">
 													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner1_id.champion.key }}_32.png" />
-													{{ match.team_2summoner1_id.champion.name }}<br />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner1_id.champion.name }}</span><br />
 													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner2_id.champion.key }}_32.png" />
-													{{ match.team_2summoner2_id.champion.name }}<br />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner2_id.champion.name }}</span><br />
 													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner3_id.champion.key }}_32.png" />
-													{{ match.team_2summoner3_id.champion.name }}<br />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner3_id.champion.name }}</span><br />
 													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner4_id.champion.key }}_32.png" />
-													{{ match.team_2summoner4_id.champion.name }}<br />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner4_id.champion.name }}</span><br />
 													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner5_id.champion.key }}_32.png" />
-													{{ match.team_2summoner5_id.champion.name }}<br />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner5_id.champion.name }}</span><br />
 												</div>
 											</div>
 									</div>
