@@ -46,7 +46,7 @@ def neural(request):
             'optimal_result': optimal_configuration
             })
 
-<<<<<<< HEAD
+
     weightdecaymax = 4 
     alldata = getdata(False)
     globals.best_number_of_hidden_nodes=120
@@ -71,109 +71,13 @@ def neural(request):
     #print "  train error: %5.2f%%" %trnresult
     #print "  test error: %5.2f%%" %tstresult
     
-    
-=======
->>>>>>> 00d3cbc9ff1f602b6e7b825be131e022aac5409d
 
 def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
     print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
 
 
-<<<<<<< HEAD
-def getMinimaldata():
-    matches = match.objects.all()
-    init=True
-    for matc in matches:    
-        
-        if init:
-            input = getMinimalDatafromMatch(matc,True)
-            dimensions = len(input)
-            print dimensions
-            alldata = ClassificationDataSet(dimensions, 1, nb_classes=2)     
-            alldata.addSample(input, matc.won) 
-            init = False           
-        else :       
-            input = getMinimalDatafromMatch(matc,True)      
-            alldata.addSample(input, matc.won)
-            dimensions = len(input)
-    return alldata
 
-def getdata(Preprocessing):
-    matches = Match.objects.all()
-    init=True
-
-    for matc in matches:    
-        
-        if init:
-            input = getBasicDatafromMatch(matc,Preprocessing)
-            dimensions = len(input)
-            print dimensions
-            alldata = ClassificationDataSet(dimensions, 1, nb_classes=2)     
-            alldata.addSample(input, matc.won) 
-            init = False  
-            print input       
-        else :       
-            input = getBasicDatafromMatch(matc,Preprocessing)      
-            alldata.addSample(input, matc.won)
-            dimensions = len(input)
-    return alldata
-
-def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
-
-   
-    #This is a dataset 
-    #first argument is the dimension of the input
-    # second argument is dimension of the output
-    meantrnresult=0
-    meantstresult=0
-    besttstresult=100    
-    nr_of_iterations = 10
-
-    tstdata, trndata = alldata.splitWithProportion( 0.25 )
-
-    trndata._convertToOneOfMany( )
-    tstdata._convertToOneOfMany( )       
-
-    print "number_of_hidden_nodes : %s; weight decay : %s" % (number_of_hidden_nodes, weightdecay)
-    #First  arggument is number of  inputs.
-    #Second argument is number of hidden nodes 
-    #Third is number of outputs
-
-    for i in  xrange(1,nr_of_iterations+1,1):
-        print i
-        fnn = buildNetwork( trndata.indim, number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
-        trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
-        #early stopping validation set = 0.25
-        trainer.trainUntilConvergence(continueEpochs=5)   
-        trnresult = percentError( trainer.testOnClassData(), trndata['class'] )  
-        tstresult = percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
-       
-        meantrnresult = meantrnresult + trnresult
-        meantstresult = meantstresult + tstresult   
-        log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,trnresult,tstresult)
-       
-        if tstresult < besttstresult:
-            #store network                       
-            besttstresult=tstresult            
-            neuralnetwork = 'neuralHiddenNode%sdecay%s'%(number_of_hidden_nodes, weightdecay)
-            fileObject = open(neuralnetwork, 'w')
-            pickle.dump(fnn, fileObject)
-            fileObject.close()
-
-    meantrnresult =meantrnresult/(nr_of_iterations)
-    meantstresult = meantstresult/(nr_of_iterations)
-
-    if globals.best_error_rate > meantstresult : 
-        globals.best_error_rate = meantstresult
-        globals.best_weight_decay = weightdecay
-        globals.best_number_of_hidden_nodes = number_of_hidden_nodes
-
-    my_hash = {}
-    my_hash["tstresult"] = tstresult
-    my_hash["trnresult"] = trnresult
-=======
->>>>>>> 00d3cbc9ff1f602b6e7b825be131e022aac5409d
 
 
 def getdata(do_preprocessing, full_data):
