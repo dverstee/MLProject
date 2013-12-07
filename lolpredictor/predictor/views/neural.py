@@ -29,7 +29,8 @@ def neural(request):
     #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
     #sweep over all parameters to find the one that have the best mean performance
     for decay in range(2,weightdecaymax,1):
-        for number_of_hidden_node in range(500,620,20):       
+
+        for number_of_hidden_node in range(460,620,20):       
             weightdecay = 10**(-decay)            
             basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
 
@@ -95,9 +96,6 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     #This is a dataset 
     #first argument is the dimension of the input
     # second argument is dimension of the output
-    
-   
-  
     meantrnresult=0
     meantstresult=0
     besttstresult=100    
@@ -124,7 +122,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
        
         meantrnresult = meantrnresult + trnresult
         meantstresult = meantstresult + tstresult   
-        log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,meantrnresult,meantstresult)
+        log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,trnresult,tstresult)
        
         if tstresult < besttstresult:
             #store network                       
