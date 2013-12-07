@@ -19,18 +19,20 @@ def neural(request):
     print "Starting neural network training"
     
     WEIGHT_DECAY_RANGE      = range(2,4) 
-    NUMBER_OF_NODES_RANGE   = range(40,60,10)
+    NUMBER_OF_NODES_RANGE   = range(400,410,10)
+    LAYERS                  = [1]
 
     print "Preparing the data ...."
-    alldata = getdata(False, 1)
+    alldata = getdata(False, globals.use_full_features)
 
     results = []
     #Grid search over all parameters to find the one that have the best mean performance
-    for decay in WEIGHT_DECAY_RANGE:
-        for number_of_hidden_nodes in NUMBER_OF_NODES_RANGE:       
-            weightdecay = 10**(-decay)            
-            train_error, test_error = basicneuralnetwork(number_of_hidden_nodes,weightdecay,alldata)
-            results.append((number_of_hidden_nodes, decay, train_error, test_error))
+    for layers in LAYERS:
+        for decay in WEIGHT_DECAY_RANGE:
+            for number_of_hidden_nodes in NUMBER_OF_NODES_RANGE:       
+                weightdecay = 10**(-decay)            
+                train_error, test_error = basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers,alldata)
+                results.append((number_of_hidden_nodes, decay, train_error, test_error))
     print results
     optimal_configuration = min(results, key=lambda x: x[3])
     print "optimal_configuration:"
@@ -38,6 +40,11 @@ def neural(request):
     print "    decay                 : %d" % optimal_configuration[1]
     print "    train error           : %f" % optimal_configuration[2]
     print "    test error            : %f" % optimal_configuration[3]
+
+    return render(request, 'predictor/neural.html', {
+            'results': results,
+            'optimal_result': optimal_configuration
+            })
 
 
 def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
@@ -79,7 +86,7 @@ def getdata(do_preprocessing, full_data):
             all_data.addSample(input, won)
     return all_data
 
-def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
+def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
     '''
     This is a dataset 
     first argument is the dimension of the input
@@ -88,25 +95,26 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
     nr_of_iterations = 2
 
 
-    # Prepare the data
-    print "Splitting data..."
-    tstdata, trndata = alldata.splitWithProportion( 0.25 )
-    trndata._convertToOneOfMany()
-    tstdata._convertToOneOfMany()
+    
 
     # Construct neural network
     print "Constructing network"
     
 
-    print "number_of_hidden_nodes : %s; weight decay : %s" % (number_of_hidden_nodes, weightdecay)
+    print "  (number_of_hidden_nodes : %s, weight decay : %s, layers: %s)" % (number_of_hidden_nodes, weightdecay, layers)
 
     train_results   = []
     test_results    = []
     neural_networks = []
     for i in  xrange(1,nr_of_iterations+1):
         print "Iteration %d" % i
+
+        # Prepare the data
+        tstdata, trndata = alldata.splitWithProportion( 0.05 )
+        trndata._convertToOneOfMany()
+        tstdata._convertToOneOfMany()
         # construct a neural network
-        fnn = construct_neural_network(number_of_hidden_nodes, 2, trndata.indim, trndata.outdim)
+        fnn = construct_neural_network(number_of_hidden_nodes, layers, trndata.indim, trndata.outdim)
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
         trainer.trainUntilConvergence(continueEpochs=5)   
@@ -131,67 +139,6 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
 
     return (mean_train_error, mean_test_error)
 
-
-def buildbestneuralnetwork(number_of_hidden_nodes,weightdecay, alldata):
-    trnresult=0
-    tstresult=0
-    nr_of_iterations = 10
-
-    data = alldata.splitWithProportion( 0.25 )
-
-    trndata._convertToOneOfMany( )
-    tstdata._convertToOneOfMany( )         
-
-    print "The best network : number_of_hidden_nodes : %s; weight decay : %s" % (number_of_hidden_nodes, weightdecay)
-    #First  arggument is number of  inputs.
-    #Second argument is number of hidden nodes 
-    #Third is number of outputs
-    bestresult = 100
-    for i in  xrange(1,nr_of_iterations,1):
-        
-        fnn = buildNetwork(trndata.indim , number_of_hidden_nodes, trndata.outdim, outclass=SoftmaxLayer )
-        trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
-        #early stopping validation set = 0.25
-        trainer.trainUntilConvergence(continueEpochs=5)         
-        trnresult = percentError( trainer.testOnClassData(), trndata['class'] )
-        tstresult = percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
-        if tstresult < bestresult:
-            #store network
-            
-            bestresult=tstresult
-            fileObject = open('neural', 'w')
-            pickle.dump(fnn, fileObject)
-            fileObject.close()  
-    
-    print "best result  %s "% (bestresult)
-    fileObject = open('neural','r')
-    fnn = pickle.load(fileObject)
-    trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
-    tstresult = percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] )
-    print  "check from loadednetwork: %s" % (tstresult)
-
-def preprocessingChampionPlayed(request):   
-
-    #Preprocessing 
-    champsplayed = ChampionPlayed.objects.all()
-    nr=0
-    kills=0
-    deaths=0
-    assits=0
-    gold=0
-
-    for cp in champsplayed:
-        nr = nr +  cp.nr_gameswithchamp
-        kills = kills + cp.average_kills
-        deaths =deaths + cp.average_deaths
-        assits=assits + cp.average_assists
-        gold=gold + cp.average_gold
-
-    nr = nr /len(champsplayed)
-    kills = kills /len(champsplayed)
-    deaths =deaths /len(champsplayed)
-    assits=assits/len(champsplayed)
-    gold=gold /len(champsplayed)
 
 def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, inputdim, outputdim):
     """
@@ -220,6 +167,6 @@ def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, in
         fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
     output_connection = FullConnection(hidden_layers[-1], output_layer)
     fnn.addConnection(output_connection)
-    fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
+    fnn.addConnection(FullConnection(bias, hidden_layers[0]))
     fnn.sortModules()
     return fnn

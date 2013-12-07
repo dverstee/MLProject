@@ -286,95 +286,64 @@ def determineWin (game):
 
 def getMinimalDatafromMatch(matc,preprocessing):
 
+	input = [matchups_to_win_rate(matc)]
 
+	input += champion_played_to_features(matc.team_1summoner1_id)
+	input += champion_played_to_features(matc.team_1summoner2_id)
+	input += champion_played_to_features(matc.team_1summoner3_id)
+	input += champion_played_to_features(matc.team_1summoner4_id)
+	input += champion_played_to_features(matc.team_1summoner5_id)
 
-	if preprocessing==True:
-		preprocessdata(matc)
-		return
-	input=[]
-
-	
-	tier11 = matc.team_1summoner1_id.summoner.tier
-	tier12 = matc.team_1summoner2_id.summoner.tier
-	tier13 = matc.team_1summoner3_id.summoner.tier
-	tier14 = matc.team_1summoner4_id.summoner.tier
-	tier15 = matc.team_1summoner5_id.summoner.tier
-	tier21 = matc.team_2summoner1_id.summoner.tier
-	tier22 = matc.team_2summoner2_id.summoner.tier
-	tier23 = matc.team_2summoner3_id.summoner.tier
-	tier24 = matc.team_2summoner4_id.summoner.tier
-	tier25 = matc.team_2summoner5_id.summoner.tier
-	print tier11
-	print tier12
-
-	summoner11input = [ matc.team_1summoner1_id.summoner.tier ,  matc.team_1summoner1_id.summoner.rank]
-	championplayed11input = [matc.team_1summoner1_id.nr_gameswithchamp]
-
-		
-	summoner12input = [ matc.team_1summoner2_id.summoner.tier ,  matc.team_1summoner2_id.summoner.rank]
-	championplayed12input = [matc.team_1summoner2_id.nr_gameswithchamp]
-
-	summoner13input = [ matc.team_1summoner3_id.summoner.tier ,  matc.team_1summoner3_id.summoner.rank ]
-	championplayed13input = [matc.team_1summoner3_id.nr_gameswithchamp]
-
-	summoner14input = [ matc.team_1summoner4_id.summoner.tier ,  matc.team_1summoner4_id.summoner.rank]
-	championplayed14input = [matc.team_1summoner4_id.nr_gameswithchamp]
-
-	summoner15input = [ matc.team_1summoner5_id.summoner.tier ,  matc.team_1summoner5_id.summoner.rank]
-	championplayed15input = [matc.team_1summoner5_id.nr_gameswithchamp]
-
-	summoner21input = [ matc.team_2summoner1_id.summoner.tier ,  matc.team_2summoner1_id.summoner.rank ]
-	championplayed21input = [matc.team_2summoner1_id.nr_gameswithchamp ]
-
-		
-	summoner22input = [ matc.team_2summoner2_id.summoner.tier ]
-	championplayed22input = [matc.team_2summoner2_id.nr_gameswithchamp]
-
-	summoner23input = [ matc.team_2summoner3_id.summoner.tier ,  matc.team_2summoner3_id.summoner.rank]
-	championplayed23input = [matc.team_2summoner3_id.nr_gameswithchamp ]
-
-	summoner24input = [ matc.team_2summoner4_id.summoner.tier ,  matc.team_2summoner4_id.summoner.rank]
-	championplayed24input = [matc.team_2summoner4_id.nr_gameswithchamp ]
-
-	summoner25input = [ matc.team_2summoner5_id.summoner.tier ,  matc.team_2summoner5_id.summoner.rank]
-	championplayed25input = [matc.team_2summoner5_id.nr_gameswithchamp]
-
-
-
-
-	if preprocessing==False:
-		#input.extend(matchinput)
-		input.extend(summoner11input)
-		input.extend(championplayed11input)
-		input.extend(summoner12input)
-		input.extend(championplayed12input)
-		input.extend(summoner13input)
-		input.extend(championplayed13input)
-		input.extend(summoner14input)
-		input.extend(championplayed14input)
-		input.extend(summoner15input)
-		input.extend(championplayed15input)
-		input.extend(summoner21input)
-		input.extend(championplayed21input)
-		input.extend(summoner22input)
-		input.extend(championplayed22input)
-		input.extend(summoner23input)
-		input.extend(championplayed23input)
-		input.extend(summoner24input)
-		input.extend(championplayed24input)
-		input.extend(summoner25input)
-		input.extend(championplayed25input)
-	
+	input += champion_played_to_features(matc.team_1summoner1_id)
+	input += champion_played_to_features(matc.team_1summoner2_id)
+	input += champion_played_to_features(matc.team_1summoner3_id)
+	input += champion_played_to_features(matc.team_1summoner4_id)
+	input += champion_played_to_features(matc.team_1summoner5_id)
+	print input
 	return input
+
+def champion_played_to_features(champion_played):
+	# 0 to 1 ranking
+	ranking = float((champion_played.summoner.tier) - 1)/5.0 + float(4 - (champion_played.summoner.rank-1))/50.0
+	if champion_played.average_deaths:
+		kdr		= float(champion_played.average_kills + champion_played.average_assists/2) / float(champion_played.average_deaths)
+	else:
+		kdr     = float(champion_played.average_kills + champion_played.average_assists/2) * 1.5
+	normalized_gold = float(champion_played.average_gold) / float(globals.goldnormalization)
+	return [ranking, kdr, normalized_gold]
+
+def matchups_to_win_rate(match):
+	team_1 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
+	team_2 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
+	win_rates = []
+	for i in range(len(team_1)):
+		try:
+			matchup = Matchup.objects.get(champion_1=team_1[i].champion, champion_2=team_2[i].champion)
+			win_rates.append(matchup.win_rate)
+		except:
+			pass
+	synergys = []
+	try:
+		synergys.append(Synergy.objects.get(champion_1=team_1[3].champion, champion_2=team_1[4].champion).win_rate)
+	except:
+		pass
+
+	try:
+		synergys.append(1 - Synergy.objects.get(champion_1=team_2[3].champion, champion_2=team_2[4].champion).win_rate)
+	except:
+		pass
+	if synergys:
+		win_rates.append(sum(synergys)/len(synergys))
+	if win_rates:
+		return sum(win_rates)/len(win_rates)
+	else:
+		return 0.5
+
 
 def getBasicDatafromMatch(matc,preprocessing):
 
-	
-
-
-
 	input=[]
-	goldnormalization =1000
+	goldnormalization =10000.0
 
 	if preprocessing==True  :		
 		return preprocessdata(matc)
@@ -382,8 +351,7 @@ def getBasicDatafromMatch(matc,preprocessing):
 
 	matchinput =  [ int(matc.team1_is_red) ] 	
 
-	summoner11input = [ matc.team_1summoner1_id.summoner.tier ,  matc.team_1summoner1_id.summoner.rank, 
-	int(matc.team_1summoner1_id.summoner.hotstreak) ]
+	summoner11input = [ matc.team_1summoner1_id.summoner.tier ,  matc.team_1summoner1_id.summoner.rank ]
 	championplayed11input = [matc.team_1summoner1_id.nr_gameswithchamp ,matc.team_1summoner1_id.average_kills,
 	matc.team_1summoner1_id.average_deaths, matc.team_1summoner1_id.average_assists,float(matc.team_1summoner1_id.average_gold)/float(goldnormalization)]
 
@@ -599,6 +567,7 @@ def preprocessdata(matc):
 	input.append(our_gold)
 	input.append(their_gold)
 	return input
+
 
 def print_summoner(summoner, updated, realupdate):
 	if updated:
