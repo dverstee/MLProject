@@ -42,25 +42,51 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% load getchampion %}
 						{% for match in matches %}
-							<tr style="background-color:{% if match.won %}#E0FFE0{% else %}#FFE0E0{% endif %}">
+							<tr class="match" data-toggle="collapse" data-target="#match{{ match.match_id }}" style="background-color:{% if match.won %}#E0FFE0{% else %}#FFE0E0{% endif %}">
 								<td>{{ match.match_id }}</td>
 								<td>
-									{% if match.team_1summoner1_id.summoner == summoner %}{{ match.team_1summoner1_id.champion.name }}
-									{% elif match.team_1summoner2_id.summoner == summoner %}{{ match.team_1summoner2_id.champion.name }}
-									{% elif match.team_1summoner3_id.summoner == summoner %}{{ match.team_1summoner3_id.champion.name }}
-									{% elif match.team_1summoner4_id.summoner == summoner %}{{ match.team_1summoner4_id.champion.name }}
-									{% elif match.team_1summoner5_id.summoner == summoner %}{{ match.team_1summoner5_id.champion.name }}
-									{% elif match.team_2summoner1_id.summoner == summoner %}{{ match.team_2summoner1_id.champion.name }}
-									{% elif match.team_2summoner2_id.summoner == summoner %}{{ match.team_2summoner2_id.champion.name }}
-									{% elif match.team_2summoner3_id.summoner == summoner %}{{ match.team_2summoner3_id.champion.name }}
-									{% elif match.team_2summoner4_id.summoner == summoner %}{{ match.team_2summoner4_id.champion.name }}
-									{% elif match.team_2summoner5_id.summoner == summoner %}{{ match.team_2summoner5_id.champion.name }}
-									{% endif %}
+									{% getchampion match summoner as champion %}
+									<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ champion.key }}_32.png" />
+									{{ champion.name }}
 								</td>
 								<td>{{ match.nr_premade_team1 }}/{{ match.nr_premade_team2 }}</td>
 								<td>{% if match.won %}Won{% else %}Loss{% endif %}</td>
 								<td>{{ match.match_type }}</td>
+							</tr>
+							<tr class="match">
+								<td colspan="5" class="hiddenRow">
+									<div class="accordian-body collapse" id="match{{ match.match_id }}">
+										<div class="well well-sm">
+											<div class="row">
+												<div class="col-sm-6 col-md-6" style="text-align:right">
+													<span style="{% if champion == match.team_1summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner1_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner1_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner2_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner2_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner2_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner3_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner3_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner3_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner4_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner4_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner4_id.champion.key }}_32.png" /><br />
+													<span style="{% if champion == match.team_1summoner5_id.champion %}font-weight:bold{% endif %}">{{ match.team_1summoner5_id.champion.name }}</span>
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_1summoner5_id.champion.key }}_32.png" /><br />
+												</div>
+												<div class="col-sm-6 col-md-6">
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner1_id.champion.key }}_32.png" />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner1_id.champion.name }}</span><br />
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner2_id.champion.key }}_32.png" />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner2_id.champion.name }}</span><br />
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner3_id.champion.key }}_32.png" />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner3_id.champion.name }}</span><br />
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner4_id.champion.key }}_32.png" />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner4_id.champion.name }}</span><br />
+													<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ match.team_2summoner5_id.champion.key }}_32.png" />
+													<span style="{% if champion == match.team_2summoner1_id.champion %}font-weight:bold{% endif %}">{{ match.team_2summoner5_id.champion.name }}</span><br />
+												</div>
+											</div>
+									</div>
+								</td>
 							</tr>
 						{% endfor %}
 					</tbody>
@@ -83,7 +109,10 @@
 						{% for champion in championPlayed %}
 							{% resolve championStats champion.champion.key as stat %}
 							<tr>
-								<td>{{ champion.champion.name }}</td>
+								<td>
+									<img class="champicon" src="http://lkimg.zamimg.com/shared/riot/images/champions/{{ champion.champion.key }}_32.png" />
+									{{ champion.champion.name }}
+								</td>
 								<td><center>{{ champion.nr_gameswithchamp }}</center></td>
 								<td style="color:{% if champion.average_kills > stat.average_kills %}green{% else %}red{% endif %}">
 									<center><b>{{ champion.average_kills }}</b> <span style="color:gray">({{stat.average_kills|floatformat:1}})</span></center>

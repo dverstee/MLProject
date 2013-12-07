@@ -44,3 +44,30 @@ body {
 		padding-right: 20px;
 	}
 }
+
+table.table img.champicon {
+	margin: -3px 2px 0 -3px;
+	padding: 0;
+	vertical-align: middle;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+table.table div.well img.champicon {
+	margin: 5px 2px 5px 2px;
+}
+
+
+.hiddenRow {padding: 0 !important;}
+tr.match {
+	cursor: pointer;
+}
+
+tr.match div.well {
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	border-top: none;
+	border-bottom: none;
+	margin-bottom: 0;
+} 

@@ -6,6 +6,10 @@ import time
 import globals
 from functools import wraps
 
+API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
+REGION = "EUW"
+API_DOMAIN = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION
+
 
 logger = logging.getLogger(__name__)
 def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
@@ -47,8 +51,6 @@ def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
 
     return deco_retry     
  
-
-
 @retry(KeyError)        
 def getSummonerIdByAccountId(account_id):    
     method = 'getAllPublicSummonerDataByAccount'
@@ -58,6 +60,8 @@ def getSummonerIdByAccountId(account_id):
     except KeyError, e:
         log_error(e, method, account_id)
         raise KeyError
+
+
 @retry(KeyError) 
 def getAccountIdBySummonerId(summoner_id):
     method = 'getSummonerBySummonerId'
@@ -72,6 +76,8 @@ def getAccountIdBySummonerId(summoner_id):
     accountid = getAccountIdByName(name) 
      
     return accountid
+
+
 @retry(KeyError)
 def getAccountIdByName(name):
     method = 'getSummonerByName'
@@ -83,6 +89,8 @@ def getAccountIdByName(name):
     except KeyError,e:
         log_error(e, method, name)
         raise KeyError
+
+
 @retry(KeyError)        
 def getRecentGamesByAccountId(account_id):
     method = 'getRecentGames'
@@ -90,8 +98,10 @@ def getRecentGamesByAccountId(account_id):
     try:
         return values["gameStatistics"]["array"]
     except KeyError,e:
-        raise KeyError
         log_error(e, method, account_id)
+        raise KeyError
+
+
 @retry(KeyError)  
 def getAggregatedStatsByAccountID(account_id):
     method = 'getAggregatedStats'
@@ -99,12 +109,14 @@ def getAggregatedStatsByAccountID(account_id):
     try:
         return values["lifetimeStatistics"]["array"]
     except KeyError, e:        
-        log_error(e, method,account_id)
+        log_error(e, method, account_id)
         raise KeyError
+
+
 @retry(KeyError)         
 def getLeagueForPlayerBySummonerID(summoner_ID):
     method = 'getLeagueForPlayer'
-    values = get_data( method, summoner_ID)
+    values = get_data(method, summoner_ID)
     try:
         values['requestorsRank']
         return values
@@ -126,7 +138,7 @@ def get_data( method, parameters):
         "X-Mashape-Authorization": API_KEY
         },
     encoding='utf-8',
-    timeout=7000
+    timeout=20000
         );  
     try:
         s= response.raw_body.replace('\\', '')        
@@ -134,8 +146,9 @@ def get_data( method, parameters):
     except Exception, e:
         log_error("get_data", method, s)
         raise e
-   
     return a
+
+
 def unicode_conversion(text):
     def fixup(m):
         text = m.group(0)
@@ -162,5 +175,3 @@ def unicode_conversion(text):
                     return unicode(entity, "iso-8859-1")
         return text # leave as is
     return re.sub("(?s)<[^>]*>|&#?\w+;", fixup, text)
-
-

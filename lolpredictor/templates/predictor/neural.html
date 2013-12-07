@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Neural Networks{% endblock %}
+{% block title %}Neural Network stats{% endblock %}
 
 {% block content %}
-	trainerror : {{trnresult}} 
-	<br/>
-	testerror  : {{tstresult}}
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Number of hidden nodes</th>
+				<th>Weight Decay</th>
+				<th>Train error</th>
+				<th>Test error</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in results%}
+			<tr style="background-color:{% if i == optimal_result %}#E0FFE0{% endif %}">
+				<td>{{ i.0 }}</td>
+				<td>{{ i.1 }}</td>
+				<td>{{ i.2 }}%</td>
+				<td>{{ i.3 }}%</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
 {% endblock %}
