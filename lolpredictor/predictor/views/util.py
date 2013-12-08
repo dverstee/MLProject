@@ -71,7 +71,7 @@ def store_match(game, type, account_id):
 	if champion is None or summoner is None:
 		return None
 	try:
-		store_champions_played(account_id)
+		store_champions_played(account_id, champion)
 	except KeyError, e:
 		print "Error storing champions"
 		return None	
@@ -93,14 +93,14 @@ def store_match(game, type, account_id):
 		summoner = store_summoner(summoner_id, None)		
 		if summoner == None:
 			return None
-						
+		champion = Champion.objects.get(pk=champion_id)	
 		try:
-			store_champions_played(summoner.account_id)
+			store_champions_played(summoner.account_id, champion)
 		except KeyError, e:
 			print "Error storing champions"
 			return None
 
-		champion = Champion.objects.get(pk=champion_id)	
+		
 		try:
 			champion_played = ChampionPlayed.objects.get(summoner = summoner, champion=champion )	
 		except ChampionPlayed.DoesNotExist:			
@@ -186,17 +186,17 @@ def store_summoner(summoner_id,account_id):
 
 # Store the information for all champions for the given summoner
 # return: false if the summoner was recently updated
-def store_champions_played(accountId):
+def store_champions_played(accountId, champion):
 	summoner = Summoner.objects.get(pk=accountId)
 
 	try:
-		cp = ChampionPlayed.objects.filter(summoner=summoner)[0]
+		cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
 		if cp is not None:
 			diff =datetime.now() - cp.champions_updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
 			if diff.days < 0:
 				print_champion_played(summoner,False)
 				return False
-	except IndexError:		
+	except:		
 		pass
 
 	accountstats = getAggregatedStatsByAccountID(accountId)
@@ -206,6 +206,9 @@ def store_champions_played(accountId):
 	param_hash = {}
 	for champion_stats in accountstats:
 		champion_id = champion_stats["championId"]
+		# Only store the relevant 
+		if champion_id != champion.key:
+			continue
 		if champion_id not in param_hash:
 			param_hash[champion_id] = {}
 		try:
