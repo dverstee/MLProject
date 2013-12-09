@@ -7,6 +7,7 @@ from pybrain.structure           import FullConnection, FeedForwardNetwork, Line
 from api import *
 from util import *
 from preprocessing import *
+from neural import *
 from lolpredictor.predictor.models import *
 
 from django.shortcuts import render
@@ -30,18 +31,22 @@ def predict(request):
                 #todo error
                 return render(request, 'predictor/predictor.html')
             else : 
-                inputvector = parsegame(game)
+                pred = parsegame(game)
                 makeprediction(inputvector)
             
         except TypeError, e:
-            #todo error
+            #todo 
             pass
+
+       
     return render(request, 'predictor/predictor.html')
       
 
        
 def parsegame(game):
-
+    #used to determine wich team our summoner is on.
+    pick_turn_our_summoner = game["pickTurn"]
+    team=2
     champ_hash = makechamphash(game)
     team_1=[]
     teamOne = game["teamOne"]["array"]
@@ -50,11 +55,14 @@ def parsegame(game):
         summoner_id = summoner["summonerId"]
         internalname = summoner["summonerInternalName"]
         champion_id = champ_hash[internalname]
+        pick_turn = summoner["pickTurn"]
         #No overhead in storing summoner 
         summoner = store_summoner(summoner_id,account_id)
         #there is overhead in store_championplayed , avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_1.append(cp)
+        if pick_turn == pick_turn_our_summoner:
+            team = 1
     team_2=[]
     teamTwo = game["teamTwo"]["array"]
     for summoner in teamTwo:
@@ -69,10 +77,19 @@ def parsegame(game):
         #there is overhead in store_championplayed , avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_2.append(cp)
-    #Sort champs 
+    #Sort champs     
     optimal_setup_1 = fill_missing_spots(sort_champion_list(team_1, []), team_1)
     optimal_setup_2 = fill_missing_spots(sort_champion_list(team_2, []), team_2)
-    return getDatafromMatch(optimal_setup_1,optimal_setup_2)
+    print team
+    print makeprediction(getDatafromMatch(optimal_setup_1,optimal_setup_2))
+    print makeprediction(getDatafromMatch(optimal_setup_2,optimal_setup_1))
+    if team == 1:
+        i= getDatafromMatch(optimal_setup_1,optimal_setup_2)
+    if team == 2:
+        i=getDatafromMatch(optimal_setup_2,optimal_setup_1)
+    return makeprediction(i)
+
+
 def getDatafromMatch(team_1,team_2):
     input = [matchups_win_rate(team_1,team_2)]
     for s in team_1:        
@@ -159,4 +176,4 @@ def makeChampionplayed(account_id, summoner,champion_id):
 def makeprediction(inputvector):
     fileObject = open('neuralHiddenNode50decay0.01','r')
     net = pickle.load(fileObject)
-    print net.activate(inputvector)  
+    print net.activate(inputvector)

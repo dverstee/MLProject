@@ -123,10 +123,6 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
 
     nr_of_iterations = 10
 
-
-
-    
-
     # Construct neural network
     print "Constructing network"
     
