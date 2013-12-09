@@ -46,6 +46,7 @@ def parse_ranked_games(games, accountid):
 
 	
 def store_match(game, type, account_id):
+	print game
 	our_team = []
 	their_team = []
 	championid = game["championId"]
@@ -284,6 +285,12 @@ def determineWin (game):
 
 def getMinimalDatafromMatch(matc,preprocessing):
 	input = [matchups_to_win_rate(matc)]
+	if matc.team1_is_red:
+		input += champion_played_to_features(matc.team_1summoner1_id)
+		input += champion_played_to_features(matc.team_1summoner2_id)
+		input += champion_played_to_features(matc.team_1summoner3_id)
+		input += champion_played_to_features(matc.team_1summoner4_id)
+		input += champion_played_to_features(matc.team_1summoner5_id)
 
 	input += champion_played_to_features(matc.team_1summoner1_id)
 	input += champion_played_to_features(matc.team_1summoner2_id)
@@ -291,11 +298,12 @@ def getMinimalDatafromMatch(matc,preprocessing):
 	input += champion_played_to_features(matc.team_1summoner4_id)
 	input += champion_played_to_features(matc.team_1summoner5_id)
 
-	input += champion_played_to_features(matc.team_1summoner1_id)
-	input += champion_played_to_features(matc.team_1summoner2_id)
-	input += champion_played_to_features(matc.team_1summoner3_id)
-	input += champion_played_to_features(matc.team_1summoner4_id)
-	input += champion_played_to_features(matc.team_1summoner5_id)
+	if not matc.team1_is_red:
+		input += champion_played_to_features(matc.team_1summoner1_id)
+		input += champion_played_to_features(matc.team_1summoner2_id)
+		input += champion_played_to_features(matc.team_1summoner3_id)
+		input += champion_played_to_features(matc.team_1summoner4_id)
+		input += champion_played_to_features(matc.team_1summoner5_id)
 	print input
 	return input
 
@@ -311,8 +319,13 @@ def champion_played_to_features(champion_played):
 	return [ranking, kdr, normalized_gold]
 
 def matchups_to_win_rate(match):
-	team_1 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
-	team_2 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
+	if matc.team1_is_red:
+		team_1 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
+		team_2 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
+	else:
+		team_1 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
+		team_2 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
+	
 	win_rates = []
 	for i in range(len(team_1)):
 		try:
@@ -558,7 +571,10 @@ def preprocessdata(matc):
 
 
 def print_summoner(summoner, updated, realupdate):
+<<<<<<< HEAD
+=======
 	
+>>>>>>> 68adef4a37b469186c33894de5e051305d1744c8
 	try:
 		if updated:
 			if realupdate : 
@@ -567,15 +583,22 @@ def print_summoner(summoner, updated, realupdate):
 				print "No update was required for Summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
 		else:
 			print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+<<<<<<< HEAD
+	except Exception:
+		return None
+=======
 	except:
 		pass
+>>>>>>> 68adef4a37b469186c33894de5e051305d1744c8
 
 def print_champion_played(summoner,updated):
-	if updated:
-		print "champions for summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
-	else:
-		print "No need to update champions for summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
-
+	try:
+		if updated:
+			print "champions for summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+		else:
+			print "No need to update champions for summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+	except Exception:
+		return None
 
 def print_match(match):
 	print match
