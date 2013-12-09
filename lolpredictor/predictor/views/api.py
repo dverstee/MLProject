@@ -6,8 +6,8 @@ import time
 import globals
 from functools import wraps
 
-# Arthur Key API_KEY = "LPr5tiP2Bv4EdDJ7UDaoXghst0DkJBLC"
-API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
+API_KEY = "LPr5tiP2Bv4EdDJ7UDaoXghst0DkJBLC"
+# Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 # Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 
 REGION = "EUW"
@@ -165,7 +165,7 @@ def get_data( method, parameters):
         "X-Mashape-Authorization": API_KEY
         },
     encoding='utf-8',
-    timeout=10000
+    timeout=20000
         );  
     try:
         s= response.raw_body.replace('\\', '')        

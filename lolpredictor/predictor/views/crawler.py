@@ -40,10 +40,10 @@ def crawler(request):
         return render(request, 'predictor/success.html', my_hash)
 
 def recrawler(request):
-    recrawl()
+    recrawl(0,1)
     return render(request, 'predictor/success.html')
 
-def recrawl():
+def recrawl(index, fragments):
     summoners = Summoner.objects.all()
     chosenSummoners = []
     print 'Summoner filtering start.'
@@ -64,6 +64,7 @@ def recrawl():
             chosenSummoners.append(summoner)
     print 'Summoner filtering completed. ' + str(len(chosenSummoners)) + ' summoners selected.'
 
+    chosenSummoners = chosenSummoners[(len(chosenSummoners)/fragments)*index:(len(chosenSummoners)/fragments)*(index+1)]
     for summoner in chosenSummoners:
         recentGames = getRecentGamesByAccountId(summoner.account_id)
         if recentGames != None:

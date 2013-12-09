@@ -162,25 +162,22 @@ def store_summoner(summoner_id,account_id):
 		param_hash["rank"] = ranktoint(league_information["requestorsRank"])
 		param_hash["tier"] = tiertoint(league_information["tier"])
 		param_hash["name"] = league_information["requestorsName"]
-		if league_information is None:
-			print summoner_id
-			print "League is none"
-			return None
-		
-	except ValueError:		
+
+		leagues = league_information["entries"]["array"]
+		summoner_info = filter(lambda x: int(x["playerOrTeamId"]) == summoner_id, leagues)
+		summoner_info = summoner_info[0]
+		param_hash["hotstreak"] = summoner_info["hotStreak"]
+	except:		
 		param_hash["rank"] = 4
 		param_hash["tier"] = 2
 		param_hash["name"] = getNameByAccountId(account_id)
+		param_hash["hotstreak"] = False
 
 	param_hash["summoner_id"] = summoner_id
 	param_hash["account_id"] = account_id	
 	param_hash["updated_at"] = datetime.now()
-	leagues = league_information["entries"]["array"]
-	summoner_info = filter(lambda x: int(x["playerOrTeamId"]) == summoner_id, leagues)
-	summoner_info = summoner_info[0]
 
 	# Todo improve win percentage
-	param_hash["hotstreak"] = summoner_info["hotStreak"]
 	s1 = Summoner.objects.create( **param_hash )
 
 	print_summoner(s1, updated,True)
