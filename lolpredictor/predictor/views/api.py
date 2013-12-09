@@ -51,7 +51,7 @@ def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
 
     return deco_retry     
  
-@retry(KeyError)        
+@retry(Exception)        
 def getSummonerIdByAccountId(account_id):    
     method = 'getAllPublicSummonerDataByAccount'
     values = get_data(method, account_id) 
@@ -62,7 +62,7 @@ def getSummonerIdByAccountId(account_id):
         raise KeyError
 
 
-@retry(KeyError) 
+@retry(Exception ) 
 def getAccountIdBySummonerId(summoner_id):
     method = 'getSummonerBySummonerId'
     values = get_data(method, summoner_id)
@@ -78,7 +78,7 @@ def getAccountIdBySummonerId(summoner_id):
     return accountid
 
 
-@retry(KeyError)
+@retry(Exception )
 def getAccountIdByName(name):
     method = 'getSummonerByName'
     name = re.sub(r'\s+', '', name)
@@ -91,7 +91,7 @@ def getAccountIdByName(name):
         raise KeyError
 
 
-@retry(KeyError)        
+@retry(Exception )        
 def getRecentGamesByAccountId(account_id):
     method = 'getRecentGames'
     values = get_data(method, account_id)
@@ -102,7 +102,7 @@ def getRecentGamesByAccountId(account_id):
         raise KeyError
 
 
-@retry(KeyError)  
+@retry(Exception )  
 def getAggregatedStatsByAccountID(account_id):
     method = 'getAggregatedStats'
     values = get_data(method, account_id)
@@ -113,7 +113,7 @@ def getAggregatedStatsByAccountID(account_id):
         raise KeyError
 
 
-@retry(KeyError)         
+@retry(Exception)         
 def getLeagueForPlayerBySummonerID(summoner_ID):
     method = 'getLeagueForPlayer'
     values = get_data(method, summoner_ID)
