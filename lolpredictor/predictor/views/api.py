@@ -6,7 +6,7 @@ import time
 import globals
 from functools import wraps
 
-API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
+API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 REGION = "EUW"
 API_DOMAIN = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION
 
@@ -131,8 +131,7 @@ def log_error(error, method, argument):
 
 
 def get_data( method, parameters):
-    url = "%s%s/%s" % (API_DOMAIN, method, parameters);
-   
+    url = "%s%s/%s" % (API_DOMAIN, method, parameters);   
     response =  unirest.get(url.encode('utf-8'),
     headers={
         "X-Mashape-Authorization": API_KEY
@@ -145,6 +144,7 @@ def get_data( method, parameters):
         a= json.loads(s)
     except Exception, e:
         log_error("get_data", method, s)
+        print s
         raise e
     return a
 

@@ -15,62 +15,13 @@ from lolpredictor.predictor.models import Match
 import globals
 logger = logging.getLogger(__name__)
 
-def neural(request):    
-    print "Starting neural network training"
-    
-    WEIGHT_DECAY_RANGE      = range(2,4) 
-    NUMBER_OF_NODES_RANGE   = range(20,70,10)
-    LAYERS                  = [2]
+def predict(request):    
+    print "Predicting !"
 
-    print "Preparing the data ...."
-    alldata = getdata(False, globals.use_full_features)
+    if request.method == 'GET':
+        return render(request, 'predictor/predictor.html')
 
-    results = []
-    #Grid search over all parameters to find the one that have the best mean performance
-    for layers in LAYERS:
-        for decay in WEIGHT_DECAY_RANGE:
-            for number_of_hidden_nodes in NUMBER_OF_NODES_RANGE:       
-                weightdecay = 10**(-decay)            
-                train_error, test_error = basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers,alldata)
-                results.append((number_of_hidden_nodes, decay, train_error, test_error))
-    print results
-    optimal_configuration = min(results, key=lambda x: x[3])
-    print "optimal_configuration:"
-    print "    number of hidden nodes: %d" % optimal_configuration[0]
-    print "    decay                 : %d" % optimal_configuration[1]
-    print "    train error           : %f" % optimal_configuration[2]
-    print "    test error            : %f" % optimal_configuration[3]
-
-    return render(request, 'predictor/neural.html', {
-            'results': results,
-            'optimal_result': optimal_configuration
-            })
-
-
-    weightdecaymax = 4 
-    alldata = getdata(False)
-    globals.best_number_of_hidden_nodes=120
-    globals.best_weight_decay=0.01
-
-    #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
-    #sweep over all parameters to find the one that have the best mean performance
-    for decay in range(2,weightdecaymax,1):
-
-        for number_of_hidden_node in range(460,620,20):       
-            weightdecay = 10**(-decay)            
-            basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
-
-    #build the best network with the parameters that performed best on mean
-           
    
-    #alldata = getMinimaldata()    
-    #for number_of_hidden_node in xrange(20,1000,20):       
-    #    basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
-    
-    #print "epoch: %4d" %trainer.totalepochs
-    #print "  train error: %5.2f%%" %trnresult
-    #print "  test error: %5.2f%%" %tstresult
-    
 
 def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))

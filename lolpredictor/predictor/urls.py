@@ -11,4 +11,5 @@ urlpatterns = patterns('',
  	url(r'^summoners/$', views.summoners, name='summoners'),
     url(r'^search/', views.search, name='search'),
     url(r'^winrates/', views.winrates, name='winrates'),
+    url(r'^predict/', views.predict, name='predict')
 )

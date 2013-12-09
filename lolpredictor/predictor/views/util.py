@@ -321,7 +321,6 @@ def matchups_to_win_rate(match):
 		synergys.append(Synergy.objects.get(champion_1=team_1[3].champion, champion_2=team_1[4].champion).win_rate)
 	except:
 		pass
-
 	try:
 		synergys.append(1 - Synergy.objects.get(champion_1=team_2[3].champion, champion_2=team_2[4].champion).win_rate)
 	except:
