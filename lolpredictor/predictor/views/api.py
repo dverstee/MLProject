@@ -8,6 +8,8 @@ from functools import wraps
 
 # Arthur Key API_KEY = "LPr5tiP2Bv4EdDJ7UDaoXghst0DkJBLC"
 API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
+# Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
+
 REGION = "EUW"
 API_DOMAIN = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION
 
@@ -77,6 +79,20 @@ def getAccountIdBySummonerId(summoner_id):
     accountid = getAccountIdByName(name) 
      
     return accountid
+@retry(KeyError) 
+def getNameByAccountId(account_id):
+    method = 'getAllPublicSummonerDataByAccount'
+    values = get_data(method, account_id)
+    try:
+        name = values["summoner"]["internalName"] 
+
+    except KeyError, e:
+        log_error(e, method, account_id)
+        raise KeyError
+    
+    accountid = getAccountIdByName(name) 
+     
+    return accountid
 
 
 @retry(KeyError)
@@ -125,6 +141,17 @@ def getLeagueForPlayerBySummonerID(summoner_ID):
         log_error(e, method, summoner_ID)
         raise KeyError 
 
+@retry(KeyError)         
+def retrieveInProgressSpectatorGameInfo(summonerName):
+    method = 'retrieveInProgressSpectatorGameInfo'
+    values = get_data(method, summonerName)
+    try:
+        values = values['game']
+        return values
+    except KeyError, e:  
+        log_error(e, method, summonerName)
+        raise KeyError 
+
 # Helper functions
 
 def log_error(error, method, argument):
@@ -132,20 +159,20 @@ def log_error(error, method, argument):
 
 
 def get_data( method, parameters):
-    url = "%s%s/%s" % (API_DOMAIN, method, parameters);
-   
+    url = "%s%s/%s" % (API_DOMAIN, method, parameters);   
     response =  unirest.get(url.encode('utf-8'),
     headers={
         "X-Mashape-Authorization": API_KEY
         },
     encoding='utf-8',
-    timeout=20000
+    timeout=10000
         );  
     try:
         s= response.raw_body.replace('\\', '')        
         a= json.loads(s)
     except Exception, e:
         log_error("get_data", method, s)
+        print s
         raise e
     return a
 

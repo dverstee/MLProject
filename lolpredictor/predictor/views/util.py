@@ -71,7 +71,7 @@ def store_match(game, type, account_id):
 	if champion is None or summoner is None:
 		return None
 	try:
-		store_champions_played(account_id)
+		store_champions_played(account_id, champion)
 	except KeyError, e:
 		print "Error storing champions"
 		return None	
@@ -93,14 +93,14 @@ def store_match(game, type, account_id):
 		summoner = store_summoner(summoner_id, None)		
 		if summoner == None:
 			return None
-						
+		champion = Champion.objects.get(pk=champion_id)	
 		try:
-			store_champions_played(summoner.account_id)
+			store_champions_played(summoner.account_id, champion)
 		except KeyError, e:
 			print "Error storing champions"
 			return None
 
-		champion = Champion.objects.get(pk=champion_id)	
+		
 		try:
 			champion_played = ChampionPlayed.objects.get(summoner = summoner, champion=champion )	
 		except ChampionPlayed.DoesNotExist:			
@@ -138,8 +138,7 @@ def store_match(game, type, account_id):
 	return m
 
 
-def store_summoner(summoner_id,account_id):
-	print summoner_id
+def store_summoner(summoner_id,account_id):	
 	try:
 		summoner = Summoner.objects.get(summoner_id=summoner_id)
 		diff = datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
@@ -157,18 +156,22 @@ def store_summoner(summoner_id,account_id):
 		account_id = getAccountIdBySummonerId(summoner_id)
 	if account_id is None:
 		return None	
-	print account_id
-	
-	league_information = getLeagueForPlayerBySummonerID(summoner_id)
-	if league_information is None:
-		print summoner_id
-		print "League is none"
-		return None
-	param_hash = {}
+	param_hash = {}	
+	try : 
+		league_information = getLeagueForPlayerBySummonerID(summoner_id)
+		param_hash["rank"] = ranktoint(league_information["requestorsRank"])
+		param_hash["tier"] = tiertoint(league_information["tier"])
+		param_hash["name"] = league_information["requestorsName"]
+		if league_information is None:
+			print summoner_id
+			print "League is none"
+			return None
+		
+	except ValueError:		
+		param_hash["rank"] = 4
+		param_hash["tier"] = 2
+		param_hash["name"] = getNameByAccountId(account_id)
 
-	param_hash["rank"] = ranktoint(league_information["requestorsRank"])
-	param_hash["tier"] = tiertoint(league_information["tier"])
-	param_hash["name"] = league_information["requestorsName"]
 	param_hash["summoner_id"] = summoner_id
 	param_hash["account_id"] = account_id	
 	param_hash["updated_at"] = datetime.now()
@@ -186,17 +189,17 @@ def store_summoner(summoner_id,account_id):
 
 # Store the information for all champions for the given summoner
 # return: false if the summoner was recently updated
-def store_champions_played(accountId):
+def store_champions_played(accountId, champion):
 	summoner = Summoner.objects.get(pk=accountId)
 
 	try:
-		cp = ChampionPlayed.objects.filter(summoner=summoner)[0]
+		cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
 		if cp is not None:
 			diff =datetime.now() - cp.champions_updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
 			if diff.days < 0:
 				print_champion_played(summoner,False)
 				return False
-	except IndexError:		
+	except:		
 		pass
 
 	accountstats = getAggregatedStatsByAccountID(accountId)
@@ -206,6 +209,9 @@ def store_champions_played(accountId):
 	param_hash = {}
 	for champion_stats in accountstats:
 		champion_id = champion_stats["championId"]
+		# Only store the relevant
+		if champion_id != champion.key:
+			continue
 		if champion_id not in param_hash:
 			param_hash[champion_id] = {}
 		try:
@@ -296,6 +302,7 @@ def getMinimalDatafromMatch(matc,preprocessing):
 	print input
 	return input
 
+
 def champion_played_to_features(champion_played):
 	# 0 to 1 ranking
 	ranking = float((champion_played.summoner.tier) - 1)/5.0 + float(4 - (champion_played.summoner.rank-1))/50.0
@@ -321,7 +328,6 @@ def matchups_to_win_rate(match):
 		synergys.append(Synergy.objects.get(champion_1=team_1[3].champion, champion_2=team_1[4].champion).win_rate)
 	except:
 		pass
-
 	try:
 		synergys.append(1 - Synergy.objects.get(champion_1=team_2[3].champion, champion_2=team_2[4].champion).win_rate)
 	except:
@@ -555,14 +561,17 @@ def preprocessdata(matc):
 
 
 def print_summoner(summoner, updated, realupdate):
-	if updated:
-		if realupdate : 
-			print "Summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
-		else :
-			print "No update was required for Summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
-	else:
-		print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
-
+	
+	try:
+		if updated:
+			if realupdate : 
+				print "Summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+			else :
+				print "No update was required for Summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+		else:
+			print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+	except:
+		pass
 
 def print_champion_played(summoner,updated):
 	if updated:

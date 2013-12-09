@@ -18,9 +18,11 @@ logger = logging.getLogger(__name__)
 def neural(request):    
     print "Starting neural network training"
     
-    WEIGHT_DECAY_RANGE      = range(2,4) 
-    NUMBER_OF_NODES_RANGE   = range(400,410,10)
-    LAYERS                  = [1]
+
+    WEIGHT_DECAY_RANGE      = range(1,4) 
+    NUMBER_OF_NODES_RANGE   = range(20,100,10)
+    LAYERS                  = [1,2]
+
 
     print "Preparing the data ...."
     alldata = getdata(False, globals.use_full_features)
@@ -47,9 +49,35 @@ def neural(request):
             })
 
 
+    weightdecaymax = 4 
+    alldata = getdata(False)
+    globals.best_number_of_hidden_nodes=120
+    globals.best_weight_decay=0.01
+
+    #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
+    #sweep over all parameters to find the one that have the best mean performance
+    for decay in range(2,weightdecaymax,1):
+
+        for number_of_hidden_node in range(460,620,20):       
+            weightdecay = 10**(-decay)            
+            basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
+
+    #build the best network with the parameters that performed best on mean
+           
+   
+    #alldata = getMinimaldata()    
+    #for number_of_hidden_node in xrange(20,1000,20):       
+    #    basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
+    
+    #print "epoch: %4d" %trainer.totalepochs
+    #print "  train error: %5.2f%%" %trnresult
+    #print "  test error: %5.2f%%" %tstresult
+    
+
 def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
     print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
+
 
 
 
@@ -92,7 +120,9 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
     first argument is the dimension of the input
      second argument is dimension of the output
     '''  
-    nr_of_iterations = 2
+
+    nr_of_iterations = 10
+
 
 
     
@@ -110,7 +140,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
         print "Iteration %d" % i
 
         # Prepare the data
-        tstdata, trndata = alldata.splitWithProportion( 0.05 )
+        tstdata, trndata = alldata.splitWithProportion( 0.15 )
         trndata._convertToOneOfMany()
         tstdata._convertToOneOfMany()
         # construct a neural network

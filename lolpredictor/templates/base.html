@@ -27,8 +27,11 @@
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
+
 						{% url 'home' as url %}
-						<li {% if request.path == url %} class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
+						<li {% if request.path == url %} class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>						
+						{% url 'predictor:predict' as url %}
+						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Predict</a></li>
 						{% url 'predictor:neural' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Neural network</a></li>
 						{% url 'predictor:crawler' as url %}
