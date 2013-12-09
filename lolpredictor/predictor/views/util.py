@@ -139,8 +139,7 @@ def store_match(game, type, account_id):
 	return m
 
 
-def store_summoner(summoner_id,account_id):
-	print summoner_id
+def store_summoner(summoner_id,account_id):	
 	try:
 		summoner = Summoner.objects.get(summoner_id=summoner_id)
 		diff = datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
@@ -158,18 +157,22 @@ def store_summoner(summoner_id,account_id):
 		account_id = getAccountIdBySummonerId(summoner_id)
 	if account_id is None:
 		return None	
-	print account_id
-	
-	league_information = getLeagueForPlayerBySummonerID(summoner_id)
-	if league_information is None:
-		print summoner_id
-		print "League is none"
-		return None
-	param_hash = {}
+	param_hash = {}	
+	try : 
+		league_information = getLeagueForPlayerBySummonerID(summoner_id)
+		param_hash["rank"] = ranktoint(league_information["requestorsRank"])
+		param_hash["tier"] = tiertoint(league_information["tier"])
+		param_hash["name"] = league_information["requestorsName"]
+		if league_information is None:
+			print summoner_id
+			print "League is none"
+			return None
+		
+	except ValueError:		
+		param_hash["rank"] = 4
+		param_hash["tier"] = 2
+		param_hash["name"] = getNameByAccountId(account_id)
 
-	param_hash["rank"] = ranktoint(league_information["requestorsRank"])
-	param_hash["tier"] = tiertoint(league_information["tier"])
-	param_hash["name"] = league_information["requestorsName"]
 	param_hash["summoner_id"] = summoner_id
 	param_hash["account_id"] = account_id	
 	param_hash["updated_at"] = datetime.now()
@@ -207,7 +210,7 @@ def store_champions_played(accountId, champion):
 	param_hash = {}
 	for champion_stats in accountstats:
 		champion_id = champion_stats["championId"]
-		# Only store the relevant 
+		# Only store the relevant
 		if champion_id != champion.key:
 			continue
 		if champion_id not in param_hash:
@@ -307,6 +310,7 @@ def getMinimalDatafromMatch(matc,preprocessing):
 	print input
 	return input
 
+
 def champion_played_to_features(champion_played):
 	# 0 to 1 ranking
 	ranking = float((champion_played.summoner.tier) - 1)/5.0 + float(4 - (champion_played.summoner.rank-1))/50.0
@@ -337,7 +341,6 @@ def matchups_to_win_rate(match):
 		synergys.append(Synergy.objects.get(champion_1=team_1[3].champion, champion_2=team_1[4].champion).win_rate)
 	except:
 		pass
-
 	try:
 		synergys.append(1 - Synergy.objects.get(champion_1=team_2[3].champion, champion_2=team_2[4].champion).win_rate)
 	except:
@@ -571,6 +574,10 @@ def preprocessdata(matc):
 
 
 def print_summoner(summoner, updated, realupdate):
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 68adef4a37b469186c33894de5e051305d1744c8
 	try:
 		if updated:
 			if realupdate : 
@@ -579,8 +586,13 @@ def print_summoner(summoner, updated, realupdate):
 				print "No update was required for Summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
 		else:
 			print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+<<<<<<< HEAD
 	except Exception:
 		return None
+=======
+	except:
+		pass
+>>>>>>> 68adef4a37b469186c33894de5e051305d1744c8
 
 def print_champion_played(summoner,updated):
 	try:

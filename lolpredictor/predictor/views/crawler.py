@@ -39,8 +39,11 @@ def crawler(request):
         my_hash["updated"] = globals.nrofupdates
         return render(request, 'predictor/success.html', my_hash)
 
-
 def recrawler(request):
+    recrawl()
+    return render(request, 'predictor/success.html')
+
+def recrawl():
     summoners = Summoner.objects.all()
     chosenSummoners = []
     print 'Summoner filtering start.'
