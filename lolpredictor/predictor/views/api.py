@@ -6,6 +6,7 @@ import time
 import globals
 from functools import wraps
 
+# Arthur Key API_KEY = "LPr5tiP2Bv4EdDJ7UDaoXghst0DkJBLC"
 API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 REGION = "EUW"
 API_DOMAIN = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION
