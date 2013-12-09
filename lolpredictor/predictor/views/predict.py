@@ -4,146 +4,159 @@ from pybrain.tools.shortcuts     import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure.modules   import SoftmaxLayer, BiasUnit
 from pybrain.structure           import FullConnection, FeedForwardNetwork, LinearLayer, SigmoidLayer
+from api import *
+from util import *
+from preprocessing import *
+from lolpredictor.predictor.models import *
 
 from django.shortcuts import render
 import itertools, collections
 import logging
 import pickle
-import json
-from util import getBasicDatafromMatch, getMinimalDatafromMatch
-from lolpredictor.predictor.models import Match
+
 import globals
 logger = logging.getLogger(__name__)
 
 def predict(request):    
     print "Predicting !"
-
     if request.method == 'GET':
         return render(request, 'predictor/predictor.html')
-
-   
-
-def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
-    logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
-    print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
-
-
-
-
-
-def getdata(do_preprocessing, full_data):
-    '''
-    fetch and format the match data according to the given flags
-    do_preprocessing: bool: true if preprocessing needs to be do_preprocessing
-    full_data: bool: false if the minimal data should be used
-    '''
-    if full_data == 0 :
-        fn = getMinimalDatafromMatch
-    else:
-        fn = getBasicDatafromMatch
-    if globals.use_saved_data:
+    if request.method == 'POST':
+        summoner_name = str(request.POST["summoner_name"])
+        print summoner_name 
+        game = retrieveInProgressSpectatorGameInfo(summoner_name)
         try:
-            with open('processed_data%d' % full_data) as outfile:
-                data = json.load(outfile)
-        except IOError:
-            matches = Match.objects.all()
-            data = map(lambda x: (fn(x,do_preprocessing), x.won), matches )
-            with open('processed_data%d' % full_data, 'w') as outfile:
-                json.dump(data,outfile)
-    else:
-        matches = Match.objects.all()
-        data = map(lambda x: (fn(x,do_preprocessing), x.won), matches )
-        with open('processed_data%d' % full_data, 'w') as outfile:
-                json.dump(data,outfile)
-
-    all_data = None
-    for input, won in data:           
-            if all_data is None:
-                all_data = ClassificationDataSet(len(input), 1, nb_classes=2)       
-            all_data.addSample(input, won)
-    return all_data
-
-def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
-    '''
-    This is a dataset 
-    first argument is the dimension of the input
-     second argument is dimension of the output
-    '''  
-    nr_of_iterations = 5
-
-
-    
-
-    # Construct neural network
-    print "Constructing network"
-    
-
-    print "  (number_of_hidden_nodes : %s, weight decay : %s, layers: %s)" % (number_of_hidden_nodes, weightdecay, layers)
-
-    train_results   = []
-    test_results    = []
-    neural_networks = []
-    for i in  xrange(1,nr_of_iterations+1):
-        print "Iteration %d" % i
-
-        # Prepare the data
-        tstdata, trndata = alldata.splitWithProportion( 0.15 )
-        trndata._convertToOneOfMany()
-        tstdata._convertToOneOfMany()
-        # construct a neural network
-        fnn = construct_neural_network(number_of_hidden_nodes, layers, trndata.indim, trndata.outdim)
-        trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
-        #early stopping validation set = 0.25
-        trainer.trainUntilConvergence(continueEpochs=5)   
-        train_results.append(percentError( trainer.testOnClassData(), trndata['class'] ))
-        test_results.append(percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] ))
-        neural_networks.append(fnn)
-        log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,train_results[-1],test_results[-1])         
+            if game["queueTypeName"]!="RANKED_SOLO_5x5":
+                #todo error
+                return render(request, 'predictor/predictor.html')
+            else : 
+                inputvector = parsegame(game)
+                makeprediction(inputvector)
             
-    # Compute means
-    mean_train_error    = sum(train_results)/len(train_results)
-    mean_test_error     = sum(test_results)/len(test_results)
+        except TypeError, e:
+            #todo error
+            pass
+    return render(request, 'predictor/predictor.html')
+      
 
-    # Compute optimal network configuration
-    optimal_test_error  = min(test_results)
-    optimal_index       = test_results.index(optimal_test_error)
+       
+def parsegame(game):
 
-    # Save the optimal configuration to the file system
-    neuralnetwork = 'neuralHiddenNode%sdecay%s'%(number_of_hidden_nodes, weightdecay)
-    fileObject = open(neuralnetwork, 'w')
-    pickle.dump(neural_networks[optimal_index], fileObject)
-    fileObject.close()
+    champ_hash = makechamphash(game)
+    team_1=[]
+    teamOne = game["teamOne"]["array"]
+    for summoner in teamOne:
+        account_id = summoner["accountId"]
+        summoner_id = summoner["summonerId"]
+        internalname = summoner["summonerInternalName"]
+        champion_id = champ_hash[internalname]
+        #No overhead in storing summoner 
+        summoner = store_summoner(summoner_id,account_id)
+        #there is overhead in store_championplayed , avoid this by new function.        
+        cp = makeChampionplayed(account_id,summoner,champion_id)        
+        team_1.append(cp)
+    team_2=[]
+    teamTwo = game["teamTwo"]["array"]
+    for summoner in teamTwo:
+        account_id = summoner["summonerId"]
+        summoner_id = summoner["accountId"]
+        internalname = summoner["summonerInternalName"]
+        champion_id = champ_hash[internalname]
+        #No overhead in storing summoner 
+        print account_id
+        print summoner_id
+        summoner = store_summoner(account_id,summoner_id)
+        #there is overhead in store_championplayed , avoid this by new function.        
+        cp = makeChampionplayed(account_id,summoner,champion_id)        
+        team_2.append(cp)
+    #Sort champs 
+    optimal_setup_1 = fill_missing_spots(sort_champion_list(team_1, []), team_1)
+    optimal_setup_2 = fill_missing_spots(sort_champion_list(team_2, []), team_2)
+    return getDatafromMatch(optimal_setup_1,optimal_setup_2)
+def getDatafromMatch(team_1,team_2):
+    input = [matchups_win_rate(team_1,team_2)]
+    for s in team_1:        
+        input += champion_played_to_features(s)
+    for s in team_2:
+        input += champion_played_to_features(s)
+    print input
+    return input
+def matchups_win_rate(team_1,team_2):   
+    win_rates = []
+    for i in range(len(team_1)):
+        try:
+            matchup = Matchup.objects.get(champion_1=team_1[i].champion, champion_2=team_2[i].champion)
+            win_rates.append(matchup.win_rate)
+        except:
+            pass
+    synergys = []
+    try:
+        synergys.append(Synergy.objects.get(champion_1=team_1[3].champion, champion_2=team_1[4].champion).win_rate)
+    except:
+        pass
+    try:
+        synergys.append(1 - Synergy.objects.get(champion_1=team_2[3].champion, champion_2=team_2[4].champion).win_rate)
+    except:
+        pass
+    if synergys:
+        win_rates.append(sum(synergys)/len(synergys))
+    if win_rates:
+        return sum(win_rates)/len(win_rates)
+    else:
+        return 0.5
+def makechamphash(match):
+    champ_hash = {} 
+    champs = match["playerChampionSelections"]["array"]
+    for champ in champs:
+        champ_hash[champ["summonerInternalName"]]=champ["championId"]
+    return champ_hash
+def makeChampionplayed(account_id, summoner,champion_id):  
+    champion = Champion.objects.get(pk=champion_id)   
+    try:
+        cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
+        if cp is not None:
+            print_champion_played(summoner,False)
+            return cp
+    except:     
+        pass
+    accountstats = getAggregatedStatsByAccountID(account_id)
+    champion = Champion.objects.get(pk=champion_id)    
+    param_hash = {}
+    param_hash["champion"] = champion
+    param_hash["summoner"] = summoner
+    print param_hash
+    
+    for champion_stats in accountstats:
+        champion_id = champion_stats["championId"]
+        # Only store the relevant
+        if champion_id == champion.key:
+            statType    = champion_stats["statType"]
+            if statType == "TOTAL_SESSIONS_PLAYED":                
+                param_hash["nr_gameswithchamp"] =  champion_stats["value"]
+            if statType == "TOTAL_ASSISTS":                
+                param_hash["average_assists"] =  champion_stats["value"]                
+            if statType == "TOTAL_DEATHS_PER_SESSION":               
+                param_hash["average_deaths"] =  champion_stats["value"]
+            if statType == "TOTAL_CHAMPION_KILLS":
+                param_hash["average_kills"] =  champion_stats["value"]
+            if statType == "TOTAL_GOLD_EARNED":
+                param_hash["average_gold"] =  champion_stats["value"]
+    try :
+        param_hash["average_assists"] = param_hash["average_assists"] / param_hash["nr_gameswithchamp"]
+        param_hash["average_deaths"] = param_hash["average_deaths"] / param_hash["nr_gameswithchamp"]
+        param_hash["average_kills"] = param_hash["average_kills"] / param_hash["nr_gameswithchamp"]
+        param_hash["average_gold"] = param_hash["average_gold"] / param_hash["nr_gameswithchamp"]
+    except KeyError :
+        param_hash["nr_gameswithchamp"] = 0
+        param_hash["average_assists"] = 0
+        param_hash["average_deaths"] = 0
+        param_hash["average_kills"] = 0
+        param_hash["average_gold"] = 0
 
-    return (mean_train_error, mean_test_error)
-
-
-def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, inputdim, outputdim):
-    """
-    Constructs a neural network with a given amount of hidden layers and nodes per hidden layer
-    """
-    input_layer = LinearLayer(inputdim)
-    hidden_layers = []
-    output_layer = SoftmaxLayer(outputdim)
-    # Nodes of the neural network
-    fnn = FeedForwardNetwork()
-    fnn.addInputModule(input_layer)
-    for i in range(number_of_hidden_layers):
-        sigm = SigmoidLayer(number_of_hidden_nodes)
-        hidden_layers.append(sigm)
-        fnn.addModule(sigm)
-    fnn.addOutputModule(output_layer)
-    bias = BiasUnit()
-    fnn.addModule(bias)
-    # Connections of the neural network
-    input_connection = FullConnection(input_layer, hidden_layers[0])
-    fnn.addConnection(input_connection)
-    fnn.addConnection(FullConnection(bias, hidden_layers[0]))
-    for i in range(len(hidden_layers) - 1):
-        full = FullConnection(hidden_layers[i], hidden_layers[i+1])
-        fnn.addConnection(full)
-        fnn.addConnection(FullConnection(bias, hidden_layers[i+1]))
-    output_connection = FullConnection(hidden_layers[-1], output_layer)
-    fnn.addConnection(output_connection)
-    fnn.addConnection(FullConnection(bias, hidden_layers[0]))
-    fnn.sortModules()
-    return fnn
+    c1 = ChampionPlayed.objects.create(**param_hash)
+    print_champion_played(summoner,True)
+    return c1
+def makeprediction(inputvector):
+    fileObject = open('neuralHiddenNode50decay0.01','r')
+    net = pickle.load(fileObject)
+    print net.activate(inputvector)  

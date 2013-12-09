@@ -7,3 +7,4 @@ from search import search
 from summoners import summoners
 from preprocessing import test
 from winrates import winrates
+from predict import predict

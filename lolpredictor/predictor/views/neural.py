@@ -18,9 +18,11 @@ logger = logging.getLogger(__name__)
 def neural(request):    
     print "Starting neural network training"
     
-    WEIGHT_DECAY_RANGE      = range(2,4) 
-    NUMBER_OF_NODES_RANGE   = range(20,70,10)
-    LAYERS                  = [2]
+
+    WEIGHT_DECAY_RANGE      = range(1,4) 
+    NUMBER_OF_NODES_RANGE   = range(20,100,10)
+    LAYERS                  = [1,2]
+
 
     print "Preparing the data ...."
     alldata = getdata(False, globals.use_full_features)
@@ -118,7 +120,9 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
     first argument is the dimension of the input
      second argument is dimension of the output
     '''  
-    nr_of_iterations = 5
+
+    nr_of_iterations = 10
+
 
 
     
