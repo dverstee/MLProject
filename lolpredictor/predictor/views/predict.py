@@ -32,7 +32,7 @@ def predict(request):
                 return render(request, 'predictor/predictor.html')
             else : 
                 pred = parsegame(game)
-                makeprediction(inputvector)
+                #makeprediction(inputvector)
             
         except TypeError, e:
             #todo 
@@ -81,8 +81,13 @@ def parsegame(game):
     optimal_setup_1 = fill_missing_spots(sort_champion_list(team_1, []), team_1)
     optimal_setup_2 = fill_missing_spots(sort_champion_list(team_2, []), team_2)
     print team
+    print optimal_setup_1
+    print optimal_setup_2
+    print getDatafromMatch(optimal_setup_1,optimal_setup_2)
     print makeprediction(getDatafromMatch(optimal_setup_1,optimal_setup_2))
+    print getDatafromMatch(optimal_setup_2,optimal_setup_1)
     print makeprediction(getDatafromMatch(optimal_setup_2,optimal_setup_1))
+
     if team == 1:
         i= getDatafromMatch(optimal_setup_1,optimal_setup_2)
     if team == 2:
@@ -95,8 +100,7 @@ def getDatafromMatch(team_1,team_2):
     for s in team_1:        
         input += champion_played_to_features(s)
     for s in team_2:
-        input += champion_played_to_features(s)
-    print input
+        input += champion_played_to_features(s)    
     return input
 def matchups_win_rate(team_1,team_2):   
     win_rates = []
@@ -121,6 +125,8 @@ def matchups_win_rate(team_1,team_2):
         return sum(win_rates)/len(win_rates)
     else:
         return 0.5
+
+
 def makechamphash(match):
     champ_hash = {} 
     champs = match["playerChampionSelections"]["array"]
@@ -164,16 +170,18 @@ def makeChampionplayed(account_id, summoner,champion_id):
         param_hash["average_kills"] = param_hash["average_kills"] / param_hash["nr_gameswithchamp"]
         param_hash["average_gold"] = param_hash["average_gold"] / param_hash["nr_gameswithchamp"]
     except KeyError :
-        param_hash["nr_gameswithchamp"] = 0
+        param_hash["nr_gameswithchamp"] = 1
         param_hash["average_assists"] = 0
-        param_hash["average_deaths"] = 0
-        param_hash["average_kills"] = 0
-        param_hash["average_gold"] = 0
+        param_hash["average_deaths"] = 1
+        param_hash["average_kills"] = 1
+        param_hash["average_gold"] = 2000
 
     c1 = ChampionPlayed.objects.create(**param_hash)
     print_champion_played(summoner,True)
     return c1
 def makeprediction(inputvector):
-    fileObject = open('neuralHiddenNode50decay0.01','r')
+    
+    fileObject = open('neuralHiddenNode70decay0.01','r')
     net = pickle.load(fileObject)
-    print net.activate(inputvector)
+   
+    return net.activate(inputvector)

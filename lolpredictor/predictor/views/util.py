@@ -574,10 +574,6 @@ def preprocessdata(matc):
 
 
 def print_summoner(summoner, updated, realupdate):
-<<<<<<< HEAD
-=======
-	
->>>>>>> 68adef4a37b469186c33894de5e051305d1744c8
 	try:
 		if updated:
 			if realupdate : 
@@ -586,13 +582,9 @@ def print_summoner(summoner, updated, realupdate):
 				print "No update was required for Summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
 		else:
 			print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
-<<<<<<< HEAD
-	except Exception:
-		return None
-=======
 	except:
 		pass
->>>>>>> 68adef4a37b469186c33894de5e051305d1744c8
+
 
 def print_champion_played(summoner,updated):
 	try:

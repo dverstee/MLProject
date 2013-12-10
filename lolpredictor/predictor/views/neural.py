@@ -14,14 +14,14 @@ from util import getBasicDatafromMatch, getMinimalDatafromMatch
 from lolpredictor.predictor.models import Match
 import globals
 logger = logging.getLogger(__name__)
-
+activation_samples =[]  
 def neural(request):    
     print "Starting neural network training"
     
 
-    WEIGHT_DECAY_RANGE      = range(1,4) 
-    NUMBER_OF_NODES_RANGE   = range(20,100,10)
-    LAYERS                  = [1,2]
+    WEIGHT_DECAY_RANGE      = range(2,3) 
+    NUMBER_OF_NODES_RANGE   = range(70,80,10)
+    LAYERS                  = [1]
 
 
     print "Preparing the data ...."
@@ -72,7 +72,7 @@ def neural(request):
     #print "epoch: %4d" %trainer.totalepochs
     #print "  train error: %5.2f%%" %trnresult
     #print "  test error: %5.2f%%" %tstresult
-    
+ 
 
 def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
@@ -108,10 +108,14 @@ def getdata(do_preprocessing, full_data):
                 json.dump(data,outfile)
 
     all_data = None
-    for input, won in data:           
+    i=0
+    for input, won in data:
+            i=i+1           
             if all_data is None:
-                all_data = ClassificationDataSet(len(input), 1, nb_classes=2)       
-            all_data.addSample(input, won)
+                all_data = ClassificationDataSet(len(input), 1, nb_classes=2)                 
+            all_data.addSample(input, int(won))
+            if i<5:
+                activation_samples.append(input)  
     return all_data
 
 def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
@@ -147,6 +151,10 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
         train_results.append(percentError( trainer.testOnClassData(), trndata['class'] ))
         test_results.append(percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] ))
         neural_networks.append(fnn)
+        global activation_samples
+        for sample in activation_samples:
+            print "The activation sample: %s"%sample
+            print "The output :%s"%fnn.activate(sample)
         log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,train_results[-1],test_results[-1])         
             
     # Compute means
