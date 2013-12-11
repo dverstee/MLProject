@@ -19,9 +19,9 @@ def neural(request):
     print "Starting neural network training"
     
 
-    WEIGHT_DECAY_RANGE      = range(1,4) 
-    NUMBER_OF_NODES_RANGE   = range(20,100,10)
-    LAYERS                  = [1,2]
+    WEIGHT_DECAY_RANGE      = range(2,4) 
+    NUMBER_OF_NODES_RANGE   = range(60,200,50)
+    LAYERS                  = [1]
 
 
     print "Preparing the data ...."
@@ -121,7 +121,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
      second argument is dimension of the output
     '''  
 
-    nr_of_iterations = 10
+    nr_of_iterations = 1
 
 
 
