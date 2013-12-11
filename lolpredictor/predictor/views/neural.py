@@ -110,15 +110,17 @@ def getdata(do_preprocessing, full_data):
             json.dump(data,outfile)
 
     all_data = None
-    i=0
+    i=0     
     for input, won in data:
             i=i+1           
             if all_data is None:
                 all_data = ClassificationDataSet(len(input), 1, nb_classes=2)  
-                activation_samples.append(input)                 
+                        
             all_data.addSample(input, int(won))
-            
-               
+            if i < 5 :
+                activation_samples.append(input)    
+                print input
+    print i           
     return all_data
 
 def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
@@ -157,6 +159,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
         for sample in activation_samples:
             print "The activation sample: %s"%sample
             print "The output :%s"%fnn.activate(sample)
+            print "Weight:%s , %s"%(fnn['in'].outputbuffer[fnn['in'].offset],fnn['hidden0'].outputbuffer[fnn['hidden0'].offset])
         log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,train_results[-1],test_results[-1])         
             
     # Compute means
@@ -174,8 +177,6 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
     fileObject.close()
 
     return (mean_train_error, mean_test_error)
-
-
 def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, inputdim, outputdim):
     """
     Constructs a neural network with a given amount of hidden layers and nodes per hidden layer
