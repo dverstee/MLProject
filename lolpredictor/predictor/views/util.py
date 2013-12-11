@@ -295,11 +295,11 @@ def getMinimalDatafromMatch(matc,preprocessing):
 		input += champion_played_to_features(matc.team_1summoner4_id)
 		input += champion_played_to_features(matc.team_1summoner5_id)
 
-	input += champion_played_to_features(matc.team_1summoner1_id)
-	input += champion_played_to_features(matc.team_1summoner2_id)
-	input += champion_played_to_features(matc.team_1summoner3_id)
-	input += champion_played_to_features(matc.team_1summoner4_id)
-	input += champion_played_to_features(matc.team_1summoner5_id)
+	input += champion_played_to_features(matc.team_2summoner1_id)
+	input += champion_played_to_features(matc.team_2summoner2_id)
+	input += champion_played_to_features(matc.team_2summoner3_id)
+	input += champion_played_to_features(matc.team_2summoner4_id)
+	input += champion_played_to_features(matc.team_2summoner5_id)
 
 	if not matc.team1_is_red:
 		input += champion_played_to_features(matc.team_1summoner1_id)
@@ -307,7 +307,7 @@ def getMinimalDatafromMatch(matc,preprocessing):
 		input += champion_played_to_features(matc.team_1summoner3_id)
 		input += champion_played_to_features(matc.team_1summoner4_id)
 		input += champion_played_to_features(matc.team_1summoner5_id)
-	print input
+	
 	return input
 
 
@@ -322,7 +322,7 @@ def champion_played_to_features(champion_played):
 	return [ranking, kdr, normalized_gold]
 
 def matchups_to_win_rate(match):
-	if matc.team1_is_red:
+	if match.team1_is_red:
 		team_1 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
 		team_2 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
 	else:
