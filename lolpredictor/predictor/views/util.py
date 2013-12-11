@@ -163,25 +163,22 @@ def store_summoner(summoner_id,account_id):
 		param_hash["rank"] = ranktoint(league_information["requestorsRank"])
 		param_hash["tier"] = tiertoint(league_information["tier"])
 		param_hash["name"] = league_information["requestorsName"]
-		if league_information is None:
-			print summoner_id
-			print "League is none"
-			return None
-		
-	except ValueError:		
+
+		leagues = league_information["entries"]["array"]
+		summoner_info = filter(lambda x: int(x["playerOrTeamId"]) == summoner_id, leagues)
+		summoner_info = summoner_info[0]
+		param_hash["hotstreak"] = summoner_info["hotStreak"]
+	except:		
 		param_hash["rank"] = 4
 		param_hash["tier"] = 2
 		param_hash["name"] = getNameByAccountId(account_id)
+		param_hash["hotstreak"] = False
 
 	param_hash["summoner_id"] = summoner_id
 	param_hash["account_id"] = account_id	
 	param_hash["updated_at"] = datetime.now()
-	leagues = league_information["entries"]["array"]
-	summoner_info = filter(lambda x: int(x["playerOrTeamId"]) == summoner_id, leagues)
-	summoner_info = summoner_info[0]
 
 	# Todo improve win percentage
-	param_hash["hotstreak"] = summoner_info["hotStreak"]
 	s1 = Summoner.objects.create( **param_hash )
 
 	print_summoner(s1, updated,True)
@@ -286,28 +283,40 @@ def determineWin (game):
 		if win == "WIN" :
 			return stat["value"]
 
-def getMinimalDatafromMatch(matc,preprocessing):
-	input = [matchups_to_win_rate(matc)]
-	if matc.team1_is_red:
+def getMinimalDatafromMatch(matc, preprocessing, reverse):
+	input = [matchups_to_win_rate(matc, reverse)]
+
+	if not reverse:
 		input += champion_played_to_features(matc.team_1summoner1_id)
 		input += champion_played_to_features(matc.team_1summoner2_id)
 		input += champion_played_to_features(matc.team_1summoner3_id)
 		input += champion_played_to_features(matc.team_1summoner4_id)
 		input += champion_played_to_features(matc.team_1summoner5_id)
 
-	input += champion_played_to_features(matc.team_2summoner1_id)
-	input += champion_played_to_features(matc.team_2summoner2_id)
-	input += champion_played_to_features(matc.team_2summoner3_id)
-	input += champion_played_to_features(matc.team_2summoner4_id)
-	input += champion_played_to_features(matc.team_2summoner5_id)
+		input += champion_played_to_features(matc.team_2summoner1_id)
+		input += champion_played_to_features(matc.team_2summoner2_id)
+		input += champion_played_to_features(matc.team_2summoner3_id)
+		input += champion_played_to_features(matc.team_2summoner4_id)
+		input += champion_played_to_features(matc.team_2summoner5_id)
+	else:
+		input += champion_played_to_features(matc.team_2summoner1_id)
+		input += champion_played_to_features(matc.team_2summoner2_id)
+		input += champion_played_to_features(matc.team_2summoner3_id)
+		input += champion_played_to_features(matc.team_2summoner4_id)
+		input += champion_played_to_features(matc.team_2summoner5_id)
 
-	if not matc.team1_is_red:
 		input += champion_played_to_features(matc.team_1summoner1_id)
 		input += champion_played_to_features(matc.team_1summoner2_id)
 		input += champion_played_to_features(matc.team_1summoner3_id)
 		input += champion_played_to_features(matc.team_1summoner4_id)
 		input += champion_played_to_features(matc.team_1summoner5_id)
-	
+
+
+	if (matc.team1_is_red and not reverse) or (not matc.team1_is_red and reverse):
+		input += [1]
+	else:
+		input += [0]
+
 	return input
 
 
@@ -321,14 +330,16 @@ def champion_played_to_features(champion_played):
 	normalized_gold = float(champion_played.average_gold) / float(globals.goldnormalization)
 	return [ranking, kdr, normalized_gold]
 
-def matchups_to_win_rate(match):
-	if match.team1_is_red:
+
+def matchups_to_win_rate(match, reverse):
+	if not reverse:
 		team_1 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
 		team_2 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
 	else:
 		team_1 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
 		team_2 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
-	
+		
+
 	win_rates = []
 	for i in range(len(team_1)):
 		try:
@@ -353,7 +364,7 @@ def matchups_to_win_rate(match):
 		return 0.5
 
 
-def getBasicDatafromMatch(matc,preprocessing):
+def getBasicDatafromMatch(matc,preprocessing, reverse):
 	input=[]
 	goldnormalization =10000.0
 
@@ -584,7 +595,6 @@ def print_summoner(summoner, updated, realupdate):
 			print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
 	except:
 		pass
-
 
 def print_champion_played(summoner,updated):
 	try:

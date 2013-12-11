@@ -20,7 +20,7 @@ def neural(request):
     
 
     WEIGHT_DECAY_RANGE      = range(2,3) 
-    NUMBER_OF_NODES_RANGE   = range(200,400,25)
+    NUMBER_OF_NODES_RANGE   = range(70,80,5)
     LAYERS                  = [1]
 
 
@@ -49,29 +49,29 @@ def neural(request):
             })
 
 
-    weightdecaymax = 4 
-    alldata = getdata(False)
-    globals.best_number_of_hidden_nodes=120
-    globals.best_weight_decay=0.01
+    # weightdecaymax = 4 
+    # alldata = getdata(False,)
+    # globals.best_number_of_hidden_nodes=120
+    # globals.best_weight_decay=0.01
 
-    #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
-    #sweep over all parameters to find the one that have the best mean performance
-    for decay in range(2,weightdecaymax,1):
+    # #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
+    # #sweep over all parameters to find the one that have the best mean performance
+    # for decay in range(2,weightdecaymax,1):
 
-        for number_of_hidden_node in range(460,620,20):       
-            weightdecay = 10**(-decay)            
-            basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
+    #     for number_of_hidden_node in range(460,620,20):       
+    #         weightdecay = 10**(-decay)            
+    #         basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
 
-    #build the best network with the parameters that performed best on mean
+    # #build the best network with the parameters that performed best on mean
            
    
-    #alldata = getMinimaldata()    
-    #for number_of_hidden_node in xrange(20,1000,20):       
-    #    basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
+    # #alldata = getMinimaldata()    
+    # #for number_of_hidden_node in xrange(20,1000,20):       
+    # #    basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
     
-    #print "epoch: %4d" %trainer.totalepochs
-    #print "  train error: %5.2f%%" %trnresult
-    #print "  test error: %5.2f%%" %tstresult
+    # #print "epoch: %4d" %trainer.totalepochs
+    # #print "  train error: %5.2f%%" %trnresult
+    # #print "  test error: %5.2f%%" %tstresult
  
 
 def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
@@ -98,14 +98,16 @@ def getdata(do_preprocessing, full_data):
                 data = json.load(outfile)
         except IOError:
             matches = Match.objects.all()
-            data = map(lambda x: (fn(x,do_preprocessing), x.won), matches )
+            data = map(lambda x: (fn(x,do_preprocessing,False), x.won), matches)
+            data += map(lambda x: (fn(x,do_preprocessing,True), not x.won), matches)
             with open('processed_data%d' % full_data, 'w') as outfile:
                 json.dump(data,outfile)
     else:
         matches = Match.objects.all()
-        data = map(lambda x: (fn(x,do_preprocessing), x.won), matches )
+        data = map(lambda x: (fn(x,do_preprocessing,False), x.won), matches)
+        data += map(lambda x: (fn(x,do_preprocessing,True), not x.won), matches)
         with open('processed_data%d' % full_data, 'w') as outfile:
-                json.dump(data,outfile)
+            json.dump(data,outfile)
 
     all_data = None
     i=0
@@ -126,8 +128,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
      second argument is dimension of the output
     '''  
 
-    nr_of_iterations =5
-
+    nr_of_iterations =2
     # Construct neural network
     print "Constructing network"
     
