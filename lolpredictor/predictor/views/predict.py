@@ -7,6 +7,7 @@ from pybrain.structure           import FullConnection, FeedForwardNetwork, Line
 from api import *
 from util import *
 from preprocessing import *
+from neural import *
 from lolpredictor.predictor.models import *
 
 from django.shortcuts import render
@@ -30,18 +31,22 @@ def predict(request):
                 #todo error
                 return render(request, 'predictor/predictor.html')
             else : 
-                inputvector = parsegame(game)
-                makeprediction(inputvector)
+                pred = parsegame(game)
+                #makeprediction(inputvector)
             
         except TypeError, e:
-            #todo error
+            #todo 
             pass
+
+       
     return render(request, 'predictor/predictor.html')
       
 
        
 def parsegame(game):
-
+    #used to determine wich team our summoner is on.
+    pick_turn_our_summoner = game["pickTurn"]
+    team=2
     champ_hash = makechamphash(game)
     team_1=[]
     teamOne = game["teamOne"]["array"]
@@ -50,11 +55,14 @@ def parsegame(game):
         summoner_id = summoner["summonerId"]
         internalname = summoner["summonerInternalName"]
         champion_id = champ_hash[internalname]
+        pick_turn = summoner["pickTurn"]
         #No overhead in storing summoner 
         summoner = store_summoner(summoner_id,account_id)
         #there is overhead in store_championplayed , avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_1.append(cp)
+        if pick_turn == pick_turn_our_summoner:
+            team = 1
     team_2=[]
     teamTwo = game["teamTwo"]["array"]
     for summoner in teamTwo:
@@ -69,17 +77,30 @@ def parsegame(game):
         #there is overhead in store_championplayed , avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_2.append(cp)
-    #Sort champs 
+    #Sort champs     
     optimal_setup_1 = fill_missing_spots(sort_champion_list(team_1, []), team_1)
     optimal_setup_2 = fill_missing_spots(sort_champion_list(team_2, []), team_2)
-    return getDatafromMatch(optimal_setup_1,optimal_setup_2)
+    print team
+    print optimal_setup_1
+    print optimal_setup_2
+    print getDatafromMatch(optimal_setup_1,optimal_setup_2)
+    print makeprediction(getDatafromMatch(optimal_setup_1,optimal_setup_2))
+    print getDatafromMatch(optimal_setup_2,optimal_setup_1)
+    print makeprediction(getDatafromMatch(optimal_setup_2,optimal_setup_1))
+
+    if team == 1:
+        i= getDatafromMatch(optimal_setup_1,optimal_setup_2)
+    if team == 2:
+        i=getDatafromMatch(optimal_setup_2,optimal_setup_1)
+    return makeprediction(i)
+
+
 def getDatafromMatch(team_1,team_2):
     input = [matchups_win_rate(team_1,team_2)]
     for s in team_1:        
         input += champion_played_to_features(s)
     for s in team_2:
-        input += champion_played_to_features(s)
-    print input
+        input += champion_played_to_features(s)    
     return input
 def matchups_win_rate(team_1,team_2):   
     win_rates = []
@@ -104,6 +125,8 @@ def matchups_win_rate(team_1,team_2):
         return sum(win_rates)/len(win_rates)
     else:
         return 0.5
+
+
 def makechamphash(match):
     champ_hash = {} 
     champs = match["playerChampionSelections"]["array"]
@@ -147,16 +170,18 @@ def makeChampionplayed(account_id, summoner,champion_id):
         param_hash["average_kills"] = param_hash["average_kills"] / param_hash["nr_gameswithchamp"]
         param_hash["average_gold"] = param_hash["average_gold"] / param_hash["nr_gameswithchamp"]
     except KeyError :
-        param_hash["nr_gameswithchamp"] = 0
+        param_hash["nr_gameswithchamp"] = 1
         param_hash["average_assists"] = 0
-        param_hash["average_deaths"] = 0
-        param_hash["average_kills"] = 0
-        param_hash["average_gold"] = 0
+        param_hash["average_deaths"] = 1
+        param_hash["average_kills"] = 1
+        param_hash["average_gold"] = 2000
 
     c1 = ChampionPlayed.objects.create(**param_hash)
     print_champion_played(summoner,True)
     return c1
 def makeprediction(inputvector):
-    fileObject = open('neuralHiddenNode50decay0.01','r')
+    
+    fileObject = open('neuralHiddenNode70decay0.01','r')
     net = pickle.load(fileObject)
-    print net.activate(inputvector)  
+   
+    return net.activate(inputvector)

@@ -283,28 +283,38 @@ def determineWin (game):
 		if win == "WIN" :
 			return stat["value"]
 
-def getMinimalDatafromMatch(matc,preprocessing):
-	input = [matchups_to_win_rate(matc)]
-	if matc.team1_is_red:
+def getMinimalDatafromMatch(matc, preprocessing, reverse):
+	input = [matchups_to_win_rate(matc, reverse)]
+
+	if not reverse:
 		input += champion_played_to_features(matc.team_1summoner1_id)
 		input += champion_played_to_features(matc.team_1summoner2_id)
 		input += champion_played_to_features(matc.team_1summoner3_id)
 		input += champion_played_to_features(matc.team_1summoner4_id)
 		input += champion_played_to_features(matc.team_1summoner5_id)
 
-	input += champion_played_to_features(matc.team_1summoner1_id)
-	input += champion_played_to_features(matc.team_1summoner2_id)
-	input += champion_played_to_features(matc.team_1summoner3_id)
-	input += champion_played_to_features(matc.team_1summoner4_id)
-	input += champion_played_to_features(matc.team_1summoner5_id)
+		input += champion_played_to_features(matc.team_2summoner1_id)
+		input += champion_played_to_features(matc.team_2summoner2_id)
+		input += champion_played_to_features(matc.team_2summoner3_id)
+		input += champion_played_to_features(matc.team_2summoner4_id)
+		input += champion_played_to_features(matc.team_2summoner5_id)
+	else:
+		input += champion_played_to_features(matc.team_2summoner1_id)
+		input += champion_played_to_features(matc.team_2summoner2_id)
+		input += champion_played_to_features(matc.team_2summoner3_id)
+		input += champion_played_to_features(matc.team_2summoner4_id)
+		input += champion_played_to_features(matc.team_2summoner5_id)
 
-	if not matc.team1_is_red:
 		input += champion_played_to_features(matc.team_1summoner1_id)
 		input += champion_played_to_features(matc.team_1summoner2_id)
 		input += champion_played_to_features(matc.team_1summoner3_id)
 		input += champion_played_to_features(matc.team_1summoner4_id)
 		input += champion_played_to_features(matc.team_1summoner5_id)
-	print input
+
+	if (matc.team1_is_red and not reverse) or (not matc.team1_is_red and reverse):
+		input += [1]
+	else:
+		input += [0]
 	return input
 
 
@@ -318,14 +328,15 @@ def champion_played_to_features(champion_played):
 	normalized_gold = float(champion_played.average_gold) / float(globals.goldnormalization)
 	return [ranking, kdr, normalized_gold]
 
-def matchups_to_win_rate(match):
-	if matc.team1_is_red:
+def matchups_to_win_rate(match, reverse):
+	if not reverse:
 		team_1 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
 		team_2 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
 	else:
 		team_1 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
 		team_2 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
-	
+		
+
 	win_rates = []
 	for i in range(len(team_1)):
 		try:
@@ -350,7 +361,7 @@ def matchups_to_win_rate(match):
 		return 0.5
 
 
-def getBasicDatafromMatch(matc,preprocessing):
+def getBasicDatafromMatch(matc,preprocessing, reverse):
 	input=[]
 	goldnormalization =10000.0
 
