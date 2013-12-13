@@ -123,8 +123,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
      second argument is dimension of the output
     '''  
 
-    nr_of_iterations = 1
-
+    nr_of_iterations =2
     # Construct neural network
     print "Constructing network"
     
@@ -153,6 +152,7 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
         for sample in activation_samples:
             print "The activation sample: %s"%sample
             print "The output :%s"%fnn.activate(sample)
+            print "Weight:%s , %s"%(fnn['in'].outputbuffer[fnn['in'].offset],fnn['hidden0'].outputbuffer[fnn['hidden0'].offset])
         log_debug(trndata.indim,number_of_hidden_nodes, weightdecay,train_results[-1],test_results[-1])         
             
     # Compute means
@@ -170,8 +170,6 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
     fileObject.close()
 
     return (mean_train_error, mean_test_error)
-
-
 def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, inputdim, outputdim):
     """
     Constructs a neural network with a given amount of hidden layers and nodes per hidden layer

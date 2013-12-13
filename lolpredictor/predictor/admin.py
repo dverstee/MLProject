@@ -5,7 +5,7 @@ from django.contrib import admin
 from models import *
 
 class ChampionAdmin(admin.ModelAdmin):
-    fields = ('key', 'name', 'can_jungle', 'can_mid', 'can_top', 'can_adc', 'can_support')
+    fields = ('key', 'name', 'can_jungle', 'can_mid', 'can_top', 'can_adc', 'can_support', 'difficulty', 'magic', 'attack', 'defense')
     list_display = ('key', 'name')
 admin.site.register(Champion, ChampionAdmin)
 

@@ -311,14 +311,21 @@ def getMinimalDatafromMatch(matc, preprocessing, reverse):
 		input += champion_played_to_features(matc.team_1summoner4_id)
 		input += champion_played_to_features(matc.team_1summoner5_id)
 
+
 	if (matc.team1_is_red and not reverse) or (not matc.team1_is_red and reverse):
 		input += [1, 0]
 	else:
+<<<<<<< HEAD
 		input += [0, 1]
+=======
+		input += [0]
+
+>>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
 	return input
 
 
 def champion_played_to_features(champion_played):
+	print "%s : %d/%d/%d" % (champion_played.champion, champion_played.average_kills, champion_played.average_deaths, champion_played.average_assists)
 	# 0 to 1 ranking
 	ranking = float((champion_played.summoner.tier) - 1)/5.0 + float(4 - (champion_played.summoner.rank-1))/50.0
 	if champion_played.average_deaths:
@@ -327,6 +334,7 @@ def champion_played_to_features(champion_played):
 		kdr     = float(champion_played.average_kills + champion_played.average_assists/2) * 1.5
 	normalized_gold = float(champion_played.average_gold) / float(globals.goldnormalization)
 	return [ranking, kdr, normalized_gold]
+
 
 def matchups_to_win_rate(match, reverse):
 	if not reverse:

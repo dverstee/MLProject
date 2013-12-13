@@ -146,7 +146,7 @@ def retrieveInProgressSpectatorGameInfo(summonerName):
     method = 'retrieveInProgressSpectatorGameInfo'
     values = get_data(method, summonerName)
     try:
-        values = values['game']
+        values['game']
         return values
     except KeyError, e:  
         log_error(e, method, summonerName)
