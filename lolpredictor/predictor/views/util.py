@@ -109,12 +109,12 @@ def store_match(game, type, account_id):
 			print summoner
 			print champion
 
-		if player ["teamId"] == team_id : 
+		if player["teamId"] == team_id : 
 			our_team.append(champion_played)
 		else :
 			their_team.append(champion_played)
 
-	if 	team_id == 100:
+	if team_id == 100:
 		team1_is_red = True
 	else:	
 		team1_is_red = False
@@ -123,7 +123,7 @@ def store_match(game, type, account_id):
 	
 	won = determineWin(game)
 
-	if 	won == 1:
+	if won == 1:
 		win = True
 	else:	
 		win = False
@@ -284,7 +284,7 @@ def determineWin (game):
 			return stat["value"]
 
 def getMinimalDatafromMatch(matc, preprocessing, reverse):
-	input = [matchups_to_win_rate(matc, reverse)]
+	input = matchups_to_win_rate(matc, reverse)
 
 	if not reverse:
 		input += champion_played_to_features(matc.team_1summoner1_id)
@@ -312,9 +312,9 @@ def getMinimalDatafromMatch(matc, preprocessing, reverse):
 		input += champion_played_to_features(matc.team_1summoner5_id)
 
 	if (matc.team1_is_red and not reverse) or (not matc.team1_is_red and reverse):
-		input += [1]
+		input += [1, 0]
 	else:
-		input += [0]
+		input += [0, 1]
 	return input
 
 
@@ -336,29 +336,23 @@ def matchups_to_win_rate(match, reverse):
 		team_1 = [match.team_2summoner1_id, match.team_2summoner2_id, match.team_2summoner3_id, match.team_2summoner4_id, match.team_2summoner5_id]
 		team_2 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
 		
-
 	win_rates = []
 	for i in range(len(team_1)):
 		try:
 			matchup = Matchup.objects.get(champion_1=team_1[i].champion, champion_2=team_2[i].champion)
 			win_rates.append(matchup.win_rate)
 		except:
-			pass
+			win_rates.append(0.5)
 	synergys = []
 	try:
 		synergys.append(Synergy.objects.get(champion_1=team_1[3].champion, champion_2=team_1[4].champion).win_rate)
 	except:
-		pass
+		synergys.append(0.5)
 	try:
 		synergys.append(1 - Synergy.objects.get(champion_1=team_2[3].champion, champion_2=team_2[4].champion).win_rate)
 	except:
-		pass
-	if synergys:
-		win_rates.append(sum(synergys)/len(synergys))
-	if win_rates:
-		return sum(win_rates)/len(win_rates)
-	else:
-		return 0.5
+		synergys.append(0.5)
+	return win_rates + synergys
 
 
 def getBasicDatafromMatch(matc,preprocessing, reverse):

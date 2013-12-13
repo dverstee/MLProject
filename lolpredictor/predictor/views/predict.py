@@ -18,6 +18,7 @@ import pickle
 import globals
 logger = logging.getLogger(__name__)
 
+
 def predict(request):    
     print "Predicting !"
     if request.method == 'GET':
@@ -26,29 +27,23 @@ def predict(request):
         summoner_name = str(request.POST["summoner_name"])
         print summoner_name 
         game = retrieveInProgressSpectatorGameInfo(summoner_name)
-        try:
-            if game["queueTypeName"]!="RANKED_SOLO_5x5":
-                #todo error
-                return render(request, 'predictor/predictor.html')
-            else : 
-                pred = parsegame(game)
-                #makeprediction(inputvector)
-            
-        except TypeError, e:
-            #todo 
-            pass
-
+        if game["queueTypeName"]!="RANKED_SOLO_5x5":
+            print 'Game not suited for this predictor.'
+            return render(request, 'predictor/predictor.html')
+        else : 
+            parsegame(game)
+            #makeprediction(inputvector)
        
     return render(request, 'predictor/predictor.html')
       
-
        
 def parsegame(game):
+    print game
     #used to determine wich team our summoner is on.
     pick_turn_our_summoner = game["pickTurn"]
-    team=2
+    team = 2
     champ_hash = makechamphash(game)
-    team_1=[]
+    team_1 = []
     teamOne = game["teamOne"]["array"]
     for summoner in teamOne:
         account_id = summoner["accountId"]
@@ -58,12 +53,12 @@ def parsegame(game):
         pick_turn = summoner["pickTurn"]
         #No overhead in storing summoner 
         summoner = store_summoner(summoner_id,account_id)
-        #there is overhead in store_championplayed , avoid this by new function.        
+        #there is overhead in store_championplayed, avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_1.append(cp)
         if pick_turn == pick_turn_our_summoner:
             team = 1
-    team_2=[]
+    team_2 = []
     teamTwo = game["teamTwo"]["array"]
     for summoner in teamTwo:
         account_id = summoner["summonerId"]
@@ -71,10 +66,8 @@ def parsegame(game):
         internalname = summoner["summonerInternalName"]
         champion_id = champ_hash[internalname]
         #No overhead in storing summoner 
-        print account_id
-        print summoner_id
         summoner = store_summoner(account_id,summoner_id)
-        #there is overhead in store_championplayed , avoid this by new function.        
+        #there is overhead in store_championplayed, avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_2.append(cp)
     #Sort champs     
@@ -83,25 +76,28 @@ def parsegame(game):
     print team
     print optimal_setup_1
     print optimal_setup_2
-    print getDatafromMatch(optimal_setup_1,optimal_setup_2)
-    print makeprediction(getDatafromMatch(optimal_setup_1,optimal_setup_2))
-    print getDatafromMatch(optimal_setup_2,optimal_setup_1)
-    print makeprediction(getDatafromMatch(optimal_setup_2,optimal_setup_1))
-
-    if team == 1:
-        i= getDatafromMatch(optimal_setup_1,optimal_setup_2)
-    if team == 2:
-        i=getDatafromMatch(optimal_setup_2,optimal_setup_1)
-    return makeprediction(i)
+    feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, True)
+    print feature
+    print makeprediction(feature)
+    feature = getDatafromMatch(optimal_setup_2, optimal_setup_1, False)
+    print feature
+    print makeprediction(feature)
 
 
-def getDatafromMatch(team_1,team_2):
-    input = [matchups_win_rate(team_1,team_2)]
+def getDatafromMatch(team_1, team_2, team1IsRed):
+    input = matchups_win_rate(team_1,team_2)
     for s in team_1:        
         input += champion_played_to_features(s)
     for s in team_2:
-        input += champion_played_to_features(s)    
+        input += champion_played_to_features(s)
+
+    if team1IsRed:
+        input += [1, 0]
+    else:
+        input += [0, 1]   
     return input
+
+
 def matchups_win_rate(team_1,team_2):   
     win_rates = []
     for i in range(len(team_1)):
@@ -109,22 +105,17 @@ def matchups_win_rate(team_1,team_2):
             matchup = Matchup.objects.get(champion_1=team_1[i].champion, champion_2=team_2[i].champion)
             win_rates.append(matchup.win_rate)
         except:
-            pass
+            win_rates.append(0.5)
     synergys = []
     try:
         synergys.append(Synergy.objects.get(champion_1=team_1[3].champion, champion_2=team_1[4].champion).win_rate)
     except:
-        pass
+        synergys.append(0.5)
     try:
         synergys.append(1 - Synergy.objects.get(champion_1=team_2[3].champion, champion_2=team_2[4].champion).win_rate)
     except:
-        pass
-    if synergys:
-        win_rates.append(sum(synergys)/len(synergys))
-    if win_rates:
-        return sum(win_rates)/len(win_rates)
-    else:
-        return 0.5
+        synergys.append(0.5)
+    return win_rates + synergys
 
 
 def makechamphash(match):
@@ -133,6 +124,8 @@ def makechamphash(match):
     for champ in champs:
         champ_hash[champ["summonerInternalName"]]=champ["championId"]
     return champ_hash
+
+
 def makeChampionplayed(account_id, summoner,champion_id):  
     champion = Champion.objects.get(pk=champion_id)   
     try:
@@ -153,7 +146,7 @@ def makeChampionplayed(account_id, summoner,champion_id):
         champion_id = champion_stats["championId"]
         # Only store the relevant
         if champion_id == champion.key:
-            statType    = champion_stats["statType"]
+            statType = champion_stats["statType"]
             if statType == "TOTAL_SESSIONS_PLAYED":                
                 param_hash["nr_gameswithchamp"] =  champion_stats["value"]
             if statType == "TOTAL_ASSISTS":                
@@ -179,9 +172,10 @@ def makeChampionplayed(account_id, summoner,champion_id):
     c1 = ChampionPlayed.objects.create(**param_hash)
     print_champion_played(summoner,True)
     return c1
+
+
 def makeprediction(inputvector):
-    
-    fileObject = open('neuralHiddenNode70decay0.01','r')
+    fileObject = open('prettygood80decay0.01withoutRB','r')
     net = pickle.load(fileObject)
    
     return net.activate(inputvector)

@@ -20,7 +20,7 @@ def neural(request):
     
 
     WEIGHT_DECAY_RANGE      = range(2,3) 
-    NUMBER_OF_NODES_RANGE   = range(70,80,10)
+    NUMBER_OF_NODES_RANGE   = range(80,81,20)
     LAYERS                  = [1]
 
 
@@ -110,14 +110,10 @@ def getdata(do_preprocessing, full_data):
             json.dump(data,outfile)
 
     all_data = None
-    i=0
-    for input, won in data:
-            i=i+1           
-            if all_data is None:
-                all_data = ClassificationDataSet(len(input), 1, nb_classes=2)                 
-            all_data.addSample(input, int(won))
-            if i<5:
-                activation_samples.append(input)  
+    for input, won in data:        
+        if all_data is None:
+            all_data = ClassificationDataSet(len(input), 1, nb_classes=2)                 
+        all_data.addSample(input, int(won)) 
     return all_data
 
 def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
