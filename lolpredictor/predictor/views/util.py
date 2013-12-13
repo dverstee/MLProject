@@ -321,6 +321,7 @@ def getMinimalDatafromMatch(matc, preprocessing, reverse):
 
 
 def champion_played_to_features(champion_played):
+	print "%s : %d/%d/%d" % (champion_played.champion, champion_played.average_kills, champion_played.average_deaths, champion_played.average_assists)
 	# 0 to 1 ranking
 	ranking = float((champion_played.summoner.tier) - 1)/5.0 + float(4 - (champion_played.summoner.rank-1))/50.0
 	if champion_played.average_deaths:

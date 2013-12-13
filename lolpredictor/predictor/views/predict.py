@@ -48,6 +48,7 @@ def parsegame(game):
     accountid_our_summoner = game["playerCredentials"]["playerId"]
     game = game['game']     
     red=True
+    team= 2
     champ_hash = makechamphash(game)
     team_1=[]
     teamOne = game["teamOne"]["array"]
@@ -57,7 +58,7 @@ def parsegame(game):
         internalname = summoner["summonerInternalName"]
         champion_id = champ_hash[internalname]
         #No overhead in storing summoner 
-        summoner = store_summoner(summoner_id,account_id)
+        summoner = store_summoner(summoner_id, account_id)
         #there is overhead in store_championplayed , avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_1.append(cp)
@@ -71,7 +72,7 @@ def parsegame(game):
         summoner_id = summoner["accountId"]
         internalname = summoner["summonerInternalName"]
         champion_id = champ_hash[internalname]  
-        summoner = store_summoner(account_id,summoner_id)
+        summoner = store_summoner(summoner_id, account_id)
         #there is overhead in store_championplayed , avoid this by new function.        
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_2.append(cp)
@@ -107,10 +108,10 @@ def getDatafromMatch(team_1,team_2,reverse,red):
             input += champion_played_to_features(s)
         for s in team_1:
             input += champion_played_to_features(s)
-    if (red and not reverse) or (not red and reverse):
-        input += [1]
-    else:
-        input += [0]    
+    #if (red and not reverse) or (not red and reverse):
+        #input += [1]
+    #else:
+        #input += [0]    
     return input
 def matchups_win_rate(team_1,team_2,reverse): 
 
@@ -150,6 +151,7 @@ def makechamphash(match):
         champ_hash[champ["summonerInternalName"]]=champ["championId"]
     return champ_hash
 def makeChampionplayed(account_id, summoner,champion_id):  
+    print account_id, summoner,champion_id
     champion = Champion.objects.get(pk=champion_id)   
     try:
         cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
