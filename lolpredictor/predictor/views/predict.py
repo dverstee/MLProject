@@ -68,8 +68,9 @@ def parsegame(game):
     team_2=[]
     teamTwo = game["teamTwo"]["array"]
     for summoner in teamTwo:
-        account_id = summoner["summonerId"]
-        summoner_id = summoner["accountId"]
+        
+        summoner_id = summoner["summonerId"]
+        account_id= summoner["accountId"]
         internalname = summoner["summonerInternalName"]
         champion_id = champ_hash[internalname]  
         summoner = store_summoner(summoner_id, account_id)
