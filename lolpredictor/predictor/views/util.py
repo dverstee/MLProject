@@ -315,17 +315,12 @@ def getMinimalDatafromMatch(matc, preprocessing, reverse):
 	if (matc.team1_is_red and not reverse) or (not matc.team1_is_red and reverse):
 		input += [1, 0]
 	else:
-<<<<<<< HEAD
 		input += [0, 1]
-=======
-		input += [0]
-
->>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
 	return input
 
 
 def champion_played_to_features(champion_played):
-	print "%s : %d/%d/%d" % (champion_played.champion, champion_played.average_kills, champion_played.average_deaths, champion_played.average_assists)
+	#print "%s : %d/%d/%d" % (champion_played.champion, champion_played.average_kills, champion_played.average_deaths, champion_played.average_assists)
 	# 0 to 1 ranking
 	ranking = float((champion_played.summoner.tier) - 1)/5.0 + float(4 - (champion_played.summoner.rank-1))/50.0
 	if champion_played.average_deaths:

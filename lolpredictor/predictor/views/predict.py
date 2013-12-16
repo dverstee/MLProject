@@ -27,43 +27,22 @@ def predict(request):
         summoner_name = str(request.POST["summoner_name"])
         print summoner_name 
         game = retrieveInProgressSpectatorGameInfo(summoner_name)
-<<<<<<< HEAD
         if game["queueTypeName"]!="RANKED_SOLO_5x5":
             print 'Game not suited for this predictor.'
             return render(request, 'predictor/predictor.html')
         else : 
             parsegame(game)
             #makeprediction(inputvector)
-=======
-        try:
-            if game['game']["queueTypeName"]!="RANKED_SOLO_5x5":
-                #todo error
-                return render(request, 'predictor/predictor.html')
-            else : 
-                pred = parsegame(game)
-                #makeprediction(inputvector)
-            
-        except TypeError, e:
-            #todo 
-            pass
-
->>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
-       
     return render(request, 'predictor/predictor.html')
       
        
 def parsegame(game):
     print game
     #used to determine wich team our summoner is on.
-<<<<<<< HEAD
-    pick_turn_our_summoner = game["pickTurn"]
-    team = 2
-=======
     accountid_our_summoner = game["playerCredentials"]["playerId"]
     game = game['game']     
-    red=True
-    team= 2
->>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
+    red = True
+    team = 2
     champ_hash = makechamphash(game)
     team_1 = []
     teamOne = game["teamOne"]["array"]
@@ -73,87 +52,41 @@ def parsegame(game):
         internalname = summoner["summonerInternalName"]
         champion_id = champ_hash[internalname]
         #No overhead in storing summoner 
-<<<<<<< HEAD
-        summoner = store_summoner(summoner_id,account_id)
-        #there is overhead in store_championplayed, avoid this by new function.        
-=======
         summoner = store_summoner(summoner_id, account_id)
         #there is overhead in store_championplayed , avoid this by new function.        
->>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_1.append(cp)
         if accountid_our_summoner == account_id:
             team = 1
-<<<<<<< HEAD
-    team_2 = []
-=======
             red= False
-    team_2=[]
->>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
+    team_2 = []
     teamTwo = game["teamTwo"]["array"]
     for summoner in teamTwo:
         
         summoner_id = summoner["summonerId"]
         account_id= summoner["accountId"]
         internalname = summoner["summonerInternalName"]
-<<<<<<< HEAD
-        champion_id = champ_hash[internalname]
-        #No overhead in storing summoner 
-        summoner = store_summoner(account_id,summoner_id)
-        #there is overhead in store_championplayed, avoid this by new function.        
-=======
         champion_id = champ_hash[internalname]  
         summoner = store_summoner(summoner_id, account_id)
         #there is overhead in store_championplayed , avoid this by new function.        
->>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
         cp = makeChampionplayed(account_id,summoner,champion_id)        
         team_2.append(cp)
     #Sort champs     
     optimal_setup_1 = fill_missing_spots(sort_champion_list(team_1, []), team_1)
     optimal_setup_2 = fill_missing_spots(sort_champion_list(team_2, []), team_2)
-    print "red:%s"%red
-    print "team:%s"%team
+    print "red: %s" % red
+    print "team: %s" % team
     print optimal_setup_1
     print optimal_setup_2
-<<<<<<< HEAD
-    feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, True)
+    feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, True, red)
     print feature
     print makeprediction(feature)
-    feature = getDatafromMatch(optimal_setup_2, optimal_setup_1, False)
+    feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, False, red)
     print feature
     print makeprediction(feature)
-
-
-def getDatafromMatch(team_1, team_2, team1IsRed):
-    input = matchups_win_rate(team_1,team_2)
-    for s in team_1:        
-        input += champion_played_to_features(s)
-    for s in team_2:
-        input += champion_played_to_features(s)
-
-    if team1IsRed:
-        input += [1, 0]
-    else:
-        input += [0, 1]   
-    return input
-
-
-def matchups_win_rate(team_1,team_2):   
-=======
-    print getDatafromMatch(optimal_setup_1,optimal_setup_2,True,red)
-    print makeprediction(getDatafromMatch(optimal_setup_1,optimal_setup_2,True,red))
-    print getDatafromMatch(optimal_setup_1,optimal_setup_2,False,red)
-    print makeprediction(getDatafromMatch(optimal_setup_1,optimal_setup_2,False,red))
-
-    if team == 1:
-        i= getDatafromMatch(optimal_setup_1,optimal_setup_2)
-    if team == 2:
-        i=getDatafromMatch(optimal_setup_2,optimal_setup_1)
-    return makeprediction(i)
 
 
 def getDatafromMatch(team_1,team_2,reverse,red):
-
     input = [matchups_win_rate(team_1,team_2,reverse)]
     if not reverse:
         for s in team_1:        
@@ -165,14 +98,15 @@ def getDatafromMatch(team_1,team_2,reverse,red):
             input += champion_played_to_features(s)
         for s in team_1:
             input += champion_played_to_features(s)
-    #if (red and not reverse) or (not red and reverse):
-        #input += [1]
-    #else:
-        #input += [0]    
-    return input
-def matchups_win_rate(team_1,team_2,reverse): 
 
->>>>>>> c5cea3acb72e4dcf2252815d6e5ecb5c5d44d82c
+    if (red and not reverse) or (not red and reverse):
+        input += [1, 0]
+    else:
+        input += [0, 1] 
+    return input
+
+
+def matchups_win_rate(team_1,team_2,reverse): 
     win_rates = []
     if not reverse:
         team_temp = team_1

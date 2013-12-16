@@ -19,8 +19,8 @@ def neural(request):
     print "Starting neural network training"
     
 
-    WEIGHT_DECAY_RANGE      = range(2,3) 
-    NUMBER_OF_NODES_RANGE   = range(80,81,20)
+    WEIGHT_DECAY_RANGE      = range(2,4) 
+    NUMBER_OF_NODES_RANGE   = range(2,10,2)
     LAYERS                  = [1]
 
 
@@ -33,7 +33,7 @@ def neural(request):
         for decay in WEIGHT_DECAY_RANGE:
             for number_of_hidden_nodes in NUMBER_OF_NODES_RANGE:       
                 weightdecay = 10**(-decay)            
-                train_error, test_error = basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers,alldata)
+                train_error, test_error = basicneuralnetwork(number_of_hidden_nodes, weightdecay, layers, alldata)
                 results.append((number_of_hidden_nodes, decay, train_error, test_error))
     print results
     optimal_configuration = min(results, key=lambda x: x[3])
@@ -74,12 +74,9 @@ def neural(request):
     # #print "  test error: %5.2f%%" %tstresult
  
 
-def log_debug(dimension , number_of_hidden_nodes, weightdecay,trnresult,tstresult):
+def log_debug(dimension, number_of_hidden_nodes, weightdecay, trnresult,tstresult):
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
     print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
-
-
-
 
 
 def getdata(do_preprocessing, full_data):
@@ -116,14 +113,14 @@ def getdata(do_preprocessing, full_data):
         all_data.addSample(input, int(won)) 
     return all_data
 
-def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
+def basicneuralnetwork(number_of_hidden_nodes, weightdecay, layers, alldata):
     '''
     This is a dataset 
     first argument is the dimension of the input
      second argument is dimension of the output
     '''  
 
-    nr_of_iterations =2
+    nr_of_iterations = 10
     # Construct neural network
     print "Constructing network"
     
@@ -145,8 +142,8 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
         trainer = BackpropTrainer( fnn, dataset=trndata, momentum=0.1, verbose=False, weightdecay=weightdecay)
         #early stopping validation set = 0.25
         trainer.trainUntilConvergence(continueEpochs=5)   
-        train_results.append(percentError( trainer.testOnClassData(), trndata['class'] ))
-        test_results.append(percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class'] ))
+        train_results.append(percentError( trainer.testOnClassData(), trndata['class']))
+        test_results.append(percentError( trainer.testOnClassData(dataset=tstdata ), tstdata['class']))
         neural_networks.append(fnn)
         global activation_samples
         for sample in activation_samples:
@@ -164,12 +161,15 @@ def basicneuralnetwork(number_of_hidden_nodes,weightdecay, layers, alldata):
     optimal_index       = test_results.index(optimal_test_error)
 
     # Save the optimal configuration to the file system
-    neuralnetwork = 'neuralHiddenNode%sdecay%s'%(number_of_hidden_nodes, weightdecay)
+    import os
+    neuralnetwork = os.path.join('networks', 'neuralHiddenNode%sdecay%s'%(number_of_hidden_nodes, weightdecay))
     fileObject = open(neuralnetwork, 'w')
     pickle.dump(neural_networks[optimal_index], fileObject)
     fileObject.close()
 
     return (mean_train_error, mean_test_error)
+
+
 def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, inputdim, outputdim):
     """
     Constructs a neural network with a given amount of hidden layers and nodes per hidden layer
