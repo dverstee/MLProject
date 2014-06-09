@@ -10,7 +10,10 @@ def crawler(request):
     if request.method == 'GET':
         return render(request, 'predictor/datacrawl.html')
     if request.method == 'POST':
-        globals.nrgamesadded=0
+        print(getIdByName("Steeltje3"))
+        print("hallo")
+        """
+        lobals.nrgamesadded=0
         globals.nrerrors=0
         globals.nrofupdates=0
         startId =       int(request.POST["StartId"])
@@ -37,6 +40,7 @@ def crawler(request):
         my_hash["matchesadded"] = globals.nrgamesadded
         my_hash["error"] = globals.nrerrors
         my_hash["updated"] = globals.nrofupdates
+        """
         return render(request, 'predictor/success.html', my_hash)
 
 def recrawler(request):

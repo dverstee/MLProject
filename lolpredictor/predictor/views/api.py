@@ -6,12 +6,12 @@ import time
 import globals
 from functools import wraps
 
-API_KEY = "LPr5tiP2Bv4EdDJ7UDaoXghst0DkJBLC"
+API_KEY = "72e5f115-6e76-43e2-8e95-af65ce16445d"
 # Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 # Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 
-REGION = "EUW"
-API_DOMAIN = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION
+REGION = "euw"
+API_DOMAIN = "https://euw.api.pvp.net/api/lol/" 
 
 
 logger = logging.getLogger(__name__)
@@ -53,104 +53,38 @@ def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
         return f_retry  # true decorator
 
     return deco_retry     
- 
-@retry(Exception)        
-def getSummonerIdByAccountId(account_id):    
-    method = 'getAllPublicSummonerDataByAccount'
-    values = get_data(method, account_id) 
-    try:
-        return values["summoner"]["sumId"]
-    except KeyError, e:
-        log_error(e, method, account_id)
-        raise KeyError
+        
 
 
-@retry(Exception ) 
-def getAccountIdBySummonerId(summoner_id):
-    method = 'getSummonerBySummonerId'
-    values = get_data(method, summoner_id)
-    try:
-        name = values["array"][0] 
-
-    except KeyError, e:
-        log_error(e, method, summoner_id)
-        raise KeyError
-    
-    accountid = getAccountIdByName(name) 
-     
-    return accountid
-@retry(KeyError) 
-def getNameByAccountId(account_id):
-    method = 'getAllPublicSummonerDataByAccount'
-    values = get_data(method, account_id)
-    try:
-        name = values["summoner"]["internalName"] 
-
-    except KeyError, e:
-        log_error(e, method, account_id)
-        raise KeyError
-    
-    accountid = getAccountIdByName(name) 
-     
-    return accountid
 
 
 @retry(Exception )
-def getAccountIdByName(name):
-    method = 'getSummonerByName'
+def getIdByName(name):
+    method = 'summoner/by-name/'
+    version = "v1.4"
+    appendix=""
     name = re.sub(r'\s+', '', name)
     name = unicode_conversion(name);
-    values = get_data(method, name)
+    values = get_data(method, name,version,appendix)
+    name =name.lower()
     try:
-        return values['acctId']
+        return values[name]['id']
     except KeyError,e:
         log_error(e, method, name)
         raise KeyError
 
-
-@retry(Exception )        
-def getRecentGamesByAccountId(account_id):
-    method = 'getRecentGames'
-    values = get_data(method, account_id)
-    try:
-        return values["gameStatistics"]["array"]
-    except KeyError,e:
-        log_error(e, method, account_id)
-        raise KeyError
-
-
-@retry(Exception )  
-def getAggregatedStatsByAccountID(account_id):
+@retry(Exception)  
+def getAggregatedStatsByID(id):
     method = 'getAggregatedStats'
+    version = "v1.4"
+    appendix="/ranked"
     values = get_data(method, account_id)
     try:
-        return values["lifetimeStatistics"]["array"]
+        return values["champions"]
     except KeyError, e:        
         log_error(e, method, account_id)
         raise KeyError
 
-
-@retry(Exception)         
-def getLeagueForPlayerBySummonerID(summoner_ID):
-    method = 'getLeagueForPlayer'
-    values = get_data(method, summoner_ID)
-    try:
-        values['requestorsRank']
-        return values
-    except KeyError, e:  
-        log_error(e, method, summoner_ID)
-        raise KeyError 
-
-@retry(KeyError)         
-def retrieveInProgressSpectatorGameInfo(summonerName):
-    method = 'retrieveInProgressSpectatorGameInfo'
-    values = get_data(method, summonerName)
-    try:
-        values['game']
-        return values
-    except KeyError, e:  
-        log_error(e, method, summonerName)
-        raise KeyError 
 
 # Helper functions
 
@@ -158,17 +92,17 @@ def log_error(error, method, argument):
     logger.error("%s(%s) : %s" % (method, error, argument))
 
 
-def get_data( method, parameters):
-    url = "%s%s/%s" % (API_DOMAIN, method, parameters);   
-    response =  unirest.get(url.encode('utf-8'),
-    headers={
-        "X-Mashape-Authorization": API_KEY
-        },
+def get_data(method, parameters,version,appendix):
+    url = "%s%s/%s/%s%s%s?api_key=%s" % (API_DOMAIN,REGION,version,method,parameters,appendix,API_KEY);   
+    print(url)
+    response =  unirest.get(url.encode('utf-8'),    
     encoding='utf-8',
     timeout=20000
         );  
     try:
-        s= response.raw_body.replace('\\', '')        
+
+        s= response.raw_body.replace('\\', '') 
+        print(s)       
         a= json.loads(s)
     except Exception, e:
         log_error("get_data", method, s)
