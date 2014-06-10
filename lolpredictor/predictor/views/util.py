@@ -25,13 +25,13 @@ def parse_champions(champions):
 	return parsed_list
 
 
-def parse_ranked_games(games, accountid):
+def parse_ranked_games(games, id):
 	recentadds=globals.nrgamesadded
 	recenterrors =globals.nrerrors
 	for game in games:
-		if game["queueType"] == "RANKED_SOLO_5x5" :
+		if game["subType"] == "RANKED_SOLO_5x5" :
 			print "Storing Ranked game" 
-			m = store_match(game,"RANKED_SOLO_5x5",accountid)
+			m = store_match(game,"RANKED_SOLO_5x5",id)
 			if m is not None :
 				globals.nrgamesadded += 1
 			else :
@@ -45,19 +45,15 @@ def parse_ranked_games(games, accountid):
 	return globals.nrgamesadded 
 
 	
-def store_match(game, type, account_id):
+def store_match(game, type, id):
 	print game
 	our_team = []
 	their_team = []
-	championid = game["championId"]
-	summoner_id = getSummonerIdByAccountId(account_id)
-	if summoner_id is None:
-		return None
+	championid = game["championId"]	
+	
 
 	team_id = game["teamId"]
-	match_id = game["gameId"]
-	if Match.objects.filter(match_id=match_id).count() > 0:
-		return None
+	match_id = game["gameId"]	
 	
 	try:
 		m = Match.objects.get(match_id=match_id)
@@ -67,7 +63,7 @@ def store_match(game, type, account_id):
 	except Match.DoesNotExist, e:
 		pass
 	
-	summoner = store_summoner(summoner_id, account_id)	
+	summoner = store_summoner(id)	
 	champion = Champion.objects.get(pk=championid)
 	if champion is None or summoner is None:
 		return None
@@ -139,9 +135,9 @@ def store_match(game, type, account_id):
 	return m
 
 
-def store_summoner(summoner_id,account_id):	
-	try:
-		summoner = Summoner.objects.get(summoner_id=summoner_id)
+def store_summoner(id):	
+	"""try:
+		summoner = Summoner.objects.get(id=id)
 		diff = datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
 		if diff.days < 0:			
 			print_summoner(summoner,True,False)
@@ -151,37 +147,39 @@ def store_summoner(summoner_id,account_id):
 	updated = False
 	if summoner:
 		summoner.delete()
-		updated = True
+		updated = True"""
 
-	if account_id is None:
-		account_id = getAccountIdBySummonerId(summoner_id)
-	if account_id is None:
-		return None	
 	param_hash = {}	
 	try : 
-		league_information = getLeagueForPlayerBySummonerID(summoner_id)
-		param_hash["rank"] = ranktoint(league_information["requestorsRank"])
-		param_hash["tier"] = tiertoint(league_information["tier"])
-		param_hash["name"] = league_information["requestorsName"]
+		league_information = getLeagueForPlayerById(id)
+		for league in league_information:
+			print(league["queue"])         
+			if league["queue"] == "RANKED_SOLO_5x5": 				
+				entries = league["entries"]
+				param_hash["tier"] = tiertoint(league["tier"])
+				for entry in entries:
+					param_hash["rank"] = ranktoint(entry["division"])
+					param_hash["name"] = entry["playerOrTeamName"]
+					param_hash["hotstreak"] = entry["isHotStreak"]			
+				
+	
 
-		leagues = league_information["entries"]["array"]
-		summoner_info = filter(lambda x: int(x["playerOrTeamId"]) == summoner_id, leagues)
-		summoner_info = summoner_info[0]
-		param_hash["hotstreak"] = summoner_info["hotStreak"]
 	except:		
 		param_hash["rank"] = 4
 		param_hash["tier"] = 2
-		param_hash["name"] = getNameByAccountId(account_id)
+		param_hash["name"] = "Unkown"
 		param_hash["hotstreak"] = False
 
-	param_hash["summoner_id"] = summoner_id
-	param_hash["account_id"] = account_id	
+	param_hash["id"] = id	
 	param_hash["updated_at"] = datetime.now()
 
 	# Todo improve win percentage
-	s1 = Summoner.objects.create( **param_hash )
+	
+	print(param_hash)
 
+	s1 = Summoner.objects.create( **param_hash )
 	print_summoner(s1, updated,True)
+	
 	return s1 
 
 

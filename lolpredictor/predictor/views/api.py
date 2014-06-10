@@ -15,7 +15,7 @@ API_DOMAIN = "https://euw.api.pvp.net/api/lol/"
 
 
 logger = logging.getLogger(__name__)
-def retry(ExceptionToCheck, tries=8, delay=1, backoff=2, logger=logger):
+def retry(ExceptionToCheck, tries=2, delay=1, backoff=2, logger=logger):
     """Retry calling the decorated function using an exponential backoff.
 
     http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/
@@ -74,16 +74,45 @@ def getIdByName(name):
         raise KeyError
 
 @retry(Exception)  
-def getAggregatedStatsByID(id):
-    method = 'getAggregatedStats'
-    version = "v1.4"
+def getAggregatedStatsById(id):
+    method = 'stats/by-summoner/'
+    version = "v1.3"
     appendix="/ranked"
-    values = get_data(method, account_id)
+    values = get_data(method,id,version,appendix)
     try:
         return values["champions"]
-    except KeyError, e:        
-        log_error(e, method, account_id)
+    except KeyError, e:    
+        print("error")    
+        log_error(e, method, id)
         raise KeyError
+
+@retry(Exception)  
+def getRecentGamesById(id):
+    method = 'game/by-summoner/'
+    version = "v1.3"
+    appendix="/recent"
+    values = get_data(method,id,version,appendix)
+    try:
+        return values["games"]
+    except KeyError, e:    
+        print("error")       
+        log_error(e, method, id)
+        raise KeyError
+
+@retry(Exception)  
+def getLeagueForPlayerById(id):
+    method = 'league/by-summoner/'
+    version = "v2.4"
+    appendix="/entry"
+    values = get_data(method,id,version,appendix)
+    try:
+        return values[str(id)]
+    except KeyError, e:    
+        print("error")       
+        log_error(e, method, id)
+        raise KeyError
+
+
 
 
 # Helper functions
@@ -100,9 +129,7 @@ def get_data(method, parameters,version,appendix):
     timeout=20000
         );  
     try:
-
-        s= response.raw_body.replace('\\', '') 
-        print(s)       
+        s= response.raw_body.replace('\\', '')            
         a= json.loads(s)
     except Exception, e:
         log_error("get_data", method, s)

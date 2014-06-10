@@ -10,8 +10,24 @@ def crawler(request):
     if request.method == 'GET':
         return render(request, 'predictor/datacrawl.html')
     if request.method == 'POST':
-        print(getIdByName("Steeltje3"))
-        print("hallo")
+        
+        id = getIdByName("Steeltje3")
+        """ print(id)
+        stats = getAggregatedStatsById(id) 
+        for stat in stats:           
+            print stat["id"]          
+
+        recentgames = getRecentGamesById(id)
+        for game in recentgames:        
+            print game["gameId" ]"""
+                      
+        store_summoner(id)
+
+
+        my_hash = {}
+        my_hash["matchesadded"] = 0
+        my_hash["error"] = 0
+        my_hash["updated"] = 0
         """
         lobals.nrgamesadded=0
         globals.nrerrors=0
