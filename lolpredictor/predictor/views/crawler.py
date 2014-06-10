@@ -11,7 +11,7 @@ def crawler(request):
         return render(request, 'predictor/datacrawl.html')
     if request.method == 'POST':
         
-        id = getIdByName("Steeltje3")
+        id = getIdByName("batman")
         """ print(id)
         stats = getAggregatedStatsById(id) 
         for stat in stats:           
@@ -20,7 +20,7 @@ def crawler(request):
         recentgames = getRecentGamesById(id)
         for game in recentgames:        
             print game["gameId" ]"""
-                      
+
         store_summoner(id)
 
 

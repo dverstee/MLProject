@@ -35,8 +35,7 @@ class ChampionPlayed(models.Model):
 
 class Summoner(models.Model):
     name                        = models.CharField(max_length=20)
-    summoner_id                 = models.CharField(max_length=10)
-    account_id                  = models.CharField(max_length=10, primary_key=True)
+    account_id                  = models.CharField(unique=True,max_length=10,default="0",primary_key=True)
     tier                        = models.SmallIntegerField()
     rank                        = models.SmallIntegerField()
     hotstreak                   = models.BooleanField ()

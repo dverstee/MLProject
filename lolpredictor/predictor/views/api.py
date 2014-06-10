@@ -10,7 +10,7 @@ API_KEY = "72e5f115-6e76-43e2-8e95-af65ce16445d"
 # Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 # Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 
-REGION = "euw"
+REGION = "lan"
 API_DOMAIN = "https://euw.api.pvp.net/api/lol/" 
 
 
@@ -40,7 +40,10 @@ def retry(ExceptionToCheck, tries=2, delay=1, backoff=2, logger=logger):
             mtries, mdelay = tries, delay
             while mtries > 0:
                 try:
-                    return f(*args, **kwargs)
+                    y = f(*args, **kwargs)               
+                    
+                   
+
                 except ExceptionToCheck, e:
                     msg = "%s, Retrying in %d seconds..." % (str(e), mdelay)
                     if logger:
@@ -48,7 +51,17 @@ def retry(ExceptionToCheck, tries=2, delay=1, backoff=2, logger=logger):
                     else:
                         print msg
                     time.sleep(mdelay)
-                    mtries -= 1                    
+                    mtries -= 1
+
+                try:                   
+                    if(y["status"] ["status_code"]==503):                                             
+                        return 503 
+                    return y
+                except Exception, e:                     
+                    pass              
+               
+                return y
+
             return None
         return f_retry  # true decorator
 

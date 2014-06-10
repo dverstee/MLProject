@@ -136,8 +136,12 @@ def store_match(game, type, id):
 
 
 def store_summoner(id):	
-	"""try:
-		summoner = Summoner.objects.get(id=id)
+	try:
+		summoners = Summoner.objects.filter(account_id=id)
+		if len(summoners)>1:
+			summoners.delete()				
+		summoner = Summoner.objects.get(account_id=id)
+		
 		diff = datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
 		if diff.days < 0:			
 			print_summoner(summoner,True,False)
@@ -147,38 +151,36 @@ def store_summoner(id):
 	updated = False
 	if summoner:
 		summoner.delete()
-		updated = True"""
+		updated = True
 
 	param_hash = {}	
 	try : 
 		league_information = getLeagueForPlayerById(id)
-		for league in league_information:
-			print(league["queue"])         
+		
+		if league_information == 503 :
+			return 503
+		for league in league_information:			       
 			if league["queue"] == "RANKED_SOLO_5x5": 				
 				entries = league["entries"]
 				param_hash["tier"] = tiertoint(league["tier"])
 				for entry in entries:
 					param_hash["rank"] = ranktoint(entry["division"])
 					param_hash["name"] = entry["playerOrTeamName"]
-					param_hash["hotstreak"] = entry["isHotStreak"]			
-				
-	
-
+					param_hash["hotstreak"] = entry["isHotStreak"]
 	except:		
 		param_hash["rank"] = 4
 		param_hash["tier"] = 2
 		param_hash["name"] = "Unkown"
 		param_hash["hotstreak"] = False
-
-	param_hash["id"] = id	
+	param_hash["account_id"] = id	
 	param_hash["updated_at"] = datetime.now()
 
 	# Todo improve win percentage
 	
-	print(param_hash)
+	
 
 	s1 = Summoner.objects.create( **param_hash )
-	print_summoner(s1, updated,True)
+	print_summoner(s1,updated,True)
 	
 	return s1 
 
@@ -580,20 +582,20 @@ def print_summoner(summoner, updated, realupdate):
 	try:
 		if updated:
 			if realupdate : 
-				print "Summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+				print "Summoner %s updated(accountId=%s) " % (summoner.name, summoner.account_id)
 			else :
-				print "No update was required for Summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+				print "No update was required for Summoner %s (accountId=%s) " % (summoner.name, summoner.account_id)
 		else:
-			print "Summoner %s added(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+			print "Summoner %s added(accountId=%s) " % (summoner.name, summoner.account_id)
 	except:
 		pass
 
 def print_champion_played(summoner,updated):
 	try:
 		if updated:
-			print "champions for summoner %s updated(accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+			print "champions for summoner %s updated(accountId=%s) " % (summoner.name, summoner.account_id)
 		else:
-			print "No need to update champions for summoner %s (accountId=%s, summonerId=%s) " % (summoner.name, summoner.account_id, summoner.summoner_id)
+			print "No need to update champions for summoner %s (accountId=%s) " % (summoner.name, summoner.account_id)
 	except Exception:
 		return None
 
