@@ -12,16 +12,16 @@ def crawler(request):
     if request.method == 'POST':
         
         id = getIdByName("batman")
-        """ print(id)
-        stats = getAggregatedStatsById(id) 
+        print(id)
+        """stats = getAggregatedStatsById(id) 
         for stat in stats:           
-            print stat["id"]          
+            print stat["id"] """         
 
         recentgames = getRecentGamesById(id)
         for game in recentgames:        
-            print game["gameId" ]"""
+            parse_ranked_games(recentgames,id)
 
-        store_summoner(id)
+        """store_summoner(id)"""
 
 
         my_hash = {}

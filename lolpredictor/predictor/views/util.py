@@ -23,8 +23,6 @@ def parse_champions(champions):
 		champion_hash["image"] = "https://github.com/rwarasaurus/league-of-legends-database/blob/master/icons/%d.jpg?raw=true" % champion["championId"]
 		parsed_list.append(champion_hash)
 	return parsed_list
-
-
 def parse_ranked_games(games, id):
 	recentadds=globals.nrgamesadded
 	recenterrors =globals.nrerrors
@@ -46,11 +44,11 @@ def parse_ranked_games(games, id):
 
 	
 def store_match(game, type, id):
-	print game
+	print("store ranked match")	
 	our_team = []
 	their_team = []
 	championid = game["championId"]	
-	
+	print(championid)	
 
 	team_id = game["teamId"]
 	match_id = game["gameId"]	
@@ -68,7 +66,7 @@ def store_match(game, type, id):
 	if champion is None or summoner is None:
 		return None
 	try:
-		store_champions_played(account_id, champion)
+		store_champions_played(id, champion)
 	except KeyError, e:
 		print "Error storing champions"
 		return None	
@@ -81,22 +79,19 @@ def store_match(game, type, id):
 		
 	our_team.append(champPlayed)
 	#Store Others
-	fellowplayers = game["fellowPlayers"]["array"]
+	fellowplayers = game["fellowPlayers"]
 	for player in fellowplayers:	
 		champion_id = player["championId"]	
-		summoner_id = player["summonerId"]	
-
-			
-		summoner = store_summoner(summoner_id, None)		
+		summoner_id = player["summonerId"]				
+		summoner = store_summoner(summoner_id)		
 		if summoner == None:
 			return None
 		champion = Champion.objects.get(pk=champion_id)	
 		try:
-			store_champions_played(summoner.account_id, champion)
+			store_champions_played(summoner_id, champion)
 		except KeyError, e:
 			print "Error storing champions"
 			return None
-
 		
 		try:
 			champion_played = ChampionPlayed.objects.get(summoner = summoner, champion=champion )	
@@ -115,7 +110,6 @@ def store_match(game, type, id):
 	else:	
 		team1_is_red = False
 	#TODO : PREMADE size uitzoeken hoe het werkt.
-	premadesize = game["premadeSize"]
 	
 	won = determineWin(game)
 
@@ -123,7 +117,7 @@ def store_match(game, type, id):
 		win = True
 	else:	
 		win = False
-	
+	print("all summoners and champions played stored")
 	#TODO Iterate over the list to make the match object ! :) 
 	try:
 		m = Match.objects.create(match_id= match_id,team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
@@ -187,9 +181,10 @@ def store_summoner(id):
 
 # Store the information for all champions for the given summoner
 # return: false if the summoner was recently updated
-def store_champions_played(accountId, champion):
-	summoner = Summoner.objects.get(pk=accountId)
-
+def store_champions_played(id, champion):
+	print("store champion played")	
+	summoner = Summoner.objects.get(pk=id)
+	print (summoner)
 	try:
 		cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
 		if cp is not None:
@@ -200,45 +195,37 @@ def store_champions_played(accountId, champion):
 	except:		
 		pass
 
-	accountstats = getAggregatedStatsByAccountID(accountId)
-	if	accountstats is None :
+	accountstats = getAggregatedStatsById(id)
+	"""TODO : rework
+	 if	accountstats is None :
 		print "Can't get accountstats"
-		raise KeyError
+		raise KeyError"""
 	param_hash = {}
 	for champion_stats in accountstats:
-		champion_id = champion_stats["championId"]
-		# Only store the relevant
-		if champion_id != champion.key:
-			continue
+		champion_id = champion_stats["id"]		
+		#review	
 		if champion_id not in param_hash:
 			param_hash[champion_id] = {}
 		try:
 			champion_instance = Champion.objects.get(pk=champion_id)
 		except:
 			continue
-
+			
 		param_hash[champion_id]["champion"] = champion_instance
 		param_hash[champion_id]["summoner"] = summoner
-		statType 	= champion_stats["statType"]
-
-		if statType == "TOTAL_SESSIONS_PLAYED":
-			param_hash[champion_id]["nr_gameswithchamp"] =  champion_stats["value"]
-		if statType == "TOTAL_ASSISTS":
-			param_hash[champion_id]["average_assists"] =  champion_stats["value"]
-		if statType == "TOTAL_DEATHS_PER_SESSION":
-			param_hash[champion_id]["average_deaths"] =  champion_stats["value"]
-		if statType == "TOTAL_CHAMPION_KILLS":
-			param_hash[champion_id]["average_kills"] =  champion_stats["value"]
-		if statType == "TOTAL_GOLD_EARNED":
-			param_hash[champion_id]["average_gold"] =  champion_stats["value"]
-
+		stats = champion_stats["stats"]		
+		
+		param_hash[champion_id]["nr_gameswithchamp"] = stats["totalSessionsPlayed"]
+		param_hash[champion_id]["average_assists"] = stats["totalAssists"]
+		param_hash[champion_id]["average_deaths"] = stats["totalDeathsPerSession"]
+		param_hash[champion_id]["average_kills"] = stats["totalChampionKills"]
+		param_hash[champion_id]["average_gold"] = stats["totalGoldEarned"]
 	for champion_id in param_hash:
 		params = param_hash[champion_id]
 		try:
 			champion_instance = Champion.objects.get(pk=champion_id)
 		except:
 			continue
-
 		try:
 			champ_played = ChampionPlayed.objects.get(champion=champion_instance,summoner=summoner)
 			champ_played.delete()
@@ -249,6 +236,7 @@ def store_champions_played(accountId, champion):
 		params["average_kills"] = params["average_kills"] / params["nr_gameswithchamp"]
 		params["average_gold"] = params["average_gold"] / params["nr_gameswithchamp"]
 		c1 = ChampionPlayed.objects.create(**params)
+	
 	print_champion_played(summoner,True)	
 	return True
 
