@@ -61,8 +61,7 @@ def parsegame(game):
             red= False
     team_2 = []
     teamTwo = game["teamTwo"]["array"]
-    for summoner in teamTwo:
-        
+    for summoner in teamTwo:        
         summoner_id = summoner["summonerId"]
         account_id= summoner["accountId"]
         internalname = summoner["summonerInternalName"]

@@ -40,9 +40,7 @@ def parse_ranked_games(games, id):
 		print "Not enough matches"		
 		return None
 
-	return globals.nrgamesadded 
-
-	
+	return globals.nrgamesadded 	
 def store_match(game, type, id):
 	print("store ranked match")	
 	our_team = []
@@ -86,7 +84,10 @@ def store_match(game, type, id):
 		summoner = store_summoner(summoner_id)		
 		if summoner == None:
 			return None
-		champion = Champion.objects.get(pk=champion_id)	
+		try:
+			champion = Champion.objects.get(pk=champion_id)
+		except Champion.DoesNotExist:
+			print champion_id
 		try:
 			store_champions_played(summoner_id, champion)
 		except KeyError, e:
@@ -109,26 +110,19 @@ def store_match(game, type, id):
 		team1_is_red = True
 	else:	
 		team1_is_red = False
-	#TODO : PREMADE size uitzoeken hoe het werkt.
-	
-	won = determineWin(game)
-
-	if won == 1:
-		win = True
-	else:	
-		win = False
+	#TODO : PREMADE size uitzoeken hoe het werkt.	
+	won = determineWin(game)	
+	premadesize=0	
 	print("all summoners and champions played stored")
 	#TODO Iterate over the list to make the match object ! :) 
 	try:
-		m = Match.objects.create(match_id= match_id,team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=win,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
+		m = Match.objects.create(match_id= match_id,team1_is_red=team1_is_red,nr_premade_team1=premadesize,nr_premade_team2=premadesize,won=won,team_1summoner1_id=our_team[0],team_1summoner2_id=our_team[1],team_1summoner3_id=our_team[2],team_1summoner4_id=our_team[3],team_1summoner5_id=our_team[4],team_2summoner1_id=their_team[0],team_2summoner2_id=their_team[1],team_2summoner3_id=their_team[2],team_2summoner4_id=their_team[3],team_2summoner5_id=their_team[4],match_type=type)
 		sort_match_champions(m.match_id)
 		print_match(m)
 	except IntegrityError as e:
 		logger = logging.getLogger("Double matchid found")
 		return None
 	return m
-
-
 def store_summoner(id):	
 	try:
 		summoners = Summoner.objects.filter(account_id=id)
@@ -239,7 +233,6 @@ def store_champions_played(id, champion):
 	
 	print_champion_played(summoner,True)	
 	return True
-
 def ranktoint(rank):
 	if rank == "I":
 		return 1	
@@ -251,7 +244,6 @@ def ranktoint(rank):
 		return 4
 	elif rank == "V":
 		return 5  
-
 def tiertoint(tier):
 	if tier == "BRONZE":
 		return 1	
@@ -263,14 +255,9 @@ def tiertoint(tier):
 		return 4
 	elif tier == "DIAMOND":
 		return 5
-
-def determineWin (game):
-	stats =  game["statistics"]["array"]
-	for stat in stats :
-		win = stat["statType"]
-		if win == "WIN" :
-			return stat["value"]
-
+def determineWin (game):	
+	return game["stats"]["win"]
+	
 def getMinimalDatafromMatch(matc, preprocessing, reverse):
 	input = matchups_to_win_rate(matc, reverse)
 
@@ -305,8 +292,6 @@ def getMinimalDatafromMatch(matc, preprocessing, reverse):
 	else:
 		input += [0, 1]
 	return input
-
-
 def champion_played_to_features(champion_played):
 	#print "%s : %d/%d/%d" % (champion_played.champion, champion_played.average_kills, champion_played.average_deaths, champion_played.average_assists)
 	# 0 to 1 ranking
@@ -317,8 +302,6 @@ def champion_played_to_features(champion_played):
 		kdr     = float(champion_played.average_kills + champion_played.average_assists/2) * 1.5
 	normalized_gold = float(champion_played.average_gold) / float(globals.goldnormalization)
 	return [ranking, kdr, normalized_gold]
-
-
 def matchups_to_win_rate(match, reverse):
 	if not reverse:
 		team_1 = [match.team_1summoner1_id, match.team_1summoner2_id, match.team_1summoner3_id, match.team_1summoner4_id, match.team_1summoner5_id]
@@ -344,8 +327,6 @@ def matchups_to_win_rate(match, reverse):
 	except:
 		synergys.append(0.5)
 	return win_rates + synergys
-
-
 def getBasicDatafromMatch(matc,preprocessing, reverse):
 	input=[]
 	goldnormalization =10000.0
@@ -429,8 +410,6 @@ def getBasicDatafromMatch(matc,preprocessing, reverse):
 	input.extend(championplayed25input)
 	input.extend(get_win_rates(matc))
 	return input
-
-
 def preprocessdata(matc):
 	tiers=[]
 	tiers.append(matc.team_1summoner1_id.summoner.tier)
@@ -577,7 +556,6 @@ def print_summoner(summoner, updated, realupdate):
 			print "Summoner %s added(accountId=%s) " % (summoner.name, summoner.account_id)
 	except:
 		pass
-
 def print_champion_played(summoner,updated):
 	try:
 		if updated:
@@ -586,6 +564,5 @@ def print_champion_played(summoner,updated):
 			print "No need to update champions for summoner %s (accountId=%s) " % (summoner.name, summoner.account_id)
 	except Exception:
 		return None
-
 def print_match(match):
 	print match
