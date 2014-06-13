@@ -2,43 +2,74 @@ from django.shortcuts import render
 from api import *
 from util import *
 from django.db.models import Q
+from datetime import timedelta
 import globals
 
 KEEP_CRAWLING_PERCENTAGE = 80
+
+
 
 def crawler(request):
     if request.method == 'GET':
         return render(request, 'predictor/datacrawl.html')
     if request.method == 'POST':
-        
-        id = getIdByName("batman")
-        print(id)
+
+        #bronze
+        summoners = getSummonersByName("mani")
+        id= summoners["mani"]["id"]
+        recent_games = getRecentGamesById(id)   
+        parse_ranked_games(recent_games,id)
+        #silver      
+        summoners = getSummonersByName("xindronke")
+        id= summoners["xindronke"]["id"]
+        recent_games = getRecentGamesById(id) 
+        parse_ranked_games(recent_games,id)
+        #gold
+        summoners = getSummonersByName("Steeltje3")
+        id= summoners["steeltje3"]["id"]
+        recent_games = getRecentGamesById(id)   
+        parse_ranked_games(recent_games,id)
+        summoners = getSummonersByName("Tr1pzz")        
+        id= summoners["tr1pzz"]["id"]
+        recent_games = getRecentGamesById(id)   
+        parse_ranked_games(recent_games,id)
+        recrawl(0, 1)
+        """
+        summoners = getSummonersByName("batman")
+        id= summoners["batman"]["id"]
+        recent_games = getRecentGamesById(id)   
+        parse_ranked_games(recent_games,id)"""
+      
         """stats = getAggregatedStatsById(id) 
         for stat in stats:           
-            print stat["id"] """         
+            print stat["id"] 
+            startId =  int(request.POST["StartId"])
 
-        recentgames = getRecentGamesById(id)
-        for game in recentgames:        
-            parse_ranked_games(recentgames,id)
+            """       
 
+        """names = ["steeltje3","gezapigeeland","xindronke"]
+        print ', '.join(names)        
+        summoners = getSummonersByName(', '.join(names))
+        print (summoners)
+        ids = []
+        for name in names:
+            ids.append(summoners[name]["id"])     
+
+        store_summoners(ids,"euw")"""
+        """recent_games = getRecentGamesById(ids)   
+        parse_ranked_games(recent_games,id)
+        recrawl(0, 1)  """
         """store_summoner(id)"""
 
-
-        my_hash = {}
-        my_hash["matchesadded"] = 0
-        my_hash["error"] = 0
-        my_hash["updated"] = 0
-        """
-        lobals.nrgamesadded=0
+        """globals.nrgamesadded=0
         globals.nrerrors=0
         globals.nrofupdates=0
-        startId =       int(request.POST["StartId"])
-        nrofMatches =   int(request.POST["Range"])  
-                 
+        startId =   id    
+        nrofMatches =   int(request.POST["Range"]) 
         percentageadded = 10        
         while percentageadded < KEEP_CRAWLING_PERCENTAGE:
             for accountId in range(startId, startId + nrofMatches):
-                recent_games = getRecentGamesByAccountId(accountId)       
+                recent_games = getRecentGamesById(accountId)       
                 if recent_games != None:
                     matchesadded = parse_ranked_games(recent_games,accountId)
                     if matchesadded != None:                        
@@ -55,9 +86,8 @@ def crawler(request):
         my_hash = {}
         my_hash["matchesadded"] = globals.nrgamesadded
         my_hash["error"] = globals.nrerrors
-        my_hash["updated"] = globals.nrofupdates
-        """
-        return render(request, 'predictor/success.html', my_hash)
+        my_hash["updated"] = globals.nrofupdates        
+        return render(request, 'predictor/success.html', my_hash)"""
 
 def recrawler(request):
     recrawl(0,1)
@@ -86,9 +116,17 @@ def recrawl(index, fragments):
 
     chosenSummoners = chosenSummoners[(len(chosenSummoners)/fragments)*index:(len(chosenSummoners)/fragments)*(index+1)]
     for summoner in chosenSummoners:
-        recentGames = getRecentGamesByAccountId(summoner.account_id)
-        if recentGames != None:
-            matchesAdded = parse_ranked_games(recentGames, summoner.account_id)
+        print(summoner.account_id)
+        try:
+            recentGames = getRecentGamesById(summoner.account_id)
+            if recentGames != None:
+                matchesAdded = parse_ranked_games(recentGames, summoner.account_id)
             if matchesAdded != None:                        
-                print "Matches added %s " % matchesAdded
+                print "Matches added %s " % matchesAdded 
+        except:
+            print("other region.")
+
+
+
+       
     return render(request, 'predictor/success.html')

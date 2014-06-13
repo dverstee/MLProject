@@ -1,13 +1,14 @@
 
 from django.db import models
 
+
 class Champion(models.Model):
     name                    = models.CharField(max_length=40)
-    key                     = models.SmallIntegerField(primary_key=True)
-    difficulty              = models.SmallIntegerField()
-    magic                   = models.SmallIntegerField()
-    attack                  = models.SmallIntegerField()
-    defense                 = models.SmallIntegerField()
+    key                     = models.IntegerField(primary_key=True)
+    difficulty              = models.IntegerField()
+    magic                   = models.IntegerField()
+    attack                  = models.IntegerField()
+    defense                 = models.IntegerField()
     can_jungle              = models.BooleanField(default=False)
     can_mid                 = models.BooleanField(default=False)
     can_top                 = models.BooleanField(default=False)
@@ -15,12 +16,11 @@ class Champion(models.Model):
     can_support             = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
-
 class ChampionPlayed(models.Model): 
     champion                = models.ForeignKey('Champion')
     summoner                = models.ForeignKey('Summoner')
 
-    nr_gameswithchamp       = models.SmallIntegerField()
+    nr_gameswithchamp       = models.IntegerField()
     average_kills           = models.FloatField()
     average_deaths          = models.FloatField()
     average_assists         = models.FloatField()
@@ -32,15 +32,16 @@ class ChampionPlayed(models.Model):
 
     def __unicode__(self):
         return str(self.champion) +" " +str(self.summoner)
-
 class Summoner(models.Model):
+    sid                         = models.IntegerField(primary_key=True,default="0")
     name                        = models.CharField(max_length=20)
-    account_id                  = models.CharField(unique=True,max_length=10,default="0",primary_key=True)
-    tier                        = models.SmallIntegerField()
-    rank                        = models.SmallIntegerField()
+    account_id                  = models.CharField(default="0",max_length=10,unique=True)
+    region                      = models.CharField(max_length=20,default="euw") 
+    tier                        = models.IntegerField()
+    rank                        = models.IntegerField()
     hotstreak                   = models.BooleanField ()
     updated_at                  = models.DateTimeField(auto_now=True)
-
+    
     def __unicode__(self):
         return str(self.name)
 
@@ -48,12 +49,11 @@ class Summoner(models.Model):
         tiers = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']
         divisions = ['I', 'II', 'III', 'IV', 'V']
         return tiers[self.tier-1] + ' ' + divisions[self.rank-1]
-
 class Match(models.Model):
     match_id            = models.CharField(max_length=10, primary_key=True)
     team1_is_red        = models.BooleanField()
-    nr_premade_team1    = models.SmallIntegerField()
-    nr_premade_team2    = models.SmallIntegerField()
+    nr_premade_team1    = models.IntegerField()
+    nr_premade_team2    = models.IntegerField()
     won                 = models.BooleanField()
     match_type          = models.CharField(max_length=40)
 

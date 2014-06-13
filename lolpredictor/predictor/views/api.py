@@ -10,12 +10,13 @@ API_KEY = "72e5f115-6e76-43e2-8e95-af65ce16445d"
 # Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 # Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 
-REGION = "lan"
+REGION = "euw"
 API_DOMAIN = "https://euw.api.pvp.net/api/lol/" 
 
+NR_REQUEST=0
 
 logger = logging.getLogger(__name__)
-def retry(ExceptionToCheck, tries=2, delay=1, backoff=2, logger=logger):
+def retry(ExceptionToCheck, tries=3, delay=1, backoff=2, logger=logger):
     """Retry calling the decorated function using an exponential backoff.
 
     http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/
@@ -40,27 +41,38 @@ def retry(ExceptionToCheck, tries=2, delay=1, backoff=2, logger=logger):
             mtries, mdelay = tries, delay
             while mtries > 0:
                 try:
-                    y = f(*args, **kwargs)               
-                    
-                   
-
+                    y = f(*args, **kwargs)                                     
                 except ExceptionToCheck, e:
                     msg = "%s, Retrying in %d seconds..." % (str(e), mdelay)
                     if logger:
-                        logger.warning(msg)
-                    else:
-                        print msg
+                        logger.warning(msg)                    
                     time.sleep(mdelay)
                     mtries -= 1
-
                 try:                   
+                    if(y["status"] ["status_code"]==400):                                             
+                        return 400 
+                    if(y["status"] ["status_code"]==401):                                             
+                        return 401
+                    if(y["status"] ["status_code"]==429):
+                        print("max number of api requests.")
+                        mtries -= 1
+                        time.sleep(5)
+                        if mtries == 1:
+                            time.sleep(10)
+                        if mtries == 0:
+                            return 429
+                        
+                    if(y["status"] ["status_code"]==500):
+                        return 500    
                     if(y["status"] ["status_code"]==503):                                             
-                        return 503 
+                        return 503
                     return y
                 except Exception, e:                     
                     pass              
-               
-                return y
+                try:
+                    return y
+                except UnboundLocalError, e:                     
+                    mtries -= 1 
 
             return None
         return f_retry  # true decorator
@@ -71,8 +83,8 @@ def retry(ExceptionToCheck, tries=2, delay=1, backoff=2, logger=logger):
 
 
 
-@retry(Exception )
-def getIdByName(name):
+@retry(Exception)
+def getSummonersByName(name):
     method = 'summoner/by-name/'
     version = "v1.4"
     appendix=""
@@ -81,7 +93,7 @@ def getIdByName(name):
     values = get_data(method, name,version,appendix)
     name =name.lower()
     try:
-        return values[name]['id']
+        return values
     except KeyError,e:
         log_error(e, method, name)
         raise KeyError
@@ -94,18 +106,17 @@ def getAggregatedStatsById(id):
     values = get_data(method,id,version,appendix)
     try:
         return values["champions"]
-    except KeyError, e:    
-        print("error")    
+    except KeyError, e: 
         log_error(e, method, id)
         raise KeyError
 
 @retry(Exception)  
-def getRecentGamesById(id):
+def getRecentGamesById(id):    
     method = 'game/by-summoner/'
     version = "v1.3"
     appendix="/recent"
     values = get_data(method,id,version,appendix)
-    try:
+    try:        
         return values["games"]
     except KeyError, e:    
         print("error")       
@@ -117,15 +128,24 @@ def getLeagueForPlayerById(id):
     method = 'league/by-summoner/'
     version = "v2.4"
     appendix="/entry"
-    values = get_data(method,id,version,appendix)
+    values = get_data(method,id,version,appendix)    
     try:
-        return values[str(id)]
-    except KeyError, e:    
-        print("error")       
+        return values
+    except KeyError, e:
         log_error(e, method, id)
         raise KeyError
 
-
+@retry(Exception)  
+def getSummonerById(id):
+    method = 'summoner/'
+    version = "v1.4"
+    appendix=""
+    values = get_data(method,id,version,appendix)    
+    try:
+        return values
+    except KeyError, e:
+        log_error(e, method, id)
+        raise KeyError
 
 
 # Helper functions

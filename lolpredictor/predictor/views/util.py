@@ -23,13 +23,13 @@ def parse_champions(champions):
 		champion_hash["image"] = "https://github.com/rwarasaurus/league-of-legends-database/blob/master/icons/%d.jpg?raw=true" % champion["championId"]
 		parsed_list.append(champion_hash)
 	return parsed_list
-def parse_ranked_games(games, id):
+def parse_ranked_games(games,id):
+
 	recentadds=globals.nrgamesadded
 	recenterrors =globals.nrerrors
 	for game in games:
-		if game["subType"] == "RANKED_SOLO_5x5" :
-			print "Storing Ranked game" 
-			m = store_match(game,"RANKED_SOLO_5x5",id)
+		if game["subType"] == "RANKED_SOLO_5x5" :			
+			m = store_match(game,"RANKED_SOLO_5x5",id,"euw")
 			if m is not None :
 				globals.nrgamesadded += 1
 			else :
@@ -41,16 +41,21 @@ def parse_ranked_games(games, id):
 		return None
 
 	return globals.nrgamesadded 	
-def store_match(game, type, id):
-	print("store ranked match")	
+def store_match(game, type,id,region):
+
+
+	our_summonersids = [] 
+	their_summonersids=[]
+	all_ids=[]
 	our_team = []
 	their_team = []
-	championid = game["championId"]	
-	print(championid)	
-
+	championid = game["championId"]
 	team_id = game["teamId"]
-	match_id = game["gameId"]	
+	match_id = game["gameId"]
+
 	
+
+
 	try:
 		m = Match.objects.get(match_id=match_id)
 		print "This match was already stored"
@@ -59,31 +64,34 @@ def store_match(game, type, id):
 	except Match.DoesNotExist, e:
 		pass
 	
-	summoner = store_summoner(id)	
-	champion = Champion.objects.get(pk=championid)
-	if champion is None or summoner is None:
-		return None
+	our_summonersids.append(id)
+	fellowplayers = game["fellowPlayers"]
+	for player in fellowplayers:
+		if player["teamId"] == team_id : 
+			our_summonersids.append(player["summonerId"])
+		else :
+			their_summonersids.append(player["summonerId"])	
+	all_ids=our_summonersids + their_summonersids
+	store_summoners(all_ids,region)
+	print("stored summoners")
+		
+	champion = Champion.objects.get(pk=championid)	
+	store_champions_played(id, champion)
+	
 	try:
-		store_champions_played(id, champion)
-	except KeyError, e:
-		print "Error storing champions"
-		return None	
-
-	try:
+		summoner = Summoner.objects.get(account_id=id)
 		champPlayed=ChampionPlayed.objects.get(summoner = summoner, champion=champion)	
-	except ChampionPlayed.DoesNotExist:		
-		print "Exception DoesNotExist"		
-		return None	
+	except ChampionPlayed.DoesNotExist:	
+		print "Exception DoesNotExist 1"
+		return None
+		
 		
 	our_team.append(champPlayed)
 	#Store Others
 	fellowplayers = game["fellowPlayers"]
 	for player in fellowplayers:	
 		champion_id = player["championId"]	
-		summoner_id = player["summonerId"]				
-		summoner = store_summoner(summoner_id)		
-		if summoner == None:
-			return None
+		summoner_id = player["summonerId"]
 		try:
 			champion = Champion.objects.get(pk=champion_id)
 		except Champion.DoesNotExist:
@@ -92,14 +100,13 @@ def store_match(game, type, id):
 			store_champions_played(summoner_id, champion)
 		except KeyError, e:
 			print "Error storing champions"
-			return None
-		
+			return None		
 		try:
+			summoner = Summoner.objects.get(account_id=summoner_id)
 			champion_played = ChampionPlayed.objects.get(summoner = summoner, champion=champion )	
 		except ChampionPlayed.DoesNotExist:			
-			print "Exception DoesNotExist"
-			print summoner
-			print champion
+			print "Exception DoesNotExist 2"
+			return None		
 
 		if player["teamId"] == team_id : 
 			our_team.append(champion_played)
@@ -123,62 +130,75 @@ def store_match(game, type, id):
 		logger = logging.getLogger("Double matchid found")
 		return None
 	return m
-def store_summoner(id):	
-	try:
-		summoners = Summoner.objects.filter(account_id=id)
-		if len(summoners)>1:
-			summoners.delete()				
-		summoner = Summoner.objects.get(account_id=id)
-		
-		diff = datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
-		if diff.days < 0:			
-			print_summoner(summoner,True,False)
-			return summoner
-	except Summoner.DoesNotExist:
-		summoner = None
-	updated = False
-	if summoner:
-		summoner.delete()
-		updated = True
 
+def store_summoners(ids,region):
+	#check which ids are alread stored.	
+	badid=[]
+	for sid in ids:			
+		try:
+			summoners = Summoner.objects.filter(account_id=sid)
+			if len(summoners)>1:
+				print("more than one summoner with this id.")
+				summoners.delete()				
+			summoner = Summoner.objects.get(account_id=sid)			
+			diff = datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
+			if diff.days < 0:	
+				badid.append(sid)					
+				print_summoner(summoner,True,False)				
+		except Summoner.DoesNotExist:
+			pass
+		updated = False		
+	for id in badid:		
+		ids.remove(id)	
+		if len(ids)==0:
+			print("ALL SUMMONERS ALREADY STORED")
+			return True
+	#for the remaining ids make a call.
 	param_hash = {}	
-	try : 
-		league_information = getLeagueForPlayerById(id)
-		
-		if league_information == 503 :
-			return 503
-		for league in league_information:			       
-			if league["queue"] == "RANKED_SOLO_5x5": 				
-				entries = league["entries"]
-				param_hash["tier"] = tiertoint(league["tier"])
-				for entry in entries:
-					param_hash["rank"] = ranktoint(entry["division"])
-					param_hash["name"] = entry["playerOrTeamName"]
-					param_hash["hotstreak"] = entry["isHotStreak"]
-	except:		
-		param_hash["rank"] = 4
-		param_hash["tier"] = 2
-		param_hash["name"] = "Unkown"
-		param_hash["hotstreak"] = False
-	param_hash["account_id"] = id	
-	param_hash["updated_at"] = datetime.now()
 
-	# Todo improve win percentage
 	
-	
+			
+	leagues = getLeagueForPlayerById(str(','.join(str(v) for v in ids)))		
+	for id in ids:	
+		try :  			
+			league_information=leagues[str(id)]			
+			if league_information == 503 :
+				return 503
 
-	s1 = Summoner.objects.create( **param_hash )
-	print_summoner(s1,updated,True)
+			for league in league_information:			       
+				if league["queue"] == "RANKED_SOLO_5x5": 				
+					entries = league["entries"]
+					param_hash["tier"] = tiertoint(league["tier"])
+					for entry in entries:
+						param_hash["rank"] = ranktoint(entry["division"])
+						param_hash["name"] = entry["playerOrTeamName"]
+						param_hash["hotstreak"] = entry["isHotStreak"]
+			param_hash["region"] = 	region
+			param_hash["account_id"] = id	
+			param_hash["updated_at"] = datetime.now()
+			param_hash["sid"]=Summoner.objects.count()+1
+			s1 = Summoner.objects.create( **param_hash )
+			print_summoner(s1,updated,True)
+		except:		
+			print("Summoner unranked.")
+			summ = getSummonerById(id)
+			param_hash["tier"] = 0
+			param_hash["rank"] = 0
+			param_hash["name"] = summ[str(id)]["name"]
+			param_hash["hotstreak"] = False
+			param_hash["region"] = 	region
+			param_hash["account_id"] = id	
+			param_hash["updated_at"] = datetime.now()
+			param_hash["sid"]=Summoner.objects.count()+1
+			s1 = Summoner.objects.create( **param_hash )
+			print_summoner(s1,updated,True)			
+	return True
 	
-	return s1 
-
 
 # Store the information for all champions for the given summoner
 # return: false if the summoner was recently updated
 def store_champions_played(id, champion):
-	print("store champion played")	
-	summoner = Summoner.objects.get(pk=id)
-	print (summoner)
+	summoner = Summoner.objects.get(account_id=id)	
 	try:
 		cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
 		if cp is not None:
@@ -188,8 +208,9 @@ def store_champions_played(id, champion):
 				return False
 	except:		
 		pass
-
+	
 	accountstats = getAggregatedStatsById(id)
+			
 	"""TODO : rework
 	 if	accountstats is None :
 		print "Can't get accountstats"
@@ -206,7 +227,7 @@ def store_champions_played(id, champion):
 			continue
 			
 		param_hash[champion_id]["champion"] = champion_instance
-		param_hash[champion_id]["summoner"] = summoner
+		param_hash[champion_id]["summoner"] = summoner		
 		stats = champion_stats["stats"]		
 		
 		param_hash[champion_id]["nr_gameswithchamp"] = stats["totalSessionsPlayed"]
@@ -220,7 +241,7 @@ def store_champions_played(id, champion):
 			champion_instance = Champion.objects.get(pk=champion_id)
 		except:
 			continue
-		try:
+		try:		
 			champ_played = ChampionPlayed.objects.get(champion=champion_instance,summoner=summoner)
 			champ_played.delete()
 		except ChampionPlayed.DoesNotExist:
@@ -229,6 +250,7 @@ def store_champions_played(id, champion):
 		params["average_deaths"] = params["average_deaths"] / params["nr_gameswithchamp"]
 		params["average_kills"] = params["average_kills"] / params["nr_gameswithchamp"]
 		params["average_gold"] = params["average_gold"] / params["nr_gameswithchamp"]
+
 		c1 = ChampionPlayed.objects.create(**params)
 	
 	print_champion_played(summoner,True)	
