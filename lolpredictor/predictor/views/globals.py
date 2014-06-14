@@ -5,7 +5,7 @@ nrerrors=0
 nrgamesadded=0
 nrofupdates=0
 
-use_saved_data = False
+use_saved_data = True
 goldnormalization =10000
 
 use_full_features = 0

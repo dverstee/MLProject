@@ -313,6 +313,7 @@ def getMinimalDatafromMatch(matc, preprocessing, reverse):
 		input += [1, 0]
 	else:
 		input += [0, 1]
+	
 	return input
 def champion_played_to_features(champion_played):
 	#print "%s : %d/%d/%d" % (champion_played.champion, champion_played.average_kills, champion_played.average_deaths, champion_played.average_assists)

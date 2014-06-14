@@ -14,7 +14,7 @@ from django.shortcuts import render
 import itertools, collections
 import logging
 import pickle
-
+import os
 import globals
 logger = logging.getLogger(__name__)
 
@@ -24,20 +24,24 @@ def predict(request):
     if request.method == 'GET':
         return render(request, 'predictor/predictor.html')
     if request.method == 'POST':
+        my_hash={}
         summoner_name = str(request.POST["summoner_name"])
         print summoner_name 
         game = retrieveInProgressSpectatorGameInfo(summoner_name)
-        if game["queueTypeName"]!="RANKED_SOLO_5x5":
+        
+        if game["game"]["queueTypeName"]!="RANKED_SOLO_5x5":
             print 'Game not suited for this predictor.'
             return render(request, 'predictor/predictor.html')
         else : 
-            parsegame(game)
+            winrate= parsegame(game)
             #makeprediction(inputvector)
-    return render(request, 'predictor/predictor.html')
+        my_hash["winrate"] =  round(winrate,3)
+
+    return render(request, 'predictor/predicted.html',my_hash)
       
        
 def parsegame(game):
-    print game
+    region = "na"
     #used to determine wich team our summoner is on.
     accountid_our_summoner = game["playerCredentials"]["playerId"]
     game = game['game']     
@@ -45,30 +49,36 @@ def parsegame(game):
     team = 2
     champ_hash = makechamphash(game)
     team_1 = []
+    team_1_summonerIds = []
+    team_2 = []    
+    team_2_summonerIds = []
     teamOne = game["teamOne"]["array"]
+    teamTwo = game["teamTwo"]["array"]
     for summoner in teamOne:
-        account_id = summoner["accountId"]
+      team_1_summonerIds.append(summoner["summonerId"])
+    for summoner in teamTwo:
+      team_2_summonerIds.append(summoner["summonerId"])
+
+    all_ids=team_1_summonerIds + team_2_summonerIds    
+    store_summoners(all_ids,region)
+    for summoner in teamOne:      
         summoner_id = summoner["summonerId"]
         internalname = summoner["summonerInternalName"]
-        champion_id = champ_hash[internalname]
-        #No overhead in storing summoner 
-        summoner = store_summoner(summoner_id, account_id)
+        champion_id = champ_hash[internalname]      
         #there is overhead in store_championplayed , avoid this by new function.        
-        cp = makeChampionplayed(account_id,summoner,champion_id)        
+        cp = makeChampionplayed(summoner_id,champion_id) 
+        account_id = summoner["accountId"]       
         team_1.append(cp)
         if accountid_our_summoner == account_id:
             team = 1
             red= False
-    team_2 = []
-    teamTwo = game["teamTwo"]["array"]
+  
     for summoner in teamTwo:        
         summoner_id = summoner["summonerId"]
-        account_id= summoner["accountId"]
         internalname = summoner["summonerInternalName"]
-        champion_id = champ_hash[internalname]  
-        summoner = store_summoner(summoner_id, account_id)
+        champion_id = champ_hash[internalname]      
         #there is overhead in store_championplayed , avoid this by new function.        
-        cp = makeChampionplayed(account_id,summoner,champion_id)        
+        cp = makeChampionplayed(summoner_id,champion_id) 
         team_2.append(cp)
     #Sort champs     
     optimal_setup_1 = fill_missing_spots(sort_champion_list(team_1, []), team_1)
@@ -77,16 +87,15 @@ def parsegame(game):
     print "team: %s" % team
     print optimal_setup_1
     print optimal_setup_2
-    feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, True, red)
-    print feature
-    print makeprediction(feature)
+    feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, True, red)   
+    pred1= makeprediction(feature)
     feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, False, red)
-    print feature
-    print makeprediction(feature)
-
+    pred2 = makeprediction(feature)
+    winrate = float(pred1[0]+pred2[1])/float(2.0)
+    return winrate
 
 def getDatafromMatch(team_1,team_2,reverse,red):
-    input = [matchups_win_rate(team_1,team_2,reverse)]
+    input = matchups_win_rate(team_1,team_2,reverse)
     if not reverse:
         for s in team_1:        
             input += champion_played_to_features(s)
@@ -138,9 +147,10 @@ def makechamphash(match):
     return champ_hash
 
 
-def makeChampionplayed(account_id, summoner,champion_id):  
-    print account_id, summoner,champion_id
-    champion = Champion.objects.get(pk=champion_id)   
+def makeChampionplayed(account_id,champion_id):  
+    
+    champion = Champion.objects.get(pk=champion_id) 
+    summoner = Summoner.objects.get(account_id=account_id)   
     try:
         cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
         if cp is not None:
@@ -148,28 +158,23 @@ def makeChampionplayed(account_id, summoner,champion_id):
             return cp
     except:     
         pass
-    accountstats = getAggregatedStatsByAccountID(account_id)
+    accountstats = getAggregatedStatsById(account_id)
     champion = Champion.objects.get(pk=champion_id)    
     param_hash = {}
     param_hash["champion"] = champion
     param_hash["summoner"] = summoner
-    print param_hash
     
     for champion_stats in accountstats:
-        champion_id = champion_stats["championId"]
+        champion_id = champion_stats["id"]
         # Only store the relevant
         if champion_id == champion.key:
-            statType = champion_stats["statType"]
-            if statType == "TOTAL_SESSIONS_PLAYED":                
-                param_hash["nr_gameswithchamp"] =  champion_stats["value"]
-            if statType == "TOTAL_ASSISTS":                
-                param_hash["average_assists"] =  champion_stats["value"]                
-            if statType == "TOTAL_DEATHS_PER_SESSION":               
-                param_hash["average_deaths"] =  champion_stats["value"]
-            if statType == "TOTAL_CHAMPION_KILLS":
-                param_hash["average_kills"] =  champion_stats["value"]
-            if statType == "TOTAL_GOLD_EARNED":
-                param_hash["average_gold"] =  champion_stats["value"]
+                stats = champion_stats["stats"]     
+        
+                param_hash["nr_gameswithchamp"] = stats["totalSessionsPlayed"]
+                param_hash["average_assists"] = stats["totalAssists"]
+                param_hash["average_deaths"] = stats["totalDeathsPerSession"]
+                param_hash["average_kills"] = stats["totalChampionKills"]
+                param_hash["average_gold"] = stats["totalGoldEarned"]
     try :
         param_hash["average_assists"] = param_hash["average_assists"] / param_hash["nr_gameswithchamp"]
         param_hash["average_deaths"] = param_hash["average_deaths"] / param_hash["nr_gameswithchamp"]
@@ -188,7 +193,9 @@ def makeChampionplayed(account_id, summoner,champion_id):
 
 
 def makeprediction(inputvector):
-    fileObject = open('prettygood80decay0.01withoutRB','r')
+    module_dir = os.path.dirname(__file__)
+    print(module_dir)
+    fileObject = open('networks/neuralHiddenNode5decay0.01','r')
     net = pickle.load(fileObject)
     net.sorted = False
     net.sortModules()

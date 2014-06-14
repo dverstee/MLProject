@@ -19,11 +19,9 @@ def neural(request):
     print "Starting neural network training"
     
 
-    WEIGHT_DECAY_RANGE      = range(2,4) 
-    NUMBER_OF_NODES_RANGE   = range(2,10,2)
+    WEIGHT_DECAY_RANGE      = range(2,3) 
+    NUMBER_OF_NODES_RANGE   = range(5,6,1)
     LAYERS                  = [1]
-
-
     print "Preparing the data ...."
     alldata = getdata(False, globals.use_full_features)
 
@@ -47,38 +45,9 @@ def neural(request):
             'results': results,
             'optimal_result': optimal_configuration
             })
-
-
-    # weightdecaymax = 4 
-    # alldata = getdata(False,)
-    # globals.best_number_of_hidden_nodes=120
-    # globals.best_weight_decay=0.01
-
-    # #buildbestneuralnetwork(globals.best_number_of_hidden_nodes,globals.best_weight_decay,alldata)
-    # #sweep over all parameters to find the one that have the best mean performance
-    # for decay in range(2,weightdecaymax,1):
-
-    #     for number_of_hidden_node in range(460,620,20):       
-    #         weightdecay = 10**(-decay)            
-    #         basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
-
-    # #build the best network with the parameters that performed best on mean
-           
-   
-    # #alldata = getMinimaldata()    
-    # #for number_of_hidden_node in xrange(20,1000,20):       
-    # #    basicneuralnetwork(number_of_hidden_node,weightdecay,alldata)
-    
-    # #print "epoch: %4d" %trainer.totalepochs
-    # #print "  train error: %5.2f%%" %trnresult
-    # #print "  test error: %5.2f%%" %tstresult
- 
-
 def log_debug(dimension, number_of_hidden_nodes, weightdecay, trnresult,tstresult):
     logger.debug(";%s; %s; %s; %s;%s" % (dimension,number_of_hidden_nodes, weightdecay, trnresult ,tstresult ))
     print ";%s; %s; %s; %s;%s" % ( dimension , number_of_hidden_nodes, weightdecay, trnresult ,tstresult )
-
-
 def getdata(do_preprocessing, full_data):
     '''
     fetch and format the match data according to the given flags
@@ -112,7 +81,6 @@ def getdata(do_preprocessing, full_data):
             all_data = ClassificationDataSet(len(input), 1, nb_classes=2)                 
         all_data.addSample(input, int(won)) 
     return all_data
-
 def basicneuralnetwork(number_of_hidden_nodes, weightdecay, layers, alldata):
     '''
     This is a dataset 
@@ -168,8 +136,6 @@ def basicneuralnetwork(number_of_hidden_nodes, weightdecay, layers, alldata):
     fileObject.close()
 
     return (mean_train_error, mean_test_error)
-
-
 def construct_neural_network(number_of_hidden_nodes, number_of_hidden_layers, inputdim, outputdim):
     """
     Constructs a neural network with a given amount of hidden layers and nodes per hidden layer
