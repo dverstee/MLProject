@@ -11,13 +11,13 @@ API_TIM = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 # Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 # Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 
-REGION = "na"
-API_DOMAIN = "https://%s.api.pvp.net/api/lol/" % REGION
-API_DOMAIN_TIM = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % REGION.upper()
+
+API_DOMAIN = "https://%s.api.pvp.net/api/lol/" % globals.REGION
+API_DOMAIN_TIM = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % globals.REGION.upper()
 NR_REQUEST=0
 
 logger = logging.getLogger(__name__)
-def retry(ExceptionToCheck, tries=3, delay=1, backoff=2, logger=logger):
+def retry(ExceptionToCheck, tries=5, delay=1, backoff=2, logger=logger):
     """Retry calling the decorated function using an exponential backoff.
 
     http://www.saltycrane.com/blog/2009/11/trying-out-retry-decorator-python/
@@ -46,7 +46,8 @@ def retry(ExceptionToCheck, tries=3, delay=1, backoff=2, logger=logger):
                 except ExceptionToCheck, e:
                     msg = "%s, Retrying in %d seconds..." % (str(e), mdelay)
                     if logger:
-                        logger.warning(msg)                    
+                        logger.warning(msg)
+                    print(msg)                    
                     time.sleep(mdelay)
                     mtries -= 1
                 try:                   
@@ -61,7 +62,8 @@ def retry(ExceptionToCheck, tries=3, delay=1, backoff=2, logger=logger):
                         if mtries == 1:
                             time.sleep(10)
                         if mtries == 0:
-                            return 429                        
+                            return 429
+                        continue                        
                     if(y["status"] ["status_code"]==500):
                         return 500    
                     if(y["status"] ["status_code"]==503):                                             
@@ -73,7 +75,6 @@ def retry(ExceptionToCheck, tries=3, delay=1, backoff=2, logger=logger):
                     return y
                 except UnboundLocalError, e:                     
                     mtries -= 1 
-
             return None
         return f_retry  # true decorator
 
@@ -123,7 +124,7 @@ def getAggregatedStatsById(id):
     appendix="/ranked"
     values = get_data(method,id,version,appendix)
     try:
-        return values["champions"]
+        return values
     except KeyError, e: 
         log_error(e, method, id)
         raise KeyError
@@ -180,7 +181,7 @@ def log_error(error, method, argument):
 
 
 def get_data(method, parameters,version,appendix):
-    url = "%s%s/%s/%s%s%s?api_key=%s" % (API_DOMAIN,REGION,version,method,parameters,appendix,API_KEY);   
+    url = "%s%s/%s/%s%s%s?api_key=%s" % (API_DOMAIN,globals.REGION,version,method,parameters,appendix,API_KEY);   
     print(url)
     response =  unirest.get(url.encode('utf-8'),    
     encoding='utf-8',

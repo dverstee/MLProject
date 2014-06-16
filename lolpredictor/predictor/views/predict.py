@@ -25,8 +25,10 @@ def predict(request):
         return render(request, 'predictor/predictor.html')
     if request.method == 'POST':
         my_hash={}
-        summoner_name = str(request.POST["summoner_name"])
+        
+        summoner_name = request.POST["summoner_name"]
         print summoner_name 
+      
         game = retrieveInProgressSpectatorGameInfo(summoner_name)
         
         if game["game"]["queueTypeName"]!="RANKED_SOLO_5x5":
@@ -41,7 +43,7 @@ def predict(request):
       
        
 def parsegame(game):
-    region = "na"
+    
     #used to determine wich team our summoner is on.
     accountid_our_summoner = game["playerCredentials"]["playerId"]
     game = game['game']     
@@ -60,7 +62,8 @@ def parsegame(game):
       team_2_summonerIds.append(summoner["summonerId"])
 
     all_ids=team_1_summonerIds + team_2_summonerIds    
-    store_summoners(all_ids,region)
+    store_summoners(all_ids,globals.REGION)
+
     for summoner in teamOne:      
         summoner_id = summoner["summonerId"]
         internalname = summoner["summonerInternalName"]
@@ -92,7 +95,8 @@ def parsegame(game):
     feature = getDatafromMatch(optimal_setup_1, optimal_setup_2, False, red)
     pred2 = makeprediction(feature)
     winrate = float(pred1[0]+pred2[1])/float(2.0)
-    return winrate
+
+    return winrate*100
 
 def getDatafromMatch(team_1,team_2,reverse,red):
     input = matchups_win_rate(team_1,team_2,reverse)
@@ -147,18 +151,26 @@ def makechamphash(match):
     return champ_hash
 
 
-def makeChampionplayed(account_id,champion_id):  
-    
-    champion = Champion.objects.get(pk=champion_id) 
-    summoner = Summoner.objects.get(account_id=account_id)   
+def makeChampionplayed(account_id,champion_id):     
+
     try:
+        print(champion_id)
+        champion = Champion.objects.get(pk=champion_id) 
+        summoner = Summoner.objects.get(account_id=account_id) 
         cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
         if cp is not None:
             print_champion_played(summoner,False)
             return cp
     except:     
         pass
-    accountstats = getAggregatedStatsById(account_id)
+    try:
+        accountstats = getAggregatedStatsById(account_id)        
+        accountstats = accountstats["champions"]
+    except:
+        print accountstats
+
+
+
     champion = Champion.objects.get(pk=champion_id)    
     param_hash = {}
     param_hash["champion"] = champion

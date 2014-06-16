@@ -34,7 +34,7 @@
     <field type="BooleanField" name="can_adc">False</field>
     <field type="BooleanField" name="can_support">False</field>
 </object>
-<object pk="161" model="predictor.champion">
+<object pk="157" model="predictor.champion">
     <field type="CharField" name="name">Yasuo</field>
     <field type="SmallIntegerField" name="difficulty">3</field>
     <field type="SmallIntegerField" name="magic">2</field>

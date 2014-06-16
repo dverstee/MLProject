@@ -7,6 +7,6 @@ nrofupdates=0
 
 use_saved_data = True
 goldnormalization =10000
-
+REGION = "euw"
 use_full_features = 0
 

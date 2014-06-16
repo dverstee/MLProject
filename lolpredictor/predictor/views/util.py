@@ -210,7 +210,7 @@ def store_champions_played(id, champion):
 		pass
 	
 	accountstats = getAggregatedStatsById(id)
-			
+	accountstats = 	accountstats["champions"]
 	"""TODO : rework
 	 if	accountstats is None :
 		print "Can't get accountstats"
