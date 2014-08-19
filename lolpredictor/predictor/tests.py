@@ -24,4 +24,9 @@ class TestAPI(TestCase):
         for id in ids:
             testnames.append(summoners[str(id)]["name"].lower())
         self.assertEqual(testnames,names)
+    def testTimAPI(self):
+        names = ["slayyder"]
+        testnames=[]
+              
 
+        self.assertEqual(testnames,names)

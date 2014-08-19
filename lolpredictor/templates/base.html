@@ -29,11 +29,22 @@
 					<ul class="nav navbar-nav">
 
 						{% url 'home' as url %}
-						<li {% if request.path == url %} class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>						
+						<li {% if request.path == url %} class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>	
+
+
 						{% url 'predictor:predict' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Predict</a></li>
+
+						{% url 'predictor:linear' as url %}
+						<li {% if request.path == url %}class="active"{% endif %}><a href=
+						"{{ url }}">Linear Regression</a></li>
+
 						{% url 'predictor:neural' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Neural network</a></li>
+
+
+
+						
 						{% url 'predictor:crawler' as url %}
 						<li {% if request.path == url %}class="active"{% endif %}><a href="{{ url }}">Crawler</a></li>
 						{% url 'predictor:crawlstats' as url %}
@@ -45,7 +56,7 @@
 					</ul>
 
 					<div class="col-md-3 pull-right">
-						<form class="navbar-form" role="search" action="/predictor/search/">
+					<form class="navbar-form" role="search" action="/predictor/search/">
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Summoner Name" name="sn">
 								<div class="input-group-btn">

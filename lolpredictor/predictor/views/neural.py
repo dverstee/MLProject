@@ -54,6 +54,7 @@ def getdata(do_preprocessing, full_data):
     do_preprocessing: bool: true if preprocessing needs to be do_preprocessing
     full_data: bool: false if the minimal data should be used
     '''
+    print ("fetching data ...")
     if full_data == 0 :
         fn = getMinimalDatafromMatch
     else:

@@ -8,3 +8,4 @@ from summoners import summoners
 from preprocessing import test
 from winrates import winrates
 from predict import predict
+from linear import linear
