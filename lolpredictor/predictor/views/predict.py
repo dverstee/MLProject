@@ -30,7 +30,7 @@ def predict(request):
         print summoner_name 
       
         game = retrieveInProgressSpectatorGameInfo(summoner_name)
-        
+        print game
         if game["game"]["queueTypeName"]!="RANKED_SOLO_5x5":
             print 'Game not suited for this predictor.'
             return render(request, 'predictor/predictor.html')
@@ -40,8 +40,6 @@ def predict(request):
         my_hash["winrate"] =  round(winrate,3)
 
     return render(request, 'predictor/predicted.html',my_hash)
-      
-       
 def parsegame(game):
     
     #used to determine wich team our summoner is on.

@@ -145,7 +145,7 @@ def getRecentGamesById(id):
 @retry(Exception)  
 def getLeagueForPlayerById(id):
     method = 'league/by-summoner/'
-    version = "v2.4"
+    version = "v2.5"
     appendix="/entry"
     values = get_data(method,id,version,appendix)    
     try:

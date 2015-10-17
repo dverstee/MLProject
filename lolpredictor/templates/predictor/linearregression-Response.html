@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Linear Regression stats{% endblock %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script>
+
+
+var dataset = {{dataset}}
+
+var width = 960;
+var height = 500;
+var padding = 55;
+
+var xScale = d3.scale.linear()
+                     .domain([d3.min(dataset, function(d) { return d[0]; }), d3.max(dataset, function(d) { return d[0]; })])
+                     .range([padding, width-2*padding]);
+
+var yScale = d3.scale.linear()
+                     .domain([d3.min(dataset, function(d) { return d[1]; }), d3.max(dataset, function(d) { return d[1]; })])
+                     .range([height-padding,padding]);
+  
+var color = d3.scale.category10();
+
+var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+
+svg = d3.select("div.container").append("svg")
+    .attr("width", width )
+    .attr("height", height)
+    svg.selectAll("circle")
+      .data(dataset)
+      .enter()
+      .append("circle")
+      .attr("r", 5.5)
+      .attr("cx", function(d) { return xScale(d[0]); })
+      .attr("cy", function(d) { return yScale(d[1]); })
+      .style("fill", function(d) { return color(d[2]); });
+
+
+      svg.selectAll("text")
+			   .data(dataset)
+			   .enter()
+			   .append("text")
+			   .text(function(d) {
+			   		return d[0] + "," + d[1];
+			   })
+			   .attr("x", function(d) {
+			   		return xScale(d[0]);
+			   })
+			   .attr("y", function(d) {
+			   		return yScale(d[1]);
+			   })
+			   .attr("font-family", "sans-serif")
+			   .attr("font-size", "11px")
+			   .attr("fill", "red");
+	svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0," + (height - padding) + ")")
+    .call(xAxis);
+    svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(" + padding + ",0)")
+    .call(yAxis);
+
+
+function update(){
+  
+ var data = {'bob':'foo','paul':'dog'};
+ $.ajax({
+   url: "linear",
+   type: 'POST',
+   contentType:'application/json',
+   data: JSON.stringify(data),
+   dataType:'json'
+ });
+        
+
+}
+</script>
+<select id="selectNumber">
+        <option>Choose a number</option>
+</select>
+
+<button class="btn btn-mini" onclick="update()" id="button">Transition</button>
+
+	<script >
+var select = document.getElementById("selectNumber");
+var options =    JSON.parse("{{options}}".replace(/&quot;/g,'"'));
+ 
+for(var i = 0; i < options.length; i++) {
+    var opt = options[i];
+    var el = document.createElement("option");
+    el.textContent = opt;
+    el.value = opt;
+    select.appendChild(el);
+}
+for(var i = 0; i < options.length; i++) {
+    var opt = options[i];
+    var el = document.createElement("option");
+    el.textContent = opt;
+    el.value = opt;
+    select.appendChild(el);
+}
+
+</script>
+{% endblock %}

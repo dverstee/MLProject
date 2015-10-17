@@ -10,7 +10,7 @@ import itertools, collections
 import logging
 import pickle
 import json
-from util import getBasicDatafromMatch, getMinimalDatafromMatch
+
 from lolpredictor.predictor.models import Match
 import globals
 logger = logging.getLogger(__name__)

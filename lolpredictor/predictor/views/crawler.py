@@ -13,7 +13,7 @@ def crawler(request):
     if request.method == 'GET':
         return render(request, 'predictor/datacrawl.html')
     if request.method == 'POST':
-
+        print "Getting Summoners"
         #bronze
         summoners = getSummonersByName("mani")
         id= summoners["mani"]["id"]
