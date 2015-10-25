@@ -1,0 +1,14 @@
+blessings==1.5.1
+checkmyreqs==0.3.1
+click==5.1
+enum34==1.0.4
+GDAL==1.11.2
+MySQL-python==1.2.5
+numpy==1.9.3
+pandas==0.16.2
+python-dateutil==2.4.2
+pytz==2015.6
+six==1.10.0
+SQLAlchemy==1.0.8
+virtualenv==13.1.2
+wheel==0.24.0

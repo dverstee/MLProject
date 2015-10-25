@@ -13,3 +13,5 @@ build/
 db.sqlite3.dll
 db.sqlite3
 mysite.log
+venv
+.idea
