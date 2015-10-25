@@ -22,7 +22,7 @@ def predict(request):
         summoner_id = getSummonersByName(summoner_name)[summoner_name.lower()]["id"]
         print summoner_id
         game = getCurrentGameBySummonerID(summoner_id)        
-        #Checks of game is ranked 5VS5
+        # Checks of game is ranked 5VS5
         if int(game["gameQueueConfigId"])!= 4:
             print 'Game not suited for this predictor.'
             return render(request, 'predictor/predictor.html')
