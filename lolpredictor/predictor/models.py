@@ -33,7 +33,7 @@ class ChampionPlayed(models.Model):
     def __unicode__(self):
         return str(self.champion) +" " +str(self.summoner)
 class Summoner(models.Model):
-    sid                         = models.IntegerField(primary_key=True,default="0")
+    sid                         = models.AutoField(primary_key=True)
     name                        = models.CharField(max_length=20)
     account_id                  = models.CharField(default="0",max_length=10,unique=True)
     region                      = models.CharField(max_length=20,default="euw") 
