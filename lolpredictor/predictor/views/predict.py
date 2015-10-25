@@ -149,12 +149,12 @@ def makechamphash(match):
     return champ_hash
 
 
-def makeChampionplayed(account_id,champion_id):     
+def makeChampionplayed(summoner_id,champion_id):
 
     try:
         print(champion_id)
         champion = Champion.objects.get(pk=champion_id) 
-        summoner = Summoner.objects.get(account_id=account_id) 
+        summoner = Summoner.objects.get(summoner_id=summoner_id)
         cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
         if cp is not None:
             print_champion_played(summoner,False)
@@ -162,7 +162,7 @@ def makeChampionplayed(account_id,champion_id):
     except:     
         pass
     try:
-        accountstats = getAggregatedStatsById(account_id)        
+        accountstats = getAggregatedStatsById(summoner_id)
         accountstats = accountstats["champions"]
     except:
         print accountstats

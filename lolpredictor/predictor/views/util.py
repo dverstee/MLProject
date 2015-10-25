@@ -46,7 +46,7 @@ def parse_ranked_games(games, id):
     return globals.nrgamesadded
 
 
-def store_match(game, type, id, region):
+def store_match(game, type, summoner_id, region):
     our_summonersids = []
     their_summonersids = []
     all_ids = []
@@ -64,7 +64,7 @@ def store_match(game, type, id, region):
     except Match.DoesNotExist, e:
         pass
 
-    our_summonersids.append(id)
+    our_summonersids.append(summoner_id)
     fellowplayers = game["fellowPlayers"]
     for player in fellowplayers:
         if player["teamId"] == team_id:
@@ -79,7 +79,7 @@ def store_match(game, type, id, region):
     store_champions_played(id, champion)
 
     try:
-        summoner = Summoner.objects.get(account_id=id)
+        summoner = Summoner.objects.get(summoner_id=summoner_id)
         champPlayed = ChampionPlayed.objects.get(summoner=summoner, champion=champion)
     except ChampionPlayed.DoesNotExist:
         print "Exception DoesNotExist 1"
@@ -101,7 +101,7 @@ def store_match(game, type, id, region):
             print "Error storing champions"
             return None
         try:
-            summoner = Summoner.objects.get(account_id=summoner_id)
+            summoner = Summoner.objects.get(summoner_id=summoner_id)
             champion_played = ChampionPlayed.objects.get(summoner=summoner, champion=champion)
         except ChampionPlayed.DoesNotExist:
             print "Exception DoesNotExist 2"
@@ -137,19 +137,19 @@ def store_match(game, type, id, region):
     return m
 
 
-def store_summoners(account_ids, region):
+def store_summoners(summoner_ids, region):
 
     updated_at_lower_bound = timezone.now() - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
 
     # Fetch the requested summoners which were already updated after the threshold
-    summoners = Summoner.objects.filter(account_id__in=account_ids)
+    summoners = Summoner.objects.filter(summoner_id__in=summoner_ids)
     summoners_dict = {summoner.account_id: summoner for summoner in summoners}
 
     # The ids which were already updated recently, skip these
     excluded_summoners = set(map(lambda x: x.account_id, filter(lambda x: x.updated_at > updated_at_lower_bound, summoners)))
 
     # Api call to fetch the league information for the summoner id's
-    leagues = getLeagueForPlayerById(','.join(str(v) for v in account_ids if v not in excluded_summoners))
+    leagues = getLeagueForPlayerById(','.join(str(v) for v in summoner_ids if v not in excluded_summoners))
 
     for account_id in account_ids:
         if account_id not in excluded_summoners:
