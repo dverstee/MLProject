@@ -6,7 +6,7 @@ class PreProcessedMatch(models.Model):
     team1_is_red = models.BooleanField()
     nr_premade_team1 = models.IntegerField()
     nr_premade_team2 = models.IntegerField()
-    won = models.BooleanField()
+    won = models.BooleanField(default=False)
     match_type = models.CharField(max_length=40)
 
     team_1_top_score = models.FloatField(default=0)

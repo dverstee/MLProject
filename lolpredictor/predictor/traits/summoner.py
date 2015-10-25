@@ -33,7 +33,8 @@ def store_summoners(summoner_ids, region):
                     'updated_at': datetime.now(),
                     'tier': 0,
                     'rank': 0,
-                    'hotstreak': False
+                    'hotstreak': False,
+                    'region': region
 
                 })
 

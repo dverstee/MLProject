@@ -7,7 +7,7 @@ class Summoner(models.Model):
     region = models.CharField(max_length=20, primary_key=True)
     tier = models.IntegerField()
     rank = models.IntegerField()
-    hotstreak = models.BooleanField()
+    hotstreak = models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
