@@ -7,5 +7,6 @@ nrofupdates=0
 
 goldnormalization =10000
 REGION = "euw"
+PLATFORM = "EUW1"
 use_full_features = 0
 

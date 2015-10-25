@@ -134,7 +134,7 @@ def store_match(game, type,id,region):
 def store_summoners(ids,region):
 	#check which ids are alread stored.	
 	badid=[]
-	for sid in ids:			
+	for sid in ids:	
 		try:
 			summoners = Summoner.objects.filter(account_id=sid)
 			if len(summoners)>1:
@@ -142,13 +142,10 @@ def store_summoners(ids,region):
 				summoners.delete()				
 			summoner = Summoner.objects.get(account_id=sid)
 			print summoner		
-			diff = timezone.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
-			
+			diff = timezone.now() - summoner.updated_at - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)			
 			if diff.days < 0:	
 				badid.append(sid)					
-				print_summoner(summoner,True,False)	
-			else :
-				summoner.delete()			
+				print_summoner(summoner,True,False)			
 		except Summoner.DoesNotExist:
 			pass
 		updated = False		
@@ -160,11 +157,9 @@ def store_summoners(ids,region):
 	#for the remaining ids make a call.
 	param_hash = {}	
 
-	
 			
 	leagues = getLeagueForPlayerById(str(','.join(str(v) for v in ids)))		
-	for id in ids:	
-		try :  			
+	for id in ids:	 			
 			league_information=leagues[str(id)]			
 			if league_information == 503 :
 				return 503
@@ -181,33 +176,24 @@ def store_summoners(ids,region):
 			param_hash["account_id"] = id	
 			param_hash["updated_at"] = datetime.now()
 			param_hash["sid"]=Summoner.objects.count()+1
-			s1 = Summoner.objects.get_or_create( **param_hash )
+			s1 = Summoner.objects.create(**param_hash )
 			print_summoner(s1,updated,True)
-		except:		
-			print("Summoner unranked.")
-			summ = getSummonerById(id)
-			param_hash["tier"] = 0
-			param_hash["rank"] = 0
-			param_hash["name"] = summ[str(id)]["name"]
-			param_hash["hotstreak"] = False
-			param_hash["region"] = 	region
-			param_hash["account_id"] = id	
-			param_hash["updated_at"] = datetime.now()
-			param_hash["sid"]=Summoner.objects.count()+1
-			s1 = Summoner.objects.get_or_create( **param_hash )
-			print_summoner(s1,updated,True)			
+		
 	return True
 # Store the information for all champions for the given summoner
 # return: false if the summoner was recently updated
 def store_champions_played(id, champion):
-	summoner = Summoner.objects.get(account_id=id)	
+	try:
+		summoner = Summoner.objects.get(account_id=id)
+	except Summoner.DoesNotExist:	
+		store_summoners([id],globals.REGION)
 	try:
 		cp = ChampionPlayed.objects.get(summoner=summoner,champion=champion)
 		if cp is not None:
 			diff =datetime.now() - cp.champions_updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
 			if diff.days < 0:
 				print_champion_played(summoner,False)
-				return False
+				return cp
 	except:		
 		pass
 	
@@ -256,7 +242,7 @@ def store_champions_played(id, champion):
 		c1 = ChampionPlayed.objects.create(**params)
 	
 	print_champion_played(summoner,True)	
-	return True
+	return c1
 def ranktoint(rank):
 	if rank == "I":
 		return 1	

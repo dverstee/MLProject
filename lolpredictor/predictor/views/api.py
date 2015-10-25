@@ -10,13 +10,14 @@ API_KEYS = ["72e5f115-6e76-43e2-8e95-af65ce16445d","72e5f115-6e76-43e2-8e95-af65
 API_NR = 0
 
 
-API_TIM = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
+
 # Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 # Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 
 
 API_DOMAIN = "https://%s.api.pvp.net/api/lol/" % globals.REGION
-API_DOMAIN_TIM = "https://community-league-of-legends.p.mashape.com/api/v1.0/%s/summoner/" % globals.REGION.upper()
+API_DOMAIN_OBSERVER = "https://%s.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo" % globals.REGION
+
 NR_REQUEST=0
 
 logger = logging.getLogger(__name__)
@@ -83,28 +84,31 @@ def retry(ExceptionToCheck, tries=5, delay=1, backoff=2, logger=logger):
         return f_retry  # true decorator
 
     return deco_retry     
-def retrytim(ExceptionToCheck, tries=3, delay=1, backoff=2, logger=logger):       
-    def deco_retry(f):       
-        @wraps(f)
-        def f_retry(*args, **kwargs):
-            mtries, mdelay = tries, delay
-            while mtries > 0:
-                try:
-                    y = f(*args, **kwargs)  
-                    return y                                    
-                except ExceptionToCheck, e:
-                    msg = "%s, Retrying in %d seconds..." % (str(e), mdelay)
-                    if logger:
-                        logger.warning(msg)                    
-                    time.sleep(mdelay)
-                    mtries -= 1 
-            return None
-        return f_retry  # true decorator
-
-    return deco_retry     
-        
 
 
+@retry(Exception)
+def getCurrentGameBySummonerID(id): 
+    values = get_data_observer(id)
+    try:
+        return values
+    except KeyError,e:
+        log_error(e, method, name)
+        raise KeyError
+      
+@retry(Exception)
+def getSummonersByName(name):
+    method = 'summoner/by-name/'
+    version = "v1.4"
+    appendix=""
+    name = re.sub(r'\s+', '', name)
+    name = unicode_conversion(name);
+    values = get_data(method, name,version,appendix)
+    name =name.lower()
+    try:
+        return values
+    except KeyError,e:
+        log_error(e, method, name)
+        raise KeyError
 
 @retry(Exception)
 def getSummonersByName(name):
@@ -170,15 +174,6 @@ def getSummonerById(id):
         log_error(e, method, id)
         raise KeyError
 
-@retrytim(Exception)
-def retrieveInProgressSpectatorGameInfo(summonerName):
-    method = 'retrieveInProgressSpectatorGameInfo'
-    values = get_tim_data(method, summonerName)
-    try:        
-        return values
-    except KeyError, e:  
-        log_error(e, method, summonerName)
-        raise KeyError 
 
 def log_error(error, method, argument):
     logger.error("%s(%s) : %s" % (method, error, argument))
@@ -199,25 +194,21 @@ def get_data(method, parameters,version,appendix):
         print s
         raise e
     return a
-def get_tim_data(method, parameters):
-    url = "%s%s/%s" % (API_DOMAIN_TIM, method, parameters); 
-    print(url)  
-    response =  unirest.get(url.encode('utf-8'),
-    headers={
-        "X-Mashape-Authorization": API_TIM
-        },
+def get_data_observer(id):
+    url = "%s/%s/%s?api_key=%s" % (API_DOMAIN_OBSERVER,globals.PLATFORM,str(id),API_KEYS[API_NR]);   
+    print(url)
+    response =  unirest.get(url.encode('utf-8'),    
     encoding='utf-8',
     timeout=20000
         );  
     try:
-        s= response.raw_body.replace('\\', '')        
+        s= response.raw_body.replace('\\', '')            
         a= json.loads(s)
     except Exception, e:
         log_error("get_data", method, s)
         print s
         raise e
     return a
-
 def unicode_conversion(text):
     def fixup(m):
         text = m.group(0)
