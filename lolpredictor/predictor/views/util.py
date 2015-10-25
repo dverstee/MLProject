@@ -8,6 +8,7 @@ from api import *
 from django.db import IntegrityError
 from preprocessing import *
 import globals
+from django.utils import timezone
 logger = logging.getLogger(__name__)
 
 REFRESH_SUMMONER_INTERVAL = 3600*24 # One day refresh interval
@@ -139,11 +140,15 @@ def store_summoners(ids,region):
 			if len(summoners)>1:
 				print("more than one summoner with this id.")
 				summoners.delete()				
-			summoner = Summoner.objects.get(account_id=sid)			
-			diff = datetime.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
+			summoner = Summoner.objects.get(account_id=sid)
+			print summoner		
+			diff = timezone.now() - summoner.updated_at.replace(tzinfo=None) - timedelta(seconds=REFRESH_SUMMONER_INTERVAL)
+			
 			if diff.days < 0:	
 				badid.append(sid)					
-				print_summoner(summoner,True,False)				
+				print_summoner(summoner,True,False)	
+			else :
+				summoner.delete()			
 		except Summoner.DoesNotExist:
 			pass
 		updated = False		
@@ -176,7 +181,7 @@ def store_summoners(ids,region):
 			param_hash["account_id"] = id	
 			param_hash["updated_at"] = datetime.now()
 			param_hash["sid"]=Summoner.objects.count()+1
-			s1 = Summoner.objects.create( **param_hash )
+			s1 = Summoner.objects.get_or_create( **param_hash )
 			print_summoner(s1,updated,True)
 		except:		
 			print("Summoner unranked.")
@@ -189,7 +194,7 @@ def store_summoners(ids,region):
 			param_hash["account_id"] = id	
 			param_hash["updated_at"] = datetime.now()
 			param_hash["sid"]=Summoner.objects.count()+1
-			s1 = Summoner.objects.create( **param_hash )
+			s1 = Summoner.objects.get_or_create( **param_hash )
 			print_summoner(s1,updated,True)			
 	return True
 # Store the information for all champions for the given summoner

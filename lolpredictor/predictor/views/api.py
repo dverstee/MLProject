@@ -6,7 +6,10 @@ import time
 import globals
 from functools import wraps
 
-API_KEY = "72e5f115-6e76-43e2-8e95-af65ce16445d"
+API_KEYS = ["72e5f115-6e76-43e2-8e95-af65ce16445d","72e5f115-6e76-43e2-8e95-af65ce16445d"]
+API_NR = 0
+
+
 API_TIM = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 # Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
 # Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
@@ -56,7 +59,8 @@ def retry(ExceptionToCheck, tries=5, delay=1, backoff=2, logger=logger):
                     if(y["status"] ["status_code"]==401):                                             
                         return 401
                     if(y["status"] ["status_code"]==429):
-                        print("max number of api requests.")
+                        API_NR = (API_NR +1) % len(API_KEYS)
+                        print("max number of api requests for key %d" % (API_NR) )
                         mtries -= 1
                         time.sleep(5)
                         if mtries == 1:
@@ -181,7 +185,7 @@ def log_error(error, method, argument):
 
 
 def get_data(method, parameters,version,appendix):
-    url = "%s%s/%s/%s%s%s?api_key=%s" % (API_DOMAIN,globals.REGION,version,method,parameters,appendix,API_KEY);   
+    url = "%s%s/%s/%s%s%s?api_key=%s" % (API_DOMAIN,globals.REGION,version,method,parameters,appendix,API_KEYS[API_NR]);   
     print(url)
     response =  unirest.get(url.encode('utf-8'),    
     encoding='utf-8',
