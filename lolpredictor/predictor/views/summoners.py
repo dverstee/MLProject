@@ -1,6 +1,6 @@
 from django.shortcuts import render
+from lolpredictor.predictor.models import Summoner
 
-from util import *
 
 def summoners(request):
     summoners = Summoner.objects.order_by('name')

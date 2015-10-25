@@ -1,6 +1,7 @@
-
-from util import *
+from django.shortcuts import render
 from lolpredictor.predictor.enums import Tier
+from lolpredictor.predictor.models import Summoner, Match, ChampionPlayed
+
 
 def crawlstats(request):
     stats = {}

@@ -1,12 +1,8 @@
 from django.shortcuts import render
-from api import *
-from util import *
 from django.db.models import Q
-from datetime import timedelta
-import globals
-
-KEEP_CRAWLING_PERCENTAGE = 80
-
+from lolpredictor.predictor.models import Summoner
+from lolpredictor.predictor.traits.match import parse_ranked_games
+from lolpredictor.predictor.views.api import getSummonersByName, getRecentGamesById
 
 
 def crawler(request):

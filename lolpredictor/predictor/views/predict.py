@@ -1,19 +1,14 @@
-from pybrain.datasets            import ClassificationDataSet
-from pybrain.utilities           import percentError
-from pybrain.tools.shortcuts     import buildNetwork
-from pybrain.supervised.trainers import BackpropTrainer
-from pybrain.structure.modules   import SoftmaxLayer, BiasUnit
-from pybrain.structure           import FullConnection, FeedForwardNetwork, LinearLayer, SigmoidLayer
-from api import *
-from util import *
-from lolpredictor.predictor.models import *
-from neural import *
 
+from lolpredictor.predictor.models import *
 
 from django.shortcuts import render
-import itertools, collections
 import logging
 import pickle
+from lolpredictor.predictor.traits.summoner import store_summoners
+from lolpredictor.predictor.utils.formatting import print_champion_played
+from lolpredictor.predictor.views.api import retrieveInProgressSpectatorGameInfo, getAggregatedStatsById
+from lolpredictor.predictor.views.preprocessing import champion_played_to_features, fill_missing_spots, \
+    sort_champion_list
 import os
 import globals
 logger = logging.getLogger(__name__)
