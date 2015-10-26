@@ -6,3 +6,5 @@ from pre_processed_match import PreProcessedMatch
 from summoner import Summoner
 from synergy import Synergy
 from api_key import ApiKey
+from task import Task
+from task_argument import TaskArgument
