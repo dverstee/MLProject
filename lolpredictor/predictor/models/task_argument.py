@@ -3,7 +3,7 @@ from lolpredictor.predictor.models import Task
 
 
 class TaskArgument(models.Model):
-    task = models.ForeignKey(Task)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
     attribute = models.CharField(max_length=20)
     value = models.CharField(max_length=200)
     type = models.IntegerField()
