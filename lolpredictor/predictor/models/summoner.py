@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Summoner(models.Model):
-    id = models.AutoField(primary_key=True)
     summoner_id = models.IntegerField(null=False)
     name = models.CharField(max_length=20)
     region = models.CharField(max_length=20)

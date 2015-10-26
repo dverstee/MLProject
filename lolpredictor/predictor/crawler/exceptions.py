@@ -1,0 +1,3 @@
+
+class RateLimitExceededError(Exception):
+    pass

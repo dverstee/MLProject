@@ -12,24 +12,24 @@ def store_summoners(summoner_ids, region):
 
     # Fetch the requested summoners which were already updated after the threshold
     summoners = Summoner.objects.filter(summoner_id__in=summoner_ids)
-    summoners_dict = {summoner.account_id: summoner for summoner in summoners}
+    summoners_dict = {summoner.summoner_id: summoner for summoner in summoners}
 
     # The ids which were already updated recently, skip these
-    excluded_summoners = set \
-        (map(lambda x: x.account_id, filter(lambda x: x.updated_at > updated_at_lower_bound, summoners)))
+    excluded_summoners = set\
+        (map(lambda x: x.summoner_id, filter(lambda x: x.updated_at > updated_at_lower_bound, summoners)))
 
     # Api call to fetch the league information for the summoner id's
     leagues = getLeagueForPlayerById(','.join(str(v) for v in summoner_ids if v not in excluded_summoners))
 
-    for account_id in summoner_ids:
-        if account_id not in excluded_summoners:
-            if account_id in summoners_dict.keys():
-                summoner = summoners_dict[account_id]
+    for summoner_id in summoner_ids:
+        if summoner_id not in excluded_summoners:
+            if summoner_id in summoners_dict.keys():
+                summoner = summoners_dict[summoner_id]
             else:
-                summoner_info = getSummonerById(account_id)
+                summoner_info = getSummonerById(summoner_id)
                 summoner = Summoner.objects.create(**{
-                    'summoner_id': account_id,
-                    'name': summoner_info[str(account_id)]["name"],
+                    'summoner_id': summoner_id,
+                    'name': summoner_info[str(summoner_id)]["name"],
                     'updated_at': datetime.now(),
                     'tier': 0,
                     'rank': 0,
@@ -38,7 +38,7 @@ def store_summoners(summoner_ids, region):
 
                 })
 
-            league_information = leagues[str(account_id)]
+            league_information = leagues[str(summoner_id)]
 
             print league_information
 
