@@ -1,6 +1,4 @@
 
-from lolpredictor.predictor.models import *
-
 from django.shortcuts import render
 import logging
 import pickle
