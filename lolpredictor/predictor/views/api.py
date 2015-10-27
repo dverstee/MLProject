@@ -1,18 +1,15 @@
 import json
 import unirest
+import requests
 import re
 import logging
 import time
 import globals
 from functools import wraps
 
-API_KEYS = ["72e5f115-6e76-43e2-8e95-af65ce16445d","72e5f115-6e76-43e2-8e95-af65ce16445d"]
+
 API_NR = 0
 
-
-
-# Ralph Key API_KEY = "oLnuKcY8wryIkrE94xUMtGXjAbujt2Hx"
-# Dimitry Key API_KEY = "rdhin8bBPEAPK5d5tcDxl94ygpAhUBLO"
 
 
 API_DOMAIN = "https://%s.api.pvp.net/api/lol/" % globals.REGION

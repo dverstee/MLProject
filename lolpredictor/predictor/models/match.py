@@ -3,7 +3,7 @@ from django.db import models
 
 class Match(models.Model):
     match_id = models.CharField(max_length=10, primary_key=True)
-    team1_is_red = models.BooleanField()
+    team1_is_red = models.BooleanField(default=False)
     nr_premade_team1 = models.IntegerField()
     nr_premade_team2 = models.IntegerField()
     won = models.BooleanField()

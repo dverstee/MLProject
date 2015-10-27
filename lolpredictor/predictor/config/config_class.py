@@ -8,3 +8,13 @@ class Config(object):
 
     KEEP_CRAWLING_PERCENTAGE = 80
 
+    NR_OF_API_RETRIES = 2
+
+    REQUESTS_PER_MINUTE = 10
+    REQUESTS_PER_HOUR = 100
+    REQUESTS_PER_DAY = 3600
+
+    API_KEYS = [
+        "72e5f115-6e76-43e2-8e95-af65ce16445d",
+        "72e5f115-6e76-43e2-8e95-af65ce16445d"
+    ]

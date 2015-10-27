@@ -2,9 +2,9 @@ from django.db import models
 
 
 class Summoner(models.Model):
-    summoner_id = models.IntegerField(primary_key=True)
+    summoner_id = models.IntegerField(null=False)
     name = models.CharField(max_length=20)
-    region = models.CharField(max_length=20, primary_key=True)
+    region = models.CharField(max_length=20)
     tier = models.IntegerField()
     rank = models.IntegerField()
     hotstreak = models.BooleanField(default=False)
@@ -12,6 +12,9 @@ class Summoner(models.Model):
 
     def __unicode__(self):
         return str(self.name)
+
+    class Meta:
+        unique_together = (("summoner_id", "region"),)
 
     def getDivision(self):
         tiers = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']

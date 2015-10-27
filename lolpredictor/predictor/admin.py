@@ -51,3 +51,5 @@ class SynergyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Synergy, SynergyAdmin)
+
+admin.site.register(ApiKey)
